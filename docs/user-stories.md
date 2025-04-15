@@ -55,7 +55,54 @@ Para registrarlas en el sistema de forma rápida y eficiente
 - Componentes necesarios: Módulo de importación de archivos, parser de hojas de cálculo (Excel, CSV), sistema de validación de datos, mapeo de columnas, vista previa de datos, registro de errores.
 - Modelos de datos: Transferencia (id, cliente_id, monto, fecha, método_pago, ruta_comprobante, propósito, subasta_id, estado, notas, creado_por, fecha_creación).
 - Interacciones: Integración con el sistema de archivos, validación de formatos de archivo, mapeo automático de columnas, alertas de errores, registro de eventos de importación. 
+---
 
+### 📝 Historia de Usuario: Asociación de fondos con cliente específico
+Como operador financiero  
+Quiero asociar cada transferencia recibida con un cliente específico  
+Para poder rastrear correctamente los fondos y mantener la relación cliente-transferencia-subasta
+
+#### Criterios de Aceptación:
+1. Dado que estoy registrando una transferencia  
+   Cuando selecciono un cliente del listado desplegable  
+   Entonces el sistema vincula la transferencia con ese cliente y muestra su información de contacto
+
+2. Dado que estoy en el listado de transferencias  
+   Cuando filtro por un cliente específico  
+   Entonces visualizo todas las transferencias asociadas únicamente a ese cliente
+
+3. Dado que estoy viendo el detalle de un cliente  
+   Cuando accedo a la pestaña "Transferencias"  
+   Entonces puedo ver un historial de todas sus transferencias y el estado actual de cada una
+
+#### Notas Técnicas:
+- Componentes necesarios: Selector de clientes con búsqueda, filtros de listado, vista de detalle de cliente
+- Modelos de datos: Relación Cliente-Transferencia (1:N), Cliente (id, nombre, correo, teléfono, datos fiscales)
+- Interacciones: Búsqueda predictiva de clientes al escribir, carga de datos históricos del cliente seleccionado
+---
+
+### 📝 Historia de Usuario: Asignación de fondos a subastas específicas
+Como operador financiero  
+Quiero asignar los fondos recibidos a subastas específicas  
+Para tener claridad sobre el propósito de cada transferencia y facilitar el seguimiento
+
+#### Criterios de Aceptación:
+1. Dado que estoy registrando una transferencia o editando una existente  
+   Cuando selecciono una subasta para asignar los fondos  
+   Entonces el sistema vincula la transferencia con esa subasta y actualiza el estado a "Fondos Asignados"
+
+2. Dado que una transferencia está en estado "Fondos Disponibles"  
+   Cuando accedo a su detalle y selecciono "Asignar a Subasta"  
+   Entonces puedo vincularla con una subasta activa y cambiar su estado
+
+3. Dado que estoy viendo el detalle de una subasta  
+   Cuando reviso la sección "Fondos Asignados"  
+   Entonces puedo ver todas las transferencias vinculadas a esa subasta y sus montos
+
+#### Notas Técnicas:
+- Componentes necesarios: Selector de subastas, panel de asignación, actualizador de estado de fondos
+- Modelos de datos: Relación Transferencia-Subasta, Subasta (id, título, fecha_inicio, fecha_fin, estado)
+- Interacciones: Integración con sistema actual de subastas, verificación de estado y disponibilidad de la subasta
 
 ## 2. Seguimiento de estado de fondos
 
