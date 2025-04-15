@@ -128,3 +128,7 @@ Este proyecto está siendo desarrollado por:
 - **Erick Verde**: Líder Técnico, Documentación, Gestión de Datos
 - **Mario**: Frontend, Gestión de Datos
 
+## Documentacion del proyecto
+[Requerimientos](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/requirements.md)
+[Equipo de desarrollo](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/team.md)
+[Historias de Usuario](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/user-stories.md)
