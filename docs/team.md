@@ -16,21 +16,17 @@
 
 **Documentación (Erick Verde):**
 
-* **Documentación Técnica:** Crear la documentación técnica del proyecto, incluyendo la arquitectura, el diseño, las especificaciones, las API, etc.
+* **Documentación Técnica:** Crear la documentación técnica del proyecto, el diseño, las especificaciones, las API, etc.
 * **Documentación de Usuario:**  Definir las guías de usuario, tutoriales, FAQs, etc., para que los usuarios puedan utilizar el sistema de forma eficiente.
 * **Mantenimiento de la Documentación:** Actualizar la documentación con los cambios realizados en el sistema.
 
 **Frontend (Mario):**
 
-* **Diseño y Desarrollo de la Interfaz de Usuario:**  Crear la interfaz de usuario del sistema, incluyendo la experiencia del usuario (UX), la interfaz de usuario (UI), la navegabilidad, la accesibilidad, etc.
-* **Implementación del Frontend:**  Utilizar frameworks y herramientas de desarrollo web para implementar la interfaz de usuario, incluyendo HTML, CSS, JavaScript, etc.
-* **Integración con el Backend:**  Integrar la interfaz de usuario con el backend del sistema, incluyendo la comunicación con las API, la gestión de datos, etc.
+* **Diseño y Desarrollo de la Interfaz de Usuario:**  Crear la interfaz de usuario del sistema.
+* **Implementación del Frontend:**  Utilizar frameworks y herramientas de desarrollo web para implementar la interfaz de usuario, incluyendo HTML, CSS, JavaScript.
 
 **Gestión de Datos (Erick Verde y Mario):**
-
-* **Diseño de la Base de Datos:**  Definir la estructura de la base de datos, los modelos de datos, las relaciones entre las entidades, etc.
-* **Implementación de la Base de Datos:**  Utilizar herramientas de gestión de bases de datos para implementar la base de datos, incluyendo la creación de tablas, la definición de índices, etc.
-* **Gestión de Datos:**  Implementar las funcionalidades de gestión de datos, incluyendo la creación, lectura, actualización y eliminación de datos, la seguridad de los datos, etc.
+* **Gestión de Datos:**  Implementar las funcionalidades de gestión de datos, incluyendo la creación, lectura, actualización y eliminación de datos.
 
 **Colaboración:**
 
