@@ -6,14 +6,14 @@
   <title>Dashboard Financiero</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="app.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-100">
-  <div class="flex h-screen">
+<body class="bg-gray-100 flex flex-col min-h-screen m-0">
+  <div class="flex flex-1">
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-cyan-900 text-white p-4 shadow-md">
       <div class="flex items-center space-x-2 mb-6">
-        <img src="./imagen/bob-subastas-logo.png" alt="Logo Bob Subastas" class="h-50 w-50" />
+        <img src="./imagen/bob-subastas-logo.png" alt="Logo Bob Subastas" class="h-25 w-50" />
         <!-- <h2 class="text-xl font-bold">BOB Subastas</h2> -->
       </div>
       <nav class="space-y-2">
@@ -51,12 +51,14 @@
       <section id="clientes" class="hidden space-y-4">
         <h2 class="text-2xl font-bold">Gestión de Clientes</h2>
         <form id="form-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input id="cliente-id" type="hidden" />
           <input id="cliente-email" type="email" placeholder="Correo Electrónico" class="p-2 border rounded" required />
-          <input id="cliente-nombre" type="text" placeholder="Nombre o Razón Social" class="p-2 border rounded" required />
+          <input id="cliente-nombre" type="text" placeholder="Nombre del cliente" class="p-2 border rounded" required />
           <input id="cliente-telefono" type="text" placeholder="Celular" class="p-2 border rounded" required />
           <select id="cliente-tipo-documento" class="p-2 border rounded">
             <option>DNI</option>
             <option>RUC</option>
+            <option>CE</option>
           </select>
           <input id="cliente-numero-documento" type="text" placeholder="Número de Documento" class="p-2 border rounded" required />
           <input id="cliente-facturacion-ruc" type="text" placeholder="RUC (Facturación)" class="p-2 border rounded" />
@@ -64,7 +66,7 @@
           <textarea id="cliente-observaciones" placeholder="Observaciones" class="p-2 border rounded md:col-span-2"></textarea>
           <div class="md:col-span-2 space-x-2">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
-            <button type="reset" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+            <button type="reset" id="cancelar-cliente" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
           </div>
         </form>
         <div id="tabla-clientes" class="bg-white p-4 rounded shadow mt-4 overflow-auto"></div>
@@ -100,7 +102,14 @@
           </select>
           <p id="saldo-disponible" class="md:col-span-2 text-gray-700">Saldo disponible: S/ 0.00</p>
           <input type="number" id="egreso-monto" placeholder="Monto a Devolver" class="p-2 border rounded" required />
-          <input type="text" id="cuenta-destino" placeholder="Cuenta de Destino" class="p-2 border rounded" required />
+          <select id="cuenta-destino" class="p-2 border rounded" required>
+            <option value="">Seleccione banco</option>
+            <option value="BBVA">Banco BBVA</option>
+            <option value="BCP">Banco de Crédito del Perú</option>
+            <option value="Interbank">Interbank</option>
+            <option value="Scotiabank">Scotiabank</option>
+          </select>
+          <input type="text" id="numero-cuenta" placeholder="Número de Cuenta/CCI" class="p-2 border rounded" required />
           <input type="text" id="concepto" placeholder="Concepto" class="p-2 border rounded" />
           <div class="md:col-span-2 space-x-2">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
@@ -117,7 +126,6 @@
             <option value="">Seleccione un cliente</option>
           </select>
           <input type="date" id="fecha-inicio" class="p-2 border rounded" />
-          <input type="date" id="fecha-fin" class="p-2 border rounded" />
           <div class="md:col-span-3 space-x-2">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Generar Reporte</button>
           </div>
@@ -126,5 +134,9 @@
       </section>
     </main>
   </div>
+  
+  <footer class="w-full bg-gray-100 p-4 text-center text-sm text-gray-600 border-t border-gray-200">
+    © 2025 BOB SUBASTAS. Todos los derechos reservados.
+  </footer>
 </body>
 </html>
