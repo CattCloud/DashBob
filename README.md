@@ -7,6 +7,7 @@ El Sistema de Gestión Financiera para BOB Subastas es una aplicación web dise�
 ### Problema que Resuelve
 
 BOB es una empresa especializada en subastas industriales que opera como intermediario en la compraventa de vehículos, maquinarias y materiales de segundo uso. Actualmente, BOB enfrenta desafíos en el seguimiento del dinero transferido por sus clientes para:
+
 - Registrar los ingresos recibidos
 - Conocer los gastos realizados y las comisiones generadas
 - Mantener trazabilidad completa de los fondos (si fueron usados, están en cuenta, devueltos o reasignados)
@@ -38,6 +39,7 @@ El sistema proporciona una solución centralizada y transparente para gestionar 
 ## Tecnologías a Utilizar
 
 ### Frontend
+
 - **HTML5 Semántico**: Estructura de contenido accesible y optimizada para SEO
 - **CSS3 con Flexbox y Grid**: Layouts responsivos y adaptables a diferentes dispositivos
 - **JavaScript ES6+**: Programación orientada a objetos para la lógica de negocio del cliente
@@ -45,18 +47,21 @@ El sistema proporciona una solución centralizada y transparente para gestionar 
 - **Chart.js**: Biblioteca para visualización de datos y generación de gráficos interactivos
 
 ### Backend (Implementación Cliente-Side)
+
 - **Arquitectura MVC**: Patrón de diseño para separar datos, lógica y presentación
 - **LocalStorage API**: Persistencia de datos en el navegador del cliente
 - **Vanilla JavaScript**: Implementación de clases y prototipos para la lógica de negocio
 - **Event Handling**: Sistema de eventos para sincronización de la interfaz con el modelo de datos
 
 ### Herramientas de Desarrollo
+
 - **Git y GitHub**: Control de versiones y colaboración
 - **Trello**: Gestión de proyecto con metodología Agile
 - **VS Code**: Editor de código con extensiones para desarrollo web
 - **Jest**: Framework para pruebas unitarias y de integración (opcional)
 
 ### Despliegue
+
 - **GitHub Pages**: Hosting gratuito para la aplicación web
 - **Netlify/Vercel**: Alternativas para CI/CD y despliegue automático
 
@@ -72,7 +77,7 @@ La persistencia se logra utilizando LocalStorage, que permite almacenar datos en
 
 ### Diagrama de Clases (Básico)
 
-```
+```bash
 +----------------+      +----------------+      +---------------+
 |  Transferencia |      |    Cliente     |      |    Subasta    |
 +----------------+      +----------------+      +---------------+
@@ -92,22 +97,29 @@ La persistencia se logra utilizando LocalStorage, que permite almacenar datos en
 | - porcentaje   |
 | - monto        |
 +----------------+
-```
+```bash
+```bash
+```bash
 
 ## Instalación y Uso
 
 1. Clone el repositorio:
+
+```bash
+```
    ```
    https://github.com/CattCloud/bobAuction-Platform.git
    ```
 
-2. Abra el proyecto en su editor de código preferido
+2.Abra el proyecto en su editor de código preferido
 
-3. Para iniciar la aplicación en desarrollo local:
-   - Puede utilizar una extensión como "Live Server" en VS Code
-   - O simplemente abrir el archivo index.html en su navegador
+3.Para iniciar la aplicación en desarrollo local:
 
-4. No se requiere configuración adicional ya que el sistema utiliza almacenamiento local
+- Puede utilizar una extensión como "Live Server" en VS Code
+
+- O simplemente abrir el archivo index.html en su navegador
+
+4.No se requiere configuración adicional ya que el sistema utiliza almacenamiento local
 
 ## Estructura del Proyecto
 
@@ -125,10 +137,12 @@ nombre-proyecto/
 ## Contribución
 
 Este proyecto está siendo desarrollado por:
+
 - **Erick Verde**: Líder Técnico, Documentación, Gestión de Datos
 - **Mario**: Frontend, Gestión de Datos
 
 ## Documentacion del proyecto
+
 [Requerimientos](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/requirements.md)
 [Equipo de desarrollo](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/team.md)
 [Historias de Usuario](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/user-stories.md)
