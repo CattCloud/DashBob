@@ -11,11 +11,45 @@ La aplicación permite:
 - Calcular balances automatizados
 - Generar reportes básicos
 
-Esta solución reemplaza el proceso manual actual basado en Google Forms y hojas de cálculo, centralizando la información y automatizando cálculos para reducir errores y mejorar la eficiencia operativa.
+
+BOB es una empresa especializada en subastas industriales que opera como intermediario en la compraventa de vehículos, maquinarias y materiales de segundo uso. Actualmente, BOB enfrenta desafíos en el seguimiento del dinero transferido por sus clientes para:
+
+- Registrar los ingresos recibidos
+- Conocer los gastos realizados y las comisiones generadas
+- Mantener trazabilidad completa de los fondos (si fueron usados, están en cuenta, devueltos o reasignados)
+=======
+Esta solución reemplaza el proceso manual actual basado en Google Forms y hojas de cálculo, centralizando la información y automatizando cálculos para reducir errores y mejorar la eficiencia ope
 
 ## Tecnologías Utilizadas
 
 ### Frontend
+
+
+- **HTML5 Semántico**: Estructura de contenido accesible y optimizada para SEO
+- **CSS3 con Flexbox y Grid**: Layouts responsivos y adaptables a diferentes dispositivos
+- **JavaScript ES6+**: Programación orientada a objetos para la lógica de negocio del cliente
+- **Bootstrap 5**: Framework CSS para agilizar el desarrollo de interfaces con componentes prediseñados
+- **Chart.js**: Biblioteca para visualización de datos y generación de gráficos interactivos
+
+### Backend (Implementación Cliente-Side)
+
+- **Arquitectura MVC**: Patrón de diseño para separar datos, lógica y presentación
+- **LocalStorage API**: Persistencia de datos en el navegador del cliente
+- **Vanilla JavaScript**: Implementación de clases y prototipos para la lógica de negocio
+- **Event Handling**: Sistema de eventos para sincronización de la interfaz con el modelo de datos
+
+### Herramientas de Desarrollo
+
+- **Git y GitHub**: Control de versiones y colaboración
+- **Trello**: Gestión de proyecto con metodología Agile
+- **VS Code**: Editor de código con extensiones para desarrollo web
+- **Jest**: Framework para pruebas unitarias y de integración (opcional)
+
+### Despliegue
+
+- **GitHub Pages**: Hosting gratuito para la aplicación web
+- **Netlify/Vercel**: Alternativas para CI/CD y despliegue automático
+=======
 - **HTML5 Semántico**: Estructura del sitio con etiquetas modernas y accesibles
 - **CSS3**: Estilización con Flexbox y Grid para layouts responsivos
 - **JavaScript (ES6+)**: Lógica de negocio y manipulación del DOM
@@ -26,6 +60,7 @@ Esta solución reemplaza el proceso manual actual basado en Google Forms y hojas
 - **Patrón Storage**: Para la gestión y persistencia de datos
 - **Event Handling**: Para la interacción entre componentes
 - **Estado y Sincronización**: Para mantener la coherencia de datos en la UI
+
 
 ## Arquitectura del Sistema
 
@@ -48,6 +83,52 @@ La arquitectura del sistema sigue un enfoque Frontend-Only, adaptado a las limit
 
 ### Diagrama de Arquitectura
 
+
+```bash
++----------------+      +----------------+      +---------------+
+|  Transferencia |      |    Cliente     |      |    Subasta    |
++----------------+      +----------------+      +---------------+
+| - id           |      | - id           |      | - id          |
+| - cliente      |<--->| - nombre       |      | - titulo      |
+| - monto        |      | - contacto     |      | - fechas      |
+| - fecha        |      +----------------+      | - estado      |
+| - estado       |                              +---------------+
+| - subasta      |<----------------------------->|
++----------------+
+        ^
+        |
++----------------+
+|    Comision    |
++----------------+
+| - transferencia|
+| - porcentaje   |
+| - monto        |
++----------------+
+```bash
+```bash
+```bash
+
+## Instalación y Uso
+
+1. Clone el repositorio:
+
+```bash
+```
+   ```
+   https://github.com/CattCloud/bobAuction-Platform.git
+   ```
+
+2.Abra el proyecto en su editor de código preferido
+
+3.Para iniciar la aplicación en desarrollo local:
+
+- Puede utilizar una extensión como "Live Server" en VS Code
+
+- O simplemente abrir el archivo index.html en su navegador
+
+4.No se requiere configuración adicional ya que el sistema utiliza almacenamiento local
+
+=======
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         INTERFAZ DE USUARIO                          │
@@ -85,6 +166,7 @@ La arquitectura del sistema sigue un enfoque Frontend-Only, adaptado a las limit
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
+
 ## Estructura del Proyecto
 
 ```
@@ -100,6 +182,18 @@ bob-subastas/
 
 ## Enfoque MVP y Consideraciones
 
+
+Este proyecto está siendo desarrollado por:
+
+- **Erick Verde**: Líder Técnico, Documentación, Gestión de Datos
+- **Mario**: Frontend, Gestión de Datos
+
+## Documentacion del proyecto
+
+[Requerimientos](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/requirements.md)
+[Equipo de desarrollo](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/team.md)
+[Historias de Usuario](https://github.com/CattCloud/bobAuction-Platform/blob/main/docs/user-stories.md)
+=======
 ### Prioridades para el MVP
 1. **Funcionalidad sobre perfección**: Implementar primero las funcionalidades core que resuelven el problema principal.
 2. **Simplicidad**: Mantener un enfoque minimalista que facilite el mantenimiento.
@@ -124,3 +218,4 @@ bob-subastas/
 1. Clonar el repositorio
 2. Abrir el archivo `index.html` en un navegador web moderno
 3. La aplicación funcionará sin necesidad de servidor o dependencias adicionales
+
