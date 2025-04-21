@@ -17,8 +17,6 @@ document.querySelectorAll("aside button").forEach((btn) => {
   });
 });
 
-
-
 // === Boton Registrar o editar cliente ===
 document.getElementById("form-cliente").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -441,6 +439,280 @@ document.getElementById("egreso-cliente").addEventListener("change", function() 
 });
 
 
+
+const inputFile = document.getElementById('input-csv-clientes');
+const archivoNombre = document.getElementById('archivo-nombre');
+
+inputFile.addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    archivoNombre.textContent = file.name; // Muestra el nombre del archivo seleccionado
+  } else {
+    archivoNombre.textContent = "Ningún archivo seleccionado"; // Muestra un mensaje predeterminado
+  }
+});
+
+document.getElementById('importar-btn').addEventListener('click', function() {
+  if (inputFile.files.length > 0) {
+    importarClientesDesdeCSV({ target: { files: inputFile.files } });
+  } else {
+    notyf.error("Por favor, selecciona el archivo que desea importar.");
+  }
+});
+
+/*
+* El archivo CSV debe tener encabezados que coincidan con estos nombres (sin importar mayúsculas):
+* email,nombre,telefono,tipodocumento,numerodocumento,observaciones
+*/
+async function importarClientesDesdeCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const text = e.target.result;
+    const filas = text.split('\n').map(line => line.trim()).filter(Boolean);
+    const cabeceras = filas[0].split(',').map(h => h.trim().toLowerCase());
+    const datos = filas.slice(1);
+    const rechazados = [];
+
+    datos.forEach((linea, index) => {
+      const columnas = linea.split(',').map(x => x.trim());
+      const cliente = {};
+
+      // Asignar campos por nombre
+      cabeceras.forEach((col, i) => cliente[col] = columnas[i]);
+
+      try {
+        const nuevoCliente = {
+          email: cliente.email,
+          nombre: cliente.nombre,
+          telefono: cliente.telefono,
+          tipoDocumento: cliente.tipodocumento,
+          numeroDocumento: cliente.numerodocumento,
+          observaciones: cliente.observaciones || ''
+        };
+        console.log(nuevoCliente);
+        // Intentar guardar en el Store
+        window.templatesStore.addCliente(nuevoCliente);
+
+      } catch (error) {
+        // Si hay error, guardar línea fallida
+        rechazados.push({ fila: index + 2, 
+                          mensaje: `Cliente ${cliente.nombre} ,`+ error.message });
+      }
+    });
+    // Renderizar solo al final
+    mostrarClientes();
+    // Reportar errores
+    if (rechazados.length > 0) {
+      notyf2.error(`${rechazados.length} cliente(s) no se pudieron importar`);
+      /*rechazados.forEach(c => {
+        notyf2.error(`Error al importar cliente ${c.nombre}: ${c.error}`);
+      });*/
+      generarArchivoErrores(rechazados, "errores_importacion_cliente.txt");
+    } else {
+      notyf.success("Todos los clientes se importaron correctamente.");
+    }
+    // Limpiar input para permitir reimportar si se desea
+    archivoNombre.textContent="Ningún archivo seleccionado";
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+
+const inputFileIngreso = document.getElementById('input-csv-ingresos');
+const archivoNombreIngreso = document.getElementById('archivo-nombre-ingreso');
+
+inputFileIngreso.addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    archivoNombreIngreso.textContent = file.name; // Muestra el nombre del archivo seleccionado
+  } else {
+    archivoNombreIngreso.textContent = "Ningún archivo seleccionado"; // Muestra un mensaje predeterminado
+  }
+});
+
+
+document.getElementById('importar-ingreso-btn').addEventListener('click', function() {
+  if (inputFileIngreso.files.length > 0) {
+    console.log("sasdas");
+    importarIngresosDesdeCSV({ target: { files: inputFileIngreso.files } });
+  } else {
+    notyf.error("Por favor, selecciona el archivo que desea importar.");
+  }
+});
+
+
+async function importarIngresosDesdeCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const text = e.target.result;
+    const filas = text.split('\n').map(line => line.trim()).filter(Boolean);
+    const cabeceras = filas[0].split(',').map(h => h.trim().toLowerCase());
+    const datos = filas.slice(1);
+    const rechazados = [];
+
+    datos.forEach((linea, index) => {
+      const columnas = linea.split(',').map(x => x.trim());
+      const ingreso = {};
+
+      // Asignar campos por nombre
+      cabeceras.forEach((col, i) => ingreso[col] = columnas[i]);
+
+      try {
+        // Validación y creación del objeto ingreso
+        const nuevoIngreso = {
+          clienteId: ingreso.clienteid,
+          moneda: ingreso.moneda,
+          medioPago: ingreso.mediopago,
+          banco: ingreso.banco,
+          importe: parseFloat(ingreso.importe),
+          concepto: ingreso.concepto,
+          estado: ingreso.estado // Valor por defecto si no se especifica
+        };
+
+        // Intentar guardar en el Store
+        window.templatesStore.addIngreso(nuevoIngreso);
+
+      } catch (error) {
+        // Si hay error, guardar línea fallida
+        rechazados.push({ fila: index + 2, 
+          mensaje: error.message });
+      }
+    });
+
+    // Renderizar solo al final
+    mostrarIngresos();
+    // Reportar errores
+    if (rechazados.length > 0) {
+      notyf2.error(`${rechazados.length} ingreso(s) no se pudieron importar.`);
+      /*rechazados.forEach(i => {
+        notyf2.error(`Error al importar ingreso ${i.info}: ${i.error}`);
+      });*/
+      generarArchivoErrores(rechazados, "errores_importacion_ingreso.txt");
+    } else {
+      notyf.success("Todos los ingresos se importaron correctamente.");
+    }
+    // Limpiar input para permitir reimportar si se desea
+    archivoNombreIngreso.textContent = "Ningún archivo seleccionado";
+    event.target.value = '';
+  };
+
+  reader.readAsText(file);
+}
+
+
+
+const inputFileEgreso = document.getElementById('input-csv-egresos');
+const archivoNombreEgreso = document.getElementById('archivo-nombre-egreso');
+
+inputFileEgreso.addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    archivoNombreEgreso.textContent = file.name; // Muestra el nombre del archivo seleccionado
+  } else {
+    archivoNombreEgreso.textContent = "Ningún archivo seleccionado"; // Muestra un mensaje predeterminado
+  }
+});
+
+
+document.getElementById('importar-egreso-btn').addEventListener('click', function() {
+  if (inputFileIngreso.files.length > 0) {
+    importarEgresosDesdeCSV({ target: { files: inputFileEgreso.files } });
+  } else {
+    notyf.error("Por favor, selecciona el archivo que desea importar.");
+  }
+});
+
+
+async function importarEgresosDesdeCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const text = e.target.result;
+    const filas = text.split('\n').map(line => line.trim()).filter(Boolean);
+    const cabeceras = filas[0].split(',').map(h => h.trim().toLowerCase());
+    const datos = filas.slice(1);
+    const rechazados = [];
+
+    datos.forEach((linea, index) => {
+      const columnas = linea.split(',').map(x => x.trim());
+      const egreso = {};
+
+      // Asignar campos por nombre
+      cabeceras.forEach((col, i) => egreso[col] = columnas[i]);
+
+      try {
+        // Validación y creación del objeto ingreso
+        const nuevoEgreso = {
+          clienteId: egreso.clienteid,
+          moneda: egreso.moneda,
+          medio: egreso.medio,
+          banco: egreso.banco,
+          importe: parseFloat(egreso.importe),
+          concepto: egreso.concepto,
+          estado: egreso.estado // Valor por defecto si no se especifica
+        };
+
+        // Intentar guardar en el Store
+        window.templatesStore.addEgreso(nuevoEgreso);
+
+      } catch (error) {
+        // Si hay error, guardar línea fallida
+        rechazados.push({ fila: index + 2, 
+          mensaje: error.message });
+      }
+    });
+
+    // Renderizar solo al final
+    mostrarEgresos();
+    // Reportar errores
+    if (rechazados.length > 0) {
+      notyf2.error(`${rechazados.length} egreso(s) no se pudieron importar.`);
+      /*rechazados.forEach(i => {
+        notyf2.error(`Error al importar ingreso ${i.info}: ${i.error}`);
+      });*/
+      generarArchivoErrores(rechazados, "errores_importacion_egreso.txt");
+    } else {
+      notyf.success("Todos los egresos se importaron correctamente.");
+    }
+    // Limpiar input para permitir reimportar si se desea
+    archivoNombreIngreso.textContent = "Ningún archivo seleccionado";
+    event.target.value = '';
+  };
+
+  reader.readAsText(file);
+}
+
+
+
+function generarArchivoErrores(errores, nombreArchivo) {
+  // Crear contenido para el archivo
+  const contenido = errores.map(error => `Fila ${error.fila}: ${error.mensaje}`).join('\n');
+  // Crear un objeto Blob con el contenido del archivo
+  const blob = new Blob([contenido], { type: "text/plain" });
+  // Crear una URL para el Blob
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(blob);
+  enlace.download = nombreArchivo; // Nombre del archivo que se descargará
+  // Simular un clic en el enlace para descargar
+  enlace.style.display = "none";
+  document.body.appendChild(enlace);
+  enlace.click();
+  document.body.removeChild(enlace);
+}
+
+
+
+
 // === Inicialización ===
 mostrarClientes();
 mostrarIngresos();
@@ -448,4 +720,7 @@ mostrarEgresos();
 cargarClientesSelect();
 actualizarDashboard();
 
+
+//localStorage.clear();
+//console.log(window.templatesStore.getClientes());
 
