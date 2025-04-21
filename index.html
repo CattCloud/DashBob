@@ -74,8 +74,8 @@
           </div>
         </form>
         <div id="tabla-clientes" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
-          <!-- Tabla responsiva -->
-        </div>
+          <!-- Tabla responsiva generada dinámicamente -->
+        </div>        
       </section>
 
       <!-- Ingresos -->
@@ -119,8 +119,6 @@
           </select> 
           <input type="number" id="ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
           <!--input id="ingreso-concepto" name="concepto" class="p-2 border rounded w-full" placeholder="Concepto" required></input-->
-
-
           <!--input type="text" id="vehiculo-datos" placeholder="Datos del Vehículo" class="p-2 border rounded w-full" required />
           <input type="text" id="subasta-detalles" placeholder="Detalles de Subasta" class="p-2 border rounded w-full" required />
           <input type="number" id="pago-garantia" placeholder="Monto Garantía" class="p-2 border rounded w-full" required />
@@ -131,6 +129,9 @@
             <button type="reset" id="cancelar-ingreso" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
           </div>
         </form>
+        <div id="tabla-ingresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
+          <!-- Tabla responsiva generada dinámicamente -->
+        </div>
       </section>
 
       <!-- Egresos -->
@@ -141,7 +142,7 @@
           <select id="egreso-cliente" class="p-2 border rounded w-full" required>
             <option value="">Seleccione un cliente</option>
           </select>
-          <p id="saldo-disponible" class="md:col-span-2 text-gray-700">Saldo disponible: S/ 0.00</p>
+          <p id="saldo-disponible" class="md:col-span-2 text-gray-700 font-bold">Saldo disponible: S/ 0.00</p>
           <input type="number" id="egreso-monto" placeholder="Monto a Devolver" class="p-2 border rounded w-full" required />
           <select id="egreso-medio" class="p-2 border rounded w-full" name="medio" required>
             <option value="">Seleccione medio</option>
@@ -181,6 +182,9 @@
             <button type="reset" id="cancelar-egreso" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
           </div>
         </form>
+        <div id="tabla-egresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
+          <!-- Tabla responsiva generada dinámicamente -->
+        </div>
       </section>
 
       <!-- Reportes -->

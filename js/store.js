@@ -549,10 +549,10 @@ function createStore() {
      */
     function calcularBalanceCliente(clienteId) {
         // Verificar que el cliente exista
-        const clienteExists = state.clientes.some(c => c.id === clienteId);
-        if (!clienteExists) {
-            throw new Error(`El cliente con ID ${clienteId} no existe`);
-        }
+        //const clienteExists = state.clientes.some(c => c.id === clienteId);
+        //if (!clienteExists) {
+        //    throw new Error(`El cliente con ID ${clienteId} no existe`);
+        //}
         
         // Sumar todos los ingresos del cliente
         const totalIngresos = state.ingresos

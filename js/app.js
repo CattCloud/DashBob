@@ -64,37 +64,44 @@ document.getElementById("form-cliente").addEventListener("submit", (e) => {
 });
 
 
-// === Mostrar clientes con botones de editar y eliminar ===
 function mostrarClientes() {
   const contenedor = document.getElementById("tabla-clientes");
-  const clientes=window.templatesStore.getClientes();
-  if (clientes.length === 0) {
-    contenedor.innerHTML = "<p>No hay clientes registrados.</p>";
+  const clientes = window.templatesStore.getClientes();
+
+  if (!clientes.length) {
+    contenedor.innerHTML = "<p class='text-gray-600'>No hay clientes registrados.</p>";
     return;
   }
+
   contenedor.innerHTML = `
-    <table class="min-w-full">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-gray-100">
         <tr>
-          <th>Email</th><th>Nombre</th><th>Teléfono</th><th>Documento</th><th>Acciones</th>
+          <th class="px-3 py-2 text-left text-gray-600">Nombre</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Email</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Teléfono</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden lg:table-cell">Documento</th>
+          <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="divide-y divide-gray-200">
         ${clientes.map(c => `
           <tr>
-            <td>${c.email}</td>
-            <td>${c.nombre}</td>
-            <td>${c.telefono}</td>
-            <td>${c.tipoDocumento} ${c.numeroDocumento}</td>
-            <td>
-              <button onclick="editarCliente('${c.id}')" class="text-blue-500" title="Editar">🖉</button>
-              <button onclick="eliminarCliente('${c.id}')" class="text-red-500 ml-2" title="Eliminar">🗑️</button>
+            <td class="px-3 py-2 font-medium">${c.nombre}</td>
+            <td class="px-3 py-2 hidden sm:table-cell">${c.email}</td>
+            <td class="px-3 py-2 hidden md:table-cell">${c.telefono}</td>
+            <td class="px-3 py-2 hidden lg:table-cell">${c.tipoDocumento} ${c.numeroDocumento}</td>
+            <td class="px-3 py-2 space-x-2">
+              <button onclick="editarCliente('${c.id}')" class="text-blue-600 hover:underline">Editar</button>
+              <button onclick="eliminarCliente('${c.id}')" class="text-red-600 hover:underline">Eliminar</button>
             </td>
           </tr>
         `).join("")}
       </tbody>
-    </table>`;
+    </table>
+  `;
 }
+
 
 // === Editar cliente (rellena el formulario) ===
 function editarCliente(id) {
@@ -195,6 +202,63 @@ document.getElementById("form-ingreso").addEventListener("submit", (e) => {
   //localStorage.setItem("ingresos", JSON.stringify(ingresos));
 
 });
+
+function getBadgeClase(estado) {
+  const clases = {
+    PENDIENTE: "bg-yellow-100 text-yellow-800",
+    FACTURADO: "bg-blue-100 text-blue-800",
+    COMPLETADO: "bg-green-100 text-green-800",
+    DEVUELTO: "bg-gray-100 text-gray-800",
+    "SALDO A FAVOR": "bg-purple-100 text-purple-800"
+  };
+  return clases[estado] || "bg-gray-200 text-gray-800";
+}
+
+
+
+function mostrarIngresos() {
+  const contenedor = document.getElementById("tabla-ingresos");
+  const ingresos = window.templatesStore.getIngresos();
+
+  if (!ingresos.length) {
+    contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos registrados.</p>";
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-3 py-2 text-left text-gray-600">Cliente</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Banco</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Medio</th>
+          <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
+          <th class="px-3 py-2 text-left text-gray-600">Estado</th>
+          <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        ${ingresos.map(i => `
+          <tr>
+            <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(i.clienteId).nombre}</td>
+            <td class="px-3 py-2 hidden sm:table-cell">${i.banco}</td>
+            <td class="px-3 py-2 hidden sm:table-cell">${i.medioPago}</td>
+            <td class="px-3 py-2">S/. ${parseFloat(i.importe).toFixed(2)}</td>
+            <td class="px-3 py-2 hidden md:table-cell">${i.concepto}</td>
+            <td class="px-3 py-2">
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(i.estado)}">${i.estado}</span>
+            </td>
+            <td class="px-3 py-2 space-x-2">
+              <button onclick="editarIngreso('${i.id}')" class="text-blue-600 hover:underline">Editar</button>
+              <button onclick="eliminarIngreso('${i.id}')" class="text-red-600 hover:underline">Eliminar</button>
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
 
 
 // === Cargar clientes en los select de ingresos, egresos y reportes ===
@@ -302,9 +366,71 @@ function actualizarGrafico() {
   });
 }
 
+function mostrarEgresos() {
+  const contenedor = document.getElementById("tabla-egresos");
+  const egresos = window.templatesStore.getEgresos();
+
+  if (!egresos.length) {
+    contenedor.innerHTML = "<p class='text-gray-600'>No hay egresos registrados.</p>";
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-3 py-2 text-left text-gray-600">Cliente</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Banco</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Medio</th>
+          <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+          <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
+          <th class="px-3 py-2 text-left text-gray-600">Estado</th>
+          <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        ${egresos.map(e => `
+          <tr>
+            <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(e.clienteId).nombre}</td>
+            <td class="px-3 py-2 hidden sm:table-cell">${e.banco}</td>
+            <td class="px-3 py-2 hidden sm:table-cell">${e.medio}</td>
+            <td class="px-3 py-2">S/. ${parseFloat(e.importe).toFixed(2)}</td>
+            <td class="px-3 py-2 hidden md:table-cell">${e.concepto}</td>
+            <td class="px-3 py-2">
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(e.estado)}">${e.estado}</span>
+            </td>
+            <td class="px-3 py-2 space-x-2">
+              <button onclick="editarEgreso('${e.id}')" class="text-blue-600 hover:underline">Editar</button>
+              <button onclick="eliminarEgreso('${e.id}')" class="text-red-600 hover:underline">Eliminar</button>
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function mostrarSaldoCliente(id){
+   const container_saldo=document.getElementById("saldo-disponible");
+   let balance=window.templatesStore.calcularBalanceCliente(id);
+   container_saldo.textContent=`Saldo Disponible: S/ ${balance}`;
+}
+
+document.getElementById("egreso-cliente").addEventListener("change", function() {
+  const selectedValue = this.value;
+  if (selectedValue !== "") { // Comprobamos que no sea la opción por defecto
+    mostrarSaldoCliente(this.value);
+      // Aquí puedes agregar la lógica adicional que necesites
+  } else {
+      console.log("Por favor, seleccione un cliente válido.");
+  }
+});
+
 
 // === Inicialización ===
 mostrarClientes();
+mostrarIngresos();
+mostrarEgresos();
 cargarClientesSelect();
 actualizarDashboard();
 
