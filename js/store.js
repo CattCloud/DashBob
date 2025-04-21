@@ -54,7 +54,7 @@ function createStore() {
     function _saveToLocalStorage() {
         try {
             // Actualizar timestamp
-            state.metadata.lastUpdated = new Date().toISOString();
+            //state.metadata.lastUpdated = new Date().toISOString();
             // Guardar en localStorage
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             return true;
@@ -73,10 +73,22 @@ function createStore() {
      */
     function _generateId(entity) {
         // Incrementar contador para la entidad
-        state.metadata.counters[entity]++;
+        //state.metadata.counters[entity]++;
         
         // Formatear ID según el tipo de entidad
-        const counter = state.metadata.counters[entity].toString().padStart(3, '0');
+        let lengthEntity;
+        switch(entity){
+            case "cliente":
+                lengthEntity=state.clientes.length;
+                break;
+            case "ingreso":
+                lengthEntity=state.ingresos.length;
+                break;
+            case "egreso":
+                lengthEntity=state.egresos.length;
+                break;    
+        }
+        const counter = lengthEntity.toString().padStart(3, '0');
         
         const prefix = {
             'cliente': 'C',
@@ -137,8 +149,7 @@ function createStore() {
      * @throws {Error} Si faltan campos requeridos o hay duplicados
      */
     function addCliente(clienteData) {
-
-        
+ 
         // Verificar si ya existe un cliente con el mismo email o documento
         const emailExists = state.clientes.some(c => 
             c.email.toLowerCase() === clienteData.email.toLowerCase());
@@ -302,27 +313,20 @@ function createStore() {
      * @throws {Error} Si faltan campos requeridos o el cliente no existe
      */
     function addIngreso(ingresoData) {
-        // Validar campos requeridos
-        const requiredFields = ['clienteId', 'fecha', 'importe'];
-        for (const field of requiredFields) {
-            if (!ingresoData[field]) {
-                throw new Error(`El campo ${field} es requerido`);
-            }
-        }
+
         
         // Verificar que exista el cliente
-        const clienteExists = state.clientes.some(c => c.id === ingresoData.clienteId);
-        if (!clienteExists) {
-            throw new Error(`El cliente con ID ${ingresoData.clienteId} no existe`);
-        }
+        //const clienteExists = state.clientes.some(c => c.id === ingresoData.clienteId);
+        //if (!clienteExists) {
+        //    throw new Error(`El cliente con ID ${ingresoData.clienteId} no existe`);
+        //}
         
         // Crear nuevo ingreso con ID generado y fechas
         const nuevoIngreso = {
             ...ingresoData,
             id: _generateId('ingreso'),
             fechaRegistro: new Date().toISOString(),
-            // Si no se especifica estado, asignar PENDIENTE por defecto
-            estado: ingresoData.estado || 'PENDIENTE'
+            estado: 'PENDIENTE'
         };
         
         // Agregar a la lista de ingresos
@@ -434,19 +438,12 @@ function createStore() {
      * @throws {Error} Si faltan campos requeridos, el cliente no existe o el saldo es insuficiente
      */
     function addEgreso(egresoData) {
-        // Validar campos requeridos
-        const requiredFields = ['clienteId', 'fecha', 'importe', 'medio'];
-        for (const field of requiredFields) {
-            if (!egresoData[field]) {
-                throw new Error(`El campo ${field} es requerido`);
-            }
-        }
-        
+
         // Verificar que exista el cliente
-        const clienteExists = state.clientes.some(c => c.id === egresoData.clienteId);
-        if (!clienteExists) {
-            throw new Error(`El cliente con ID ${egresoData.clienteId} no existe`);
-        }
+        //const clienteExists = state.clientes.some(c => c.id === egresoData.clienteId);
+        //if (!clienteExists) {
+        //    throw new Error(`El cliente con ID ${egresoData.clienteId} no existe`);
+        //}
         
         // Verificar que el cliente tenga saldo suficiente
         const saldoCliente = calcularBalanceCliente(egresoData.clienteId);
@@ -461,7 +458,7 @@ function createStore() {
             id: _generateId('egreso'),
             fechaRegistro: new Date().toISOString(),
             // Si no se especifica estado, asignar PENDIENTE por defecto
-            estado: egresoData.estado || 'PENDIENTE'
+            estado: 'PENDIENTE'
         };
         
         // Agregar a la lista de egresos
@@ -720,7 +717,7 @@ function createStore() {
     }
     
 
-
+    init();
     
     return {
     // API para Clientes
