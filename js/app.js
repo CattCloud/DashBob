@@ -39,22 +39,25 @@ document.getElementById("form-cliente").addEventListener("submit", (e) => {
   if (idEditando) { 
     try {
       const editCliente=window.templatesStore.updateCliente(idEditando,clienteData);
-      console.log("Cliente editado exitosamente:", editCliente);
+      notyf.success("Cliente editado exitosamente");
+      //console.log("Cliente editado exitosamente:", editCliente);
     } catch (error) {
-        console.error("Error al editar cliente:", error.message);
+        notyf.error(error.message);
+        //console.error("Error al editar cliente:", error.message);
     }
     delete e.target.dataset.editando;
   } else {
       try {
         const nuevoCliente=window.templatesStore.addCliente(clienteData);
-        console.log("Cliente agregado exitosamente:", nuevoCliente);
-        console.log(window.templatesStore.getClientes());
+        notyf.success("Cliente agregado exitosamente");
+        //console.log("Cliente agregado exitosamente:", nuevoCliente);
+        //console.log(window.templatesStore.getClientes());
         //return nuevoCliente;
       } catch (error) {
-          console.error("Error al agregar cliente:", error.message);
+          notyf.error(error.message);
+          //console.error("Error al agregar cliente:", error.message);
       }
   }
-
       e.target.reset();
       mostrarClientes();
       cargarClientesSelect();
@@ -133,10 +136,12 @@ function eliminarCliente(id) {
     onConfirm: () => {
       try {
         if(window.templatesStore.deleteCliente(id)){
-          console.log("Cliente eliminado exitosamente:");
+          notyf.success("Cliente eliminado exitosamente");
+          //console.log("Cliente eliminado exitosamente:");
         }
       } catch (error) {
-          console.error("Error al eliminar cliente:", error.message);
+        notyf.error(error.message);
+        //console.error("Error al eliminar cliente:", error.message);
       }
       mostrarClientes();
       cargarClientesSelect();
@@ -177,10 +182,14 @@ document.getElementById("form-ingreso").addEventListener("submit", (e) => {
     concepto: document.getElementById("ingreso-concepto").value
   };
   const ingreso= window.templatesStore.addIngreso(nuevoIngreso);
-  console.log("Ingreso registrado: ",ingreso);
+  notyf.success("Ingreso registrado exitosamente");
+  //console.log("Ingreso registrado: ",ingreso);
   e.target.reset();
   e.target.classList.add("hidden");
   actualizarDashboard();
+  mostrarClientes();
+  mostrarIngresos();
+  mostrarEgresos();
   /*
   const nuevo = {
     clienteId: document.getElementById("ingreso-cliente").value,
@@ -299,10 +308,11 @@ document.getElementById("form-egreso").addEventListener("submit", (e) => {
 
   try {
     const newEgreso=window.templatesStore.addEgreso(nuevoEgreso);
-    console.log("Egreso agregado exitosamente:", newEgreso);
-  
+    notyf.success("Egreso registrado exitosamente");
+    //console.log("Egreso agregado exitosamente:", newEgreso);
   } catch (error) {
-      console.error("Error al agregar egreso:", error.message);
+    notyf.error(error.message);
+    //console.error("Error al agregar egreso:", error.message);
   }
   /*
   const nuevo = {
@@ -323,6 +333,9 @@ document.getElementById("form-egreso").addEventListener("submit", (e) => {
   localStorage.setItem("egresos", JSON.stringify(egresos));*/
   e.target.reset();
   e.target.classList.add("hidden");
+  mostrarClientes();
+  mostrarIngresos();
+  mostrarEgresos();
   actualizarDashboard();
 });
 
@@ -422,7 +435,8 @@ document.getElementById("egreso-cliente").addEventListener("change", function() 
     mostrarSaldoCliente(this.value);
       // Aquí puedes agregar la lógica adicional que necesites
   } else {
-      console.log("Por favor, seleccione un cliente válido.");
+    const container_saldo=document.getElementById("saldo-disponible");
+    container_saldo.textContent=`Saldo disponible: S/ 0.00`;
   }
 });
 
