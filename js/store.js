@@ -154,6 +154,19 @@ function createStore() {
      */
     function addCliente(clienteData) {
  
+        if (!clienteData.telefono) {
+            throw new Error(`El cliente no tiene numero telefonico`);
+        }
+        if (!clienteData.email) {
+            throw new Error(`El cliente no tiene email`);
+        }
+        if (!clienteData.numeroDocumento) {
+            throw new Error(`El cliente no tiene numero de documento`);
+        }    
+        if (!clienteData.nombre) {
+            throw new Error(`El cliente no tiene nombres`);
+        }
+
         // Verificar si ya existe un cliente con el mismo email o documento
         const emailExists = state.clientes.some(c => 
             c.email.toLowerCase() === clienteData.email.toLowerCase());
@@ -170,6 +183,10 @@ function createStore() {
             throw new Error(`Ya existe un cliente con el documento ${clienteData.tipoDocumento}: ${clienteData.numeroDocumento}`);
         }
         
+        if(!validarTipoDocumento(clienteData.tipoDocumento)){
+            throw new Error("El tipoDocumento no cumple con ningún tipo de documento disponible");
+        }
+
         // Crear nuevo cliente con ID generado y fecha de registro
         const nuevoCliente = {
             ...clienteData,
@@ -260,6 +277,7 @@ function createStore() {
             throw new Error(`Cliente con ID ${id} no encontrado`);
         }
         
+
         // Verificar que no tenga transacciones asociadas
         const tieneIngresos = state.ingresos.some(i => i.clienteId === id);
         const tieneEgresos = state.egresos.some(e => e.clienteId === id);
@@ -318,21 +336,47 @@ function createStore() {
      */
     function addIngreso(ingresoData) {
 
-        
         // Verificar que exista el cliente
-        //const clienteExists = state.clientes.some(c => c.id === ingresoData.clienteId);
-        //if (!clienteExists) {
-        //    throw new Error(`El cliente con ID ${ingresoData.clienteId} no existe`);
-        //}
+        const clienteExists = state.clientes.some(c => c.id === ingresoData.clienteId);
+        if (!clienteExists) {
+            throw new Error(`El cliente con ID ${ingresoData.clienteId} no existe`);
+        }
         
+        if (!ingresoData.clienteId || !ingresoData.moneda || !ingresoData.medioPago || !ingresoData.banco || isNaN(ingresoData.importe)) {
+            throw new Error("Ingreso con datos incompletos");
+        }
+
+        if (!validarMedioPago(ingresoData.medioPago)) {
+            throw new Error("El medioPago no cumple con ningún medio de pago disponible");
+        }
+        
+        if (!validarBanco(ingresoData.banco)) {
+            throw new Error("El banco no cumple con ningún banco disponible");
+        }
+        
+        if (!validarMoneda(ingresoData.moneda)) {
+            throw new Error("La moneda no cumple con ningún tipo de moneda disponible");
+        }
+        
+        if (!validarConceptoIngreso(ingresoData.concepto)) {
+            throw new Error("El concepto no cumple con ningún concepto disponible");
+        }
+        
+     
+        if (ingresoData.estado && !validarEstadoIngreso(ingresoData.estado)) {
+            throw new Error("El estado no cumple con ningún estado disponible");
+        }
+        
+
         // Crear nuevo ingreso con ID generado y fechas
         const nuevoIngreso = {
             ...ingresoData,
             id: _generateId('ingreso'),
             fechaRegistro: new Date().toISOString(),
-            estado: 'PENDIENTE'
+            estado: ingresoData.estado || 'PENDIENTE'
         };
         
+
         // Agregar a la lista de ingresos
         state.ingresos.push(nuevoIngreso);
         
@@ -354,9 +398,7 @@ function createStore() {
         // Buscar posición del ingreso
         const index = state.ingresos.findIndex(i => i.id === id);
         
-        if (index === -1) {
-            throw new Error(`Ingreso con ID ${id} no encontrado`);
-        }
+c
         
         const ingresoActual = state.ingresos[index];
         
@@ -368,6 +410,8 @@ function createStore() {
             }
         }
         
+        
+
         // Actualizar ingreso manteniendo campos no modificados
         const ingresoActualizado = {
             ...ingresoActual,
@@ -444,10 +488,36 @@ function createStore() {
     function addEgreso(egresoData) {
 
         // Verificar que exista el cliente
-        //const clienteExists = state.clientes.some(c => c.id === egresoData.clienteId);
-        //if (!clienteExists) {
-        //    throw new Error(`El cliente con ID ${egresoData.clienteId} no existe`);
-        //}
+        const clienteExists = state.clientes.some(c => c.id === egresoData.clienteId);
+            if (!clienteExists) {
+            throw new Error(`El cliente con ID ${egresoData.clienteId} no existe`);
+        }
+
+        if (!egresoData.clienteId || !egresoData.moneda || !egresoData.medio || !egresoData.banco || isNaN(egresoData.importe)) {
+            throw new Error("Ingreso con datos incompletos");
+        }
+
+        if (!validarMedioPago(egresoData.medio)) {
+            throw new Error("El medioPago no cumple con ningún medio de pago disponible");
+        }
+        
+        if (!validarBanco(egresoData.banco)) {
+            throw new Error("El banco no cumple con ningún banco disponible");
+        }
+        
+        if (!validarMoneda(egresoData.moneda)) {
+            throw new Error("La moneda no cumple con ningún tipo de moneda disponible");
+        }
+        
+        if (!validarConceptoEgreso(egresoData.concepto)) {
+            throw new Error("El concepto no cumple con ningún concepto disponible");
+        }
+        
+     
+        if (egresoData.estado && !validarEstadoEgreso(egresoData.estado)) {
+            throw new Error("El estado no cumple con ningún estado disponible");
+        }
+        
         
         // Verificar que el cliente tenga saldo suficiente
         const saldoCliente = calcularBalanceCliente(egresoData.clienteId);
@@ -462,7 +532,7 @@ function createStore() {
             id: _generateId('egreso'),
             fechaRegistro: new Date().toISOString(),
             // Si no se especifica estado, asignar PENDIENTE por defecto
-            estado: 'PENDIENTE'
+            estado: egresoData.estado ||'PENDIENTE'
         };
         
         // Agregar a la lista de egresos

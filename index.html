@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Financiero</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="js/validation.js"></script>
   <script defer src="js/notificacion.js"></script>
-  <script defer src="js/models/cliente.js"></script>
   <script defer src="js/store.js"></script>
   <script defer src="js/modal.js"></script>
   <script defer src="js/app.js"></script>
@@ -56,15 +56,26 @@
       <!-- Clientes -->
       <section id="clientes" class="hidden space-y-4">
         <h2 class="text-xl md:text-2xl font-bold">Gestión de Clientes</h2>
+
+        <div class="flex items-center space-x-4">
+          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
+            Seleccionar archivo
+            <input type="file" id="input-csv-clientes" accept=".csv" class="hidden">
+          </label>
+          <span id="archivo-nombre" class="text-gray-600 italic">Ningún archivo seleccionado</span>
+          <button id="importar-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
+            Importar CSV
+          </button>
+        </div>
+
         <form id="form-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input id="cliente-id" type="hidden" />
           <input id="cliente-email" type="email" placeholder="Correo Electrónico" class="p-2 border rounded w-full" required />
           <input id="cliente-nombre" type="text" placeholder="Nombre o Razón Social" class="p-2 border rounded w-full" required />
           <input id="cliente-telefono" type="text" placeholder="Celular" class="p-2 border rounded w-full" required />
           <select id="cliente-tipo-documento" class="p-2 border rounded w-full">
-            <option>DNI</option>
-            <option>RUC</option>
-            <option>CE</option>
+            <option value="DNI">DNI</option>
+            <option value="RUC">RUC</option>
           </select>
           <input id="cliente-numero-documento" type="text" placeholder="Número de Documento" class="p-2 border rounded w-full" required />
           <!--input id="cliente-facturacion-ruc" type="text" placeholder="RUC (Facturación)" class="p-2 border rounded w-full" /-->
@@ -84,6 +95,16 @@
       <section id="ingresos" class="hidden space-y-4">
         <h2 class="text-xl md:text-2xl font-bold">Gestión de Ingresos</h2>
         <button id="nuevo-ingreso-btn" class="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Ingreso</button>
+        <div class="flex items-center space-x-4">
+          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
+            Seleccionar archivo
+            <input type="file" id="input-csv-ingresos" accept=".csv" class="hidden">
+          </label>
+          <span id="archivo-nombre-ingreso" class="text-gray-600 italic">Ningún archivo seleccionado</span>
+          <button id="importar-ingreso-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
+            Importar CSV
+          </button>
+        </div>
         <form id="form-ingreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
           <select id="ingreso-cliente" class="p-2 border rounded w-full" required>
             <option value="">Seleccione un cliente</option>
@@ -111,7 +132,6 @@
             <select id="ingreso-moneda" class="p-2 border rounded w-full" name="moneda" required>
               <option value="PEN">PEN</option>
               <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
           </select>
           <select id="ingreso-concepto" name="concepto" class="p-2 border rounded w-full" required>
               <option value="Monto de garantía por participación en subasta">Garantía por participación en subasta</option>
@@ -140,6 +160,16 @@
       <section id="egresos" class="hidden space-y-4">
         <h2 class="text-xl md:text-2xl font-bold">Gestión de Egresos</h2>
         <button id="nuevo-egreso-btn" class="bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Egreso</button>
+        <div class="flex items-center space-x-4">
+          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
+            Seleccionar archivo
+            <input type="file" id="input-csv-egresos" accept=".csv" class="hidden">
+          </label>
+          <span id="archivo-nombre-egreso" class="text-gray-600 italic">Ningún archivo seleccionado</span>
+          <button id="importar-egreso-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
+            Importar CSV
+          </button>
+        </div>
         <form id="form-egreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
           <select id="egreso-cliente" class="p-2 border rounded w-full" required>
             <option value="">Seleccione un cliente</option>
@@ -169,7 +199,6 @@
           <select id="egreso-moneda" class="p-2 border rounded w-full" name="moneda" required>
             <option value="PEN">PEN</option>
             <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
         </select>
           <!--input type="text" id="numero-cuenta" placeholder="Número de Cuenta/CCI" class="p-2 border rounded w-full" required /-->
           <select id="egreso-concepto" name="concepto-egreso" class="p-2 border rounded w-full" required>
