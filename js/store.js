@@ -32,15 +32,18 @@ function createStore() {
             if (savedData) {
                 // Si existen datos guardados, cargarlos en el estado
                 state = JSON.parse(savedData);
-                console.log('Store: Datos cargados correctamente');
+                notyf.success("Datos cargados correctamente");
+                //console.log('Store: Datos cargados correctamente');
             } else {
                 // Si no hay datos, inicializar con estado vacío y guardar
                 state = { ...initialState };
                 _saveToLocalStorage();
+                //notyf.info("Datos cargados correctamente");
                 console.log('Store: Inicializado con estado vacío');
             }
         } catch (error) {
-            console.error('Error al inicializar el Store:', error);
+            notyf.error('Error al cargar datos:', error);
+            //console.error('Error al inicializar el Store:', error);
             // En caso de error, inicializar con estado vacío
             state = { ...initialState };
             _saveToLocalStorage();
@@ -59,7 +62,8 @@ function createStore() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             return true;
         } catch (error) {
-            console.error('Error al guardar en localStorage:', error);
+            notyf.error('Error al guardar en localStorage:', error);
+            //console.error('Error al guardar en localStorage:', error);
             // Posible error por límite de espacio
             return false;
         }
