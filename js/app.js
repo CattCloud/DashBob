@@ -608,7 +608,8 @@ inputFileEgreso.addEventListener('change', function(event) {
 
 
 document.getElementById('importar-egreso-btn').addEventListener('click', function() {
-  if (inputFileIngreso.files.length > 0) {
+  console.log("sdasd");
+  if (inputFileEgreso.files.length > 0) { // Cambia inputFileIngreso por inputFileEgreso
     importarEgresosDesdeCSV({ target: { files: inputFileEgreso.files } });
   } else {
     notyf.error("Por favor, selecciona el archivo que desea importar.");
