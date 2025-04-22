@@ -303,32 +303,18 @@ document.getElementById("form-egreso").addEventListener("submit", (e) => {
     importe: document.getElementById("egreso-monto").value,
     concepto: document.getElementById("egreso-concepto").value
   };
+ 
 
   try {
     const newEgreso=window.templatesStore.addEgreso(nuevoEgreso);
+    console.log(newEgreso);
     notyf.success("Egreso registrado exitosamente");
     //console.log("Egreso agregado exitosamente:", newEgreso);
   } catch (error) {
     notyf.error(error.message);
     //console.error("Error al agregar egreso:", error.message);
   }
-  /*
-  const nuevo = {
-    id: generarId("E"),
-    clienteId: document.getElementById("egreso-cliente").value,
-    fecha: obtenerFechaHoraActual(),
-    medio: "Transferencia",
-    banco: "",
-    numeroCuentaDestino: document.getElementById("cuenta-destino").value,
-    moneda: "PEN",
-    importe: parseFloat(document.getElementById("egreso-monto").value),
-    concepto: document.getElementById("concepto").value,
-    estado: "COMPLETADO",
-    registradoPor: "Admin",
-    fechaRegistro: obtenerFechaHoraActual()
-  };
-  egresos.push(nuevo);
-  localStorage.setItem("egresos", JSON.stringify(egresos));*/
+
   e.target.reset();
   e.target.classList.add("hidden");
   mostrarClientes();

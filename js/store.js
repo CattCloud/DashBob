@@ -362,10 +362,16 @@ function createStore() {
             throw new Error("El concepto no cumple con ningún concepto disponible");
         }
         
-     
-        if (ingresoData.estado && !validarEstadoIngreso(ingresoData.estado)) {
-            throw new Error("El estado no cumple con ningún estado disponible");
+
+        if(ingresoData.estado){
+            if(!validarEstadoIngreso(ingresoData.estado)){
+                throw new Error("El estado no cumple con ningún estado disponible");
+            }
+            ingresoData.estado=ingresoData.estado.toLowerCase();
         }
+        //console.log("Es undefined-->",ingresoData.estado);
+        
+
         
 
         // Crear nuevo ingreso con ID generado y fechas
@@ -373,7 +379,7 @@ function createStore() {
             ...ingresoData,
             id: _generateId('ingreso'),
             fechaRegistro: new Date().toISOString(),
-            estado: ingresoData.estado || 'PENDIENTE'
+            estado: ingresoData.estado || 'pendiente'
         };
         
 
@@ -514,10 +520,13 @@ c
         }
         
      
-        if (egresoData.estado && !validarEstadoEgreso(egresoData.estado)) {
-            throw new Error("El estado no cumple con ningún estado disponible");
-        }
         
+        if(egresoData.estado){
+            if(!validarEstadoEgreso(egresoData.estado)){
+                throw new Error("El estado no cumple con ningún estado disponible");
+            }
+            egresoData.estado=egresoData.estado.toLowerCase();
+        }
         
         // Verificar que el cliente tenga saldo suficiente
         const saldoCliente = calcularBalanceCliente(egresoData.clienteId);
@@ -532,7 +541,7 @@ c
             id: _generateId('egreso'),
             fechaRegistro: new Date().toISOString(),
             // Si no se especifica estado, asignar PENDIENTE por defecto
-            estado: egresoData.estado ||'PENDIENTE'
+            estado: egresoData.estado ||'pendiente'
         };
         
         // Agregar a la lista de egresos
