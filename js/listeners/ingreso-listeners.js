@@ -36,7 +36,7 @@ document.getElementById("form-ingreso").addEventListener("submit", (e) => {
   const nuevoIngreso = {
     clienteId: document.getElementById("ingreso-select-cliente").value,
     moneda: document.getElementById("ingreso-moneda").value,
-    medioPago : document.getElementById("ingreso-medio").value,
+    medio : document.getElementById("ingreso-medio").value,
     banco: document.getElementById("ingreso-banco").value,
     importe: document.getElementById("ingreso-importe").value,
     concepto: document.getElementById("ingreso-concepto").value

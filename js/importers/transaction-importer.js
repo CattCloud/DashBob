@@ -25,7 +25,7 @@ async function importarIngresosDesdeCSV(event) {
           const nuevoIngreso = {
             clienteId: ingreso.clienteid,
             moneda: ingreso.moneda,
-            medioPago: ingreso.mediopago,
+            medio: ingreso.mediopago,
             banco: ingreso.banco,
             importe: parseFloat(ingreso.importe),
             concepto: ingreso.concepto,
