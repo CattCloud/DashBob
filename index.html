@@ -5,10 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Financiero</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script defer src="js/validation.js"></script>
-  <script defer src="js/notificacion.js"></script>
-  <script defer src="js/store.js"></script>
-  <script defer src="js/modal.js"></script>
+  <script defer src="js/utils/validation.js"></script>
+  <script defer src="js/utils/notificacion.js"></script>
+  <script defer src="js/ui/modal.js"></script>
+  <script type="module" defer src="./js/store/store.js"></script>
+  <script defer src="js/ui/dom-helpers.js"></script>
+  <script defer src="js/ui/dashboard-ui.js"></script>
+  <script defer src="js/ui/cliente-ui.js"></script>
+  <script defer src="js/ui/ingreso-ui.js"></script>
+  <script defer src="js/ui/egreso-ui.js"></script> 
+  <script defer src="js/services/cliente-service.js"></script>
+  <script defer src="js/services/ingreso-service.js"></script>
+  <script defer src="js/services/egreso-service.js"></script>
+  <script defer src="js/listeners/cliente-listeners.js"></script>
+  <script defer src="js/listeners/egresos-listeners.js"></script>
+  <script defer src="js/listeners/ingreso-listeners.js"></script>
+  <script defer src="js/importers/cliente-importer.js"></script>
+  <script defer src="js/importers/transaction-importer.js"></script>
+  <script defer src="js/utils/init.js"></script>
   <script defer src="js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -106,7 +120,7 @@
           </button>
         </div>
         <form id="form-ingreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
-          <select id="ingreso-cliente" class="p-2 border rounded w-full" required>
+          <select id="ingreso-select-cliente" class="p-2 border rounded w-full" required>
             <option value="">Seleccione un cliente</option>
           </select>
           <select id="ingreso-medio" class="p-2 border rounded w-full" name="medio" required>
@@ -171,7 +185,7 @@
           </button>
         </div>
         <form id="form-egreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
-          <select id="egreso-cliente" class="p-2 border rounded w-full" required>
+          <select id="egreso-select-cliente" class="p-2 border rounded w-full" required>
             <option value="">Seleccione un cliente</option>
           </select>
           <p id="saldo-disponible" class="md:col-span-2 text-gray-700 font-bold">Saldo disponible: S/ 0.00</p>
