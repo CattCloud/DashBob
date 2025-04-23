@@ -64,7 +64,7 @@ import { calcularBalanceCliente } from './balance-store.js';
         }
 
         if (!validarMedioPago(egresoData.medio)) {
-            throw new Error("El medioPago no cumple con ningún medio de pago disponible");
+            throw new Error("El medio no cumple con ningún medio de pago disponible");
         }
         
         if (!validarBanco(egresoData.banco)) {
@@ -92,15 +92,22 @@ import { calcularBalanceCliente } from './balance-store.js';
         if (parseFloat(egresoData.importe) > saldoCliente) {
             throw new Error(`Saldo insuficiente: El cliente tiene ${saldoCliente} pero se intentan retirar ${egresoData.importe}`);
         }
-        
+        const nuevoEgreso=new Transaccion(egresoData);
+        nuevoEgreso.id=_generateId('egreso');
+        nuevoEgreso.fechaRegistro= new Date().toISOString();
+        nuevoEgreso.estado=egresoData.estado ||'pendiente';
+
+
         // Crear nuevo egreso con ID generado y fechas
-        const nuevoEgreso = {
+        /*const nuevoEgreso2 = {
             ...egresoData,
             id: _generateId('egreso'),
             fechaRegistro: new Date().toISOString(),
             // Si no se especifica estado, asignar PENDIENTE por defecto
             estado: egresoData.estado ||'pendiente'
-        };
+        };*/
+
+
         
         // Agregar a la lista de egresos
         egresos.push(nuevoEgreso);
@@ -151,10 +158,10 @@ import { calcularBalanceCliente } from './balance-store.js';
         }
         
         // Actualizar egreso manteniendo campos no modificados
-        const egresoActualizado = {
+        const egresoActualizado = new Transaccion({
             ...egresoActual,
             ...egresoData
-        };
+        });
         
         // Guardar en la misma posición
         egresos[index] = egresoActualizado;

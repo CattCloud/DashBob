@@ -5,6 +5,7 @@
 // === Editar cliente (rellena el formulario) ===
 function editarCliente(id) {
     const clienteActual = window.templatesStore.getClienteById(id);
+    //console.log(clienteActual);
     document.getElementById("cliente-email").value = clienteActual.email;
     document.getElementById("cliente-nombre").value = clienteActual.nombre;
     document.getElementById("cliente-telefono").value = clienteActual.telefono;

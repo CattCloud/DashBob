@@ -84,16 +84,23 @@ import { getState, updateState, _generateId } from './store-manager.js';
             throw new Error("El tipoDocumento no cumple con ningún tipo de documento disponible");
         }
         // Crear nuevo cliente con ID generado y fecha de registro
-        const nuevoCliente = {
+        /*const nuevoCliente = {
             ...clienteData,
             id: _generateId('cliente'),
             fechaRegistro: new Date().toISOString()
-        };
+        };*/
+
+        const nuevoCliente = new Cliente(clienteData);
+        nuevoCliente.id=_generateId('cliente');
+        nuevoCliente.fechaRegistro=new Date().toISOString();
+        console.log("El  cliente insertado es :",nuevoCliente);
+
+
         clientes.push(nuevoCliente);
         // Agregar a la lista de clientes
         updateState('clientes', clientes);
 
-        
+
         // Retornar copia del cliente actualizado
         return { ...nuevoCliente };
     }
@@ -143,11 +150,19 @@ import { getState, updateState, _generateId } from './store-manager.js';
         }
         
         // Actualizar cliente manteniendo campos no modificados
-        const clienteActualizado = {
+
+        /*const clienteActualizado = {
             ...clienteActual,
             ...clienteData
-        };
-        
+        };*/
+        // Crear una nueva instancia del Cliente con los valores actualizados
+        const clienteActualizado = new Cliente({
+            ...clienteActual, // Mantiene los valores anteriores
+            ...clienteData   // Sobreescribe los valores modificados
+        });
+
+        console.log("El  cliente actualizado sera:",clienteActualizado);
+
 
         // Guardar en la misma posición
         clientes[index] = clienteActualizado;

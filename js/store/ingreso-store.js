@@ -1,3 +1,4 @@
+
 import { getState, updateState, _generateId } from './store-manager.js';
 
 
@@ -59,12 +60,12 @@ import { getState, updateState, _generateId } from './store-manager.js';
             throw new Error(`El cliente con ID ${ingresoData.clienteId} no existe`);
         }
         
-        if (!ingresoData.clienteId || !ingresoData.moneda || !ingresoData.medioPago || !ingresoData.banco || isNaN(ingresoData.importe)) {
+        if (!ingresoData.clienteId || !ingresoData.moneda || !ingresoData.medio || !ingresoData.banco || isNaN(ingresoData.importe)) {
             throw new Error("Ingreso con datos incompletos");
         }
 
-        if (!validarMedioPago(ingresoData.medioPago)) {
-            throw new Error("El medioPago no cumple con ningún medio de pago disponible");
+        if (!validarMedioPago(ingresoData.medio)) {
+            throw new Error("El medio no cumple con ningún medio de pago disponible");
         }
         
         if (!validarBanco(ingresoData.banco)) {
@@ -85,12 +86,18 @@ import { getState, updateState, _generateId } from './store-manager.js';
             ingresoData.estado=ingresoData.estado.toLowerCase();
         }
         // Crear nuevo ingreso con ID generado y fechas
+        const nuevoIngreso=new Transaccion(ingresoData);
+        nuevoIngreso.id= _generateId('ingreso');
+        nuevoIngreso.fechaRegistro=new Date().toISOString();
+        nuevoIngreso.estado= ingresoData.estado || 'pendiente';
+        console.log("registrado",nuevoIngreso);
+        /*
         const nuevoIngreso = {
             ...ingresoData,
             id: _generateId('ingreso'),
             fechaRegistro: new Date().toISOString(),
             estado: ingresoData.estado || 'pendiente'
-        };
+        };*/
         // Agregar a la lista de ingresos
         ingresos.push(nuevoIngreso);
         updateState('ingresos', ingresos);
@@ -123,12 +130,12 @@ import { getState, updateState, _generateId } from './store-manager.js';
             }
         }
         // Actualizar ingreso manteniendo campos no modificados
-        const ingresoActualizado = {
-            ...ingresoActual,
-            ...ingresoData
-        };
+        const ingresoActualizado = new Transaccion({...ingresoActual,...ingresoData});
+
+        console.log("guardado",ingresoActualizado);
         // Guardar en la misma posición
         ingresos[index] = ingresoActualizado;
+
         updateState('ingresos', ingresos);
         // Retornar copia del ingreso actualizado
         return { ...ingresoActualizado };

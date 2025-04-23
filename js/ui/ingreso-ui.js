@@ -27,7 +27,7 @@ function renderIngresos() {
             <tr>
               <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(i.clienteId).nombre}</td>
               <td class="px-3 py-2 hidden sm:table-cell">${i.banco}</td>
-              <td class="px-3 py-2 hidden sm:table-cell">${i.medioPago}</td>
+              <td class="px-3 py-2 hidden sm:table-cell">${i.medio}</td>
               <td class="px-3 py-2">S/. ${parseFloat(i.importe).toFixed(2)}</td>
               <td class="px-3 py-2 hidden md:table-cell">${i.concepto}</td>
               <td class="px-3 py-2">
