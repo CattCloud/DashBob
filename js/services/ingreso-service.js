@@ -1,4 +1,31 @@
 
+
+
+
+function aplicarregistroIngreso(){
+  const nuevoIngreso = {
+    clienteId: document.getElementById("ingreso-cliente").value,
+    moneda: document.getElementById("ingreso-moneda").value,
+    medio : document.getElementById("ingreso-medio").value,
+    banco: document.getElementById("ingreso-banco").value,
+    importe: document.getElementById("ingreso-importe").value,
+    concepto: document.getElementById("ingreso-concepto").value
+  };
+  //console.log("DataIngreso: ",nuevoIngreso);
+  const ingreso= window.templatesStore.addIngreso(nuevoIngreso);
+  notyf.success("Ingreso registrado exitosamente");
+  //console.log("Ingreso registrado: ",ingreso);
+  renderIngresos();
+  renderDashboard();
+}
+
+function registrarIngreso(){
+  abrirModalRegistrar("Registrar Ingreso","registrarIngreso",aplicarregistroIngreso);
+
+}
+
+
+
 // === Campos editables según estado ===
 function obtenerCamposEditablesPorEstado(estado) {
     const mapa = {

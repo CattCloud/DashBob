@@ -2,6 +2,6 @@ function inicializarApp() {
     renderClientes();
     renderIngresos();
     renderEgresos();
-    cargarClientesSelect();
+    //cargarClientesSelect();
     renderDashboard();
   }

@@ -44,17 +44,21 @@ function getOpcionesTiposDocumento() {
 
 
 // Formulario registrar cliente
-document.getElementById("cliente-tipo-documento").innerHTML = getOpcionesTiposDocumento();
+//document.getElementById("cliente-tipo-documento").innerHTML = getOpcionesTiposDocumento();
 
 //Formulario registrar ingreso
+/*
 document.getElementById("ingreso-medio").innerHTML = `<option value="">Seleccione medio de pago</option>`+getOpcionesMediosPago();
 document.getElementById("ingreso-banco").innerHTML = `<option value="">Seleccione banco</option>`+getOpcionesBanco();
 document.getElementById("ingreso-moneda").innerHTML = getOpcionesMonedas();
 document.getElementById("ingreso-concepto").innerHTML = getOpcionesConceptoIngreso();
+*/
 
 
 //Formulario registrar egreso
+/*
 document.getElementById("egreso-medio").innerHTML = `<option value="">Seleccione medio de pago</option>`+getOpcionesMediosPago();
 document.getElementById("egreso-banco").innerHTML = `<option value="">Seleccione banco</option>`+getOpcionesBanco();
 document.getElementById("egreso-moneda").innerHTML = getOpcionesMonedas();
 document.getElementById("egreso-concepto").innerHTML = getOpcionesConceptoEgreso();
+*/

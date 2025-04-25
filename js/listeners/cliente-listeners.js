@@ -17,42 +17,9 @@ document.getElementById('input-csv-clientes').addEventListener('change', functio
     }
   });
   
-
-// === Boton Registrar o editar cliente ===
-document.getElementById("form-cliente").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const idEditando = e.target.dataset.editando;
-    const clienteData = {
-      email: document.getElementById("cliente-email").value,
-      nombre: document.getElementById("cliente-nombre").value,
-      telefono: document.getElementById("cliente-telefono").value,
-      tipoDocumento: document.getElementById("cliente-tipo-documento").value,
-      numeroDocumento: document.getElementById("cliente-numero-documento").value,
-      observaciones: document.getElementById("cliente-observaciones").value,
-    };
-  
-  
-    if (idEditando) { 
-      try {
-        const editCliente=window.templatesStore.updateCliente(idEditando,clienteData);
-        notyf.success("Cliente editado exitosamente");
-      } catch (error) {
-          notyf.error(error.message);
-      }
-      delete e.target.dataset.editando;
-    } else {
-        try {
-          const nuevoCliente=window.templatesStore.addCliente(clienteData);
-          notyf.success("Cliente agregado exitosamente");
-        } catch (error) {
-            notyf.error(error.message);
-        }
-    }
-        e.target.reset();
-        renderClientes();
-        cargarClientesSelect();
-  
-        // Restaura el botón al estado original
-        document.querySelector("#form-cliente button[type='submit']").textContent = "Registrar Cliente";
+//Boton para registrar cliente
+  document.getElementById("nuevo-cliente-btn").addEventListener("click", () => {
+    console.log("Botón 'Nuevo Cliente' clickeado.");
+    registrarCliente();
   });
-  
+

@@ -1,4 +1,36 @@
 
+//Listener para registrar un egreso
+
+function aplicarregistroEgreso(){
+  const nuevoEgreso = {
+    clienteId: document.getElementById("egreso-cliente").value,
+    moneda: document.getElementById("egreso-moneda").value,
+    medio : document.getElementById("egreso-medio").value,
+    banco: document.getElementById("egreso-banco").value,
+    importe: document.getElementById("egreso-importe").value,
+    concepto: document.getElementById("egreso-concepto").value
+  };
+  console.log("DataIngreso: ",nuevoEgreso);
+  try {
+    const newEgreso=window.templatesStore.addEgreso(nuevoEgreso);
+    console.log(newEgreso);
+    notyf.success("Egreso registrado exitosamente");
+    renderEgresos();
+    renderDashboard();
+  } catch (error) {
+    notyf.error(error.message);
+  }
+
+}
+
+function registrarEgreso(){
+  abrirModalRegistrar("Registrar Egreso","registrarEgreso",aplicarregistroEgreso);
+
+}
+
+
+
+
 // === Campos editables según estado ===
 function obtenerCamposEgresoEditablesPorEstado(estado) {
     const mapa = {
