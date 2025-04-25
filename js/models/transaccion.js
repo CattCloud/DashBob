@@ -15,13 +15,13 @@
       }) {
         this.id = id; // se asignará desde el Store
         this.clienteId = clienteId;
-        this.medio = medio;
-        this.banco = banco;
+        this.medio = medio.toLowerCase();
+        this.banco = banco.toLowerCase();
         //this.numeroCuentaDestino = numeroCuentaDestino;
-        this.moneda = moneda;
+        this.moneda = moneda.toLowerCase();
         this.importe = parseFloat(importe);
-        this.concepto = concepto;
-        this.estado = estado;
+        this.concepto = concepto.toLowerCase();
+        this.estado = estado.toLowerCase();
         this.registradoPor = registradoPor;
         this.fechaRegistro = fechaRegistro;
       }

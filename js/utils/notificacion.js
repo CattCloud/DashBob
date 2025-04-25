@@ -2,7 +2,7 @@
 
 // Crear una instancia de Notyf
 const notyf = new Notyf({
-    duration: 2000, // Duración en milisegundos
+    duration: 3000, // Duración en milisegundos
     position: {
       x: 'center',
       y: 'top',

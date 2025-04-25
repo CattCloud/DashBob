@@ -14,7 +14,7 @@ class Cliente {
       this.email = email;
       this.nombre = nombre;
       this.telefono = telefono;
-      this.tipoDocumento = tipoDocumento; // 'DNI' o 'RUC'
+      this.tipoDocumento = tipoDocumento.toLowerCase(); // 'DNI' o 'RUC'
       this.numeroDocumento = numeroDocumento;
       this.observaciones = observaciones;
       this.fechaRegistro = fechaRegistro;

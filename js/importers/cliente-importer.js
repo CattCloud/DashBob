@@ -70,7 +70,7 @@ async function importarClientesDesdeCSV(event) {
         notyf.success("Todos los clientes se importaron correctamente.");
       }
       // Limpiar input para permitir reimportar si se desea
-      archivoNombre.textContent="Ningún archivo seleccionado";
+      document.getElementById("archivo-nombre").textContent="Ningún archivo seleccionado";
       event.target.value = '';
     };
     reader.readAsText(file);

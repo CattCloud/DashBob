@@ -148,13 +148,13 @@ import { calcularBalanceCliente } from './balance-store.js';
             const clienteId = egresoData.clienteId || egresoActual.clienteId;
             
             // Calcular saldo actual sumando el monto actual (para excluirlo del cálculo)
-            let saldoCliente = calcularBalanceCliente(clienteId);
-            saldoCliente += parseFloat(egresoActual.importe);
-            
+            //let saldoCliente = calcularBalanceCliente(clienteId);
+            //saldoCliente += parseFloat(egresoActual.importe);
+                
             // Verificar si el nuevo monto es válido
-            if (egresoData.importe && parseFloat(egresoData.importe) > saldoCliente) {
-                throw new Error(`Saldo insuficiente: El cliente tiene ${saldoCliente} pero se intentan retirar ${egresoData.importe}`);
-            }
+                //if (egresoData.importe && parseFloat(egresoData.importe) > saldoCliente) {
+                //    throw new Error(`Saldo insuficiente: El cliente tiene ${saldoCliente} pero se intentan retirar ${egresoData.importe}`);
+            // }
         }
         
         // Actualizar egreso manteniendo campos no modificados
@@ -189,6 +189,28 @@ import { calcularBalanceCliente } from './balance-store.js';
         return updateEgreso(id, { estado: nuevoEstado });
     }
     
+    /**
+         * Elimina un egreso
+         * @param {string} id - ID del egreso a eliminar
+         * @returns {boolean} true si se eliminó correctamente
+         * @throws {Error} Si el egreso no existe
+         */
+            function deleteEgreso(id) {
+                const egresos=getEgresos();
+                // Buscar posición del egreso
+                const index = egresos.findIndex(i => i.id === id);
+    
+                if (index === -1) {
+                    throw new Error(`Egreso con ID ${id} no encontrado`);
+                }
+                // Eliminar ingreso
+                egresos.splice(index, 1);
+    
+                updateState('egresos', egresos);
+    
+            return true;
+    }
+    
 
     export {
         getEgresos,
@@ -196,6 +218,7 @@ import { calcularBalanceCliente } from './balance-store.js';
         getEgresosByCliente,
         addEgreso,
         updateEgreso,
-        updateEgresoEstado
+        updateEgresoEstado,
+        deleteEgreso
       };
       
