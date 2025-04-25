@@ -12,6 +12,7 @@
   <script defer src="js/models/transaccion.js"></script>
   <script type="module" defer src="./js/store/store.js"></script>
   <script defer src="js/ui/form-ui.js"></script>
+  <script defer src="js/utils/formTemplate.js"></script>
   <script defer src="js/ui/modal.js"></script>
   <script defer src="js/ui/dom-helpers.js"></script>
   <script defer src="js/ui/dashboard-ui.js"></script>
@@ -74,6 +75,7 @@
       <!-- Clientes -->
       <section id="clientes" class="hidden space-y-4">
         <h2 class="text-xl md:text-2xl font-bold">Gestión de Clientes</h2>
+        <button id="nuevo-cliente-btn" class="bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Cliente</button>
 
         <div class="flex items-center space-x-4">
           <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
@@ -85,25 +87,6 @@
             Importar CSV
           </button>
         </div>
-
-        <form id="form-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input id="cliente-id" type="hidden" />
-          <input id="cliente-email" type="email" placeholder="Correo Electrónico" class="p-2 border rounded w-full" required />
-          <input id="cliente-nombre" type="text" placeholder="Nombre o Razón Social" class="p-2 border rounded w-full" required />
-          <input id="cliente-telefono" type="text" placeholder="Celular" class="p-2 border rounded w-full" required />
-          <select id="cliente-tipo-documento" class="p-2 border rounded w-full">
-            <!--option value="DNI">DNI</!--option>
-            <option-- value="RUC">RUC</option-->
-          </select>
-          <input id="cliente-numero-documento" type="text" placeholder="Número de Documento" class="p-2 border rounded w-full" required />
-          <!--input id="cliente-facturacion-ruc" type="text" placeholder="RUC (Facturación)" class="p-2 border rounded w-full" /-->
-          <!--input id="cliente-facturacion-nombre" type="text" placeholder="Nombre/Razón Social (Facturación)" class="p-2 border rounded w-full" /-->
-          <textarea id="cliente-observaciones" placeholder="Observaciones" class="p-2 border rounded md:col-span-2 w-full"></textarea>
-          <div class="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Registrar Cliente</button>
-            <button type="reset" id="cancelar-cliente" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
-          </div>
-        </form>
         <div id="tabla-clientes" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
         </div>        
@@ -123,29 +106,7 @@
             Importar CSV
           </button>
         </div>
-        <form id="form-ingreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
-          <select id="ingreso-select-cliente" class="p-2 border rounded w-full" required>
-            <option value="">Seleccione un cliente</option>
-          </select>
-          <select id="ingreso-medio" class="p-2 border rounded w-full" name="medio" required>
-              <!--Se autocompleta con form-ui.js-->
-          </select>
-          <select id="ingreso-banco" class="p-2 border rounded w-full" name="banco" required>
-              <!--Se autocompleta con form-ui.js-->
-          </select>
-            <select id="ingreso-moneda" class="p-2 border rounded w-full" name="moneda" required>
-              <!--Se autocompleta con form-ui.js-->
-            </select>
-          <select id="ingreso-concepto" name="concepto" class="p-2 border rounded w-full" required>
-              <!--Se autocompleta con form-ui.js-->
-          </select> 
-          <input type="number" id="ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
-        
-          <div class="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Guardar</button>
-            <button type="reset" id="cancelar-ingreso" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
-          </div>
-        </form>
+
         <div id="tabla-ingresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
         </div>
@@ -170,30 +131,7 @@
             Importar CSV
           </button>
         </div>
-        <form id="form-egreso" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
-          <select id="egreso-select-cliente" class="p-2 border rounded w-full" required>
-            <option value="">Seleccione un cliente</option>
-          </select>
-          <p id="saldo-disponible" class="md:col-span-2 text-gray-700 font-bold">Saldo disponible: S/ 0.00</p>
-          <input type="number" id="egreso-monto" placeholder="Monto a Devolver" class="p-2 border rounded w-full" required />
-          <select id="egreso-medio" class="p-2 border rounded w-full" name="medio" required>
-              <!--Se autocompleta con form-ui.js-->
-        </select>
-        <select id="egreso-banco" class="p-2 border rounded w-full" name="banco" required>
-              <!--Se autocompleta con form-ui.js-->
-        </select>
-          <select id="egreso-moneda" class="p-2 border rounded w-full" name="moneda" required>
-              <!--Se autocompleta con form-ui.js-->
-        </select>
-          <!--input type="text" id="numero-cuenta" placeholder="Número de Cuenta/CCI" class="p-2 border rounded w-full" required /-->
-          <select id="egreso-concepto" name="concepto-egreso" class="p-2 border rounded w-full" required>
-              <!--Se autocompleta con form-ui.js-->
-          </select>
-          <div class="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Guardar</button>
-            <button type="reset" id="cancelar-egreso" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
-          </div>
-        </form>
+
         <div id="tabla-egresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
         </div>
@@ -233,8 +171,8 @@
 
 
           <!-- Modal Reutilizable -->
-              <div id="modal-reutilizable" class="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50 hidden">
-                  <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+      <div id="modal-reutilizable" class="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50 hidden">
+              <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
                         
                         <!-- Título -->
                   <h2 id="modal-reutilizable-tittle" class="text-2xl font-bold text-center mb-4">Título del Modal</h2>
@@ -248,7 +186,7 @@
                           </form>
                   </div>                     
               </div>
-          </div>
+        </div>
           
           
     </main>

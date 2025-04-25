@@ -88,7 +88,7 @@ import { getState, updateState, _generateId } from './store-manager.js';
         const nuevoCliente = new Cliente(clienteData);
         nuevoCliente.id=_generateId('cliente');
         nuevoCliente.fechaRegistro=new Date().toISOString();
-        console.log("El  cliente insertado es :",nuevoCliente);
+        //console.log("El  cliente insertado es :",nuevoCliente);
 
 
         clientes.push(nuevoCliente);

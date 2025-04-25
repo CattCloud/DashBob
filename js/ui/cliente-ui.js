@@ -41,8 +41,6 @@ function renderClientes() {
 function cargarClientesSelect() {
     const clientes=window.templatesStore.getClientes();
     const selects = [
-      document.getElementById("ingreso-select-cliente"),
-      document.getElementById("egreso-select-cliente"),
       document.getElementById("reporte-cliente")
     ];
     selects.forEach(select => {
