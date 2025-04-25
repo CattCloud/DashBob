@@ -162,12 +162,36 @@ import { getState, updateState, _generateId } from './store-manager.js';
         return updateIngreso(id, { estado: nuevoEstado });
     }
 
+
+    /**
+     * Elimina un ingreso(previamente con ciertas validaciones)
+     * @param {string} id - ID del ingreso a eliminar
+     * @returns {boolean} true si se eliminó correctamente
+     * @throws {Error} Si el ingreso no existe
+     */
+        function deleteIngreso(id) {
+            const ingresos=getIngresos();
+            // Buscar posición del ingreso
+            const index = ingresos.findIndex(i => i.id === id);
+
+            if (index === -1) {
+                throw new Error(`Ingreso con ID ${id} no encontrado`);
+            }
+            // Eliminar ingreso
+            ingresos.splice(index, 1);
+
+            updateState('ingresos', ingresos);
+
+        return true;
+        }
+
     export {
         getIngresos,
         getIngresoById,
         getIngresosByCliente,
         addIngreso,
         updateIngreso,
-        updateIngresoEstado
+        updateIngresoEstado,
+        deleteIngreso
       };
       

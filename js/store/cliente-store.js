@@ -83,12 +83,7 @@ import { getState, updateState, _generateId } from './store-manager.js';
         if(!validarTipoDocumento(clienteData.tipoDocumento)){
             throw new Error("El tipoDocumento no cumple con ningún tipo de documento disponible");
         }
-        // Crear nuevo cliente con ID generado y fecha de registro
-        /*const nuevoCliente = {
-            ...clienteData,
-            id: _generateId('cliente'),
-            fechaRegistro: new Date().toISOString()
-        };*/
+
 
         const nuevoCliente = new Cliente(clienteData);
         nuevoCliente.id=_generateId('cliente');
