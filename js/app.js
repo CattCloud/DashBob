@@ -3,11 +3,14 @@
 
 // === Secciones SPA ===
 const secciones = document.querySelectorAll("main > section");
-document.querySelectorAll("aside button").forEach((btn) => {
+document.querySelectorAll("aside .section-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const seccion = btn.dataset.section;
+    //Oculta las secciones
     secciones.forEach((s) => s.classList.add("hidden"));
+    //Muestra solo la seccion seleccionada
     document.getElementById(seccion).classList.remove("hidden");
+
     if (["ingresos", "egresos", "reportes"].includes(seccion)) {
       cargarClientesSelect();
     }
