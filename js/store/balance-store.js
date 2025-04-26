@@ -101,7 +101,7 @@ import { getClienteById } from './cliente-store.js';
             totalTransacciones: getState().ingresos.length + getState().egresos.length,
             ultimasTransacciones: getUltimasTransacciones(5),
             // Otros datos estadísticos que se puedan requerir
-            fechaActualizacion: new Date().toISOString()
+            fechaActualizacion: new Date()
         };
     }
     

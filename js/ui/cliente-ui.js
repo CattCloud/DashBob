@@ -1,8 +1,25 @@
 //Funcion para mostrar clientes en la tabla de clientes general
 function renderClientes() {
     const contenedor = document.getElementById("tabla-clientes");
-    const clientes = window.templatesStore.getClientes();
+
+    //const clientes = window.templatesStore.getClientes();
   
+    let clientes=[];
+    if(window.clienteFilter.hasFilters()){
+      clientes= window.clienteFilter.searchArray;
+    }else{
+      if(window.clienteFilter.onlyOrdenamiento()){
+        clientes= window.clienteFilter.searchArray;
+      }else{
+        //Por defecto el ordenamiento es por fecha
+        clientes=window.templatesStore.getClientes().sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro)); 
+      }
+    }
+    
+
+
+
+
     if (!clientes.length) {
       contenedor.innerHTML = "<p class='text-gray-600'>No hay clientes registrados.</p>";
       return;

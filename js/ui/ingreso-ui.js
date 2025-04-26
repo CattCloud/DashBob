@@ -10,6 +10,7 @@ function renderIngresos() {
  
   if (!ingresosFiltrados.length) {
     contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos registrados.</p>";
+    renderIngresosDevueltos();
     return;
   }
 
@@ -43,6 +44,8 @@ function renderIngresos() {
     </tr>`).join("")}</tbody>
   </table>
   `
+  console.log("asqsdd");
+
   renderIngresosDevueltos();
 }
 
@@ -54,7 +57,7 @@ function renderIngresosDevueltos() {
   //Extraer ingresos  DEVUELTOS
   const ingresosFiltrados = ingresos.filter(ingreso => ingreso.estado == "devuelto");
 
- 
+ console.log(ingresosFiltrados.length);
   if (!ingresosFiltrados.length) {
     contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos devueltos registrados.</p>";
     return;

@@ -113,6 +113,8 @@ function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transac
 }
 
 
+
+
 function abrirModalRegistrar(titulo, casoModal, onAceptar) {
   const modal = document.getElementById("modal-reutilizable");
   document.getElementById("modal-reutilizable-tittle").textContent = titulo;
@@ -150,9 +152,6 @@ function abrirModalEditarCliente(titulo, casoModal, onAceptar,cliente) {
 }
 
 
-
-
-// Ejemplo de uso:
 function abrirModalEditarIngreso(titulo, casoModal, onAceptar, ingreso, campos) {
   abrirModalEditarTransaccion("ingreso", titulo, casoModal, onAceptar, ingreso, campos);
 }
@@ -160,6 +159,54 @@ function abrirModalEditarIngreso(titulo, casoModal, onAceptar, ingreso, campos) 
 function abrirModalEditarEgreso(titulo, casoModal, onAceptar, egreso, campos) {
   abrirModalEditarTransaccion("egreso", titulo, casoModal, onAceptar, egreso, campos);
 }
+
+
+function cargarDatosFiltroCliente(){
+    document.getElementById("filtro-fecha-desde").value=window.clienteFilter.filters.fechaDesde;
+    document.getElementById("filtro-fecha-hasta").value=window.clienteFilter.filters.fechaHasta;
+    document.getElementById("filtro-tipo-documento").value=window.clienteFilter.filters.tipoDocumento;
+    document.getElementById("filtro-observaciones").value=window.clienteFilter.filters.observaciones;
+    document.getElementById("filtro-estado-cliente").value=window.clienteFilter.filters.estadoCliente;
+}
+
+
+function abrirModalFiltros(titulo, casoModal, onAceptar) {
+  const modal = document.getElementById("modal-reutilizable");
+  document.getElementById("modal-reutilizable-tittle").textContent = titulo;
+  // Reemplazar el form-modal con uno nuevo limpio
+  const oldForm = document.getElementById("form-modal");
+  const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
+  newForm.innerHTML = getHTMLFormModal(casoModal) + botonesRegistrarFormReutilizable;
+  oldForm.replaceWith(newForm);
+  newForm.id = "form-modal";
+  modal.classList.remove("hidden");
+  if(window.clienteFilter.hasFilters()){
+    cargarDatosFiltroCliente();
+  }
+  newForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    onAceptar(); // Ejecuta la lógica del botón Aceptar
+    modal.classList.add("hidden");
+  });
+}
+
+
+
+function abrirModalFiltrosCliente() {
+  abrirModalFiltros("Filtros de Cliente", "filtrosCliente", () => {
+    window.clienteFilter.setFechaDesde(document.getElementById("filtro-fecha-desde").value);
+    window.clienteFilter.setFechaHasta(document.getElementById("filtro-fecha-hasta").value);
+    window.clienteFilter.setTipoDocumento(document.getElementById("filtro-tipo-documento").value);
+    window.clienteFilter.setObservaciones(document.getElementById("filtro-observaciones").value);
+    window.clienteFilter.setEstadoCliente(document.getElementById("filtro-estado-cliente").value);
+    console.log("Filtros aplicados",window.clienteFilter);
+    window.clienteFilter.applyFilters();
+    renderClientes(); // función que actualiza la tabla
+    document.getElementById("btn-remover-filtros-cliente").classList.remove("hidden");
+  });
+}
+
+
 
 function cerrarModalReutilizable() {
   document.getElementById("modal-reutilizable").classList.add("hidden");

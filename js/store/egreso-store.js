@@ -94,7 +94,7 @@ import { calcularBalanceCliente } from './balance-store.js';
         }
         const nuevoEgreso=new Transaccion(egresoData);
         nuevoEgreso.id=_generateId('egreso');
-        nuevoEgreso.fechaRegistro= new Date().toISOString();
+        nuevoEgreso.fechaRegistro=obtenerSoloFecha(new Date());
         nuevoEgreso.estado=egresoData.estado ||'pendiente';
 
 

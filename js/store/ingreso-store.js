@@ -88,7 +88,7 @@ import { getState, updateState, _generateId } from './store-manager.js';
         // Crear nuevo ingreso con ID generado y fechas
         const nuevoIngreso=new Transaccion(ingresoData);
         nuevoIngreso.id= _generateId('ingreso');
-        nuevoIngreso.fechaRegistro=new Date().toISOString();
+        nuevoIngreso.fechaRegistro=obtenerSoloFecha(new Date());
         nuevoIngreso.estado= ingresoData.estado || 'pendiente';
         console.log("registrado",nuevoIngreso);
         /*
