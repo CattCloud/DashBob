@@ -17,8 +17,13 @@ document.querySelectorAll("aside .section-btn").forEach((btn) => {
     if (seccion === "dashboard") {
       renderDashboard();
     }
+    if (seccion === "ingresos") {
+      renderIngresos();
+    }
   });
 });
+
+
 
 
 // === Inicialización ===

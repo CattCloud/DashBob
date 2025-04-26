@@ -43,7 +43,7 @@ async function importarClientesDesdeCSV(event) {
             email: cliente.email,
             nombre: cliente.nombre,
             telefono: cliente.telefono,
-            tipoDocumento: cliente.tipodocumento,
+            tipoDocumento: cliente.tipodocumento.toLowerCase(),
             numeroDocumento: cliente.numerodocumento,
             observaciones: cliente.observaciones || ''
           };
@@ -58,7 +58,9 @@ async function importarClientesDesdeCSV(event) {
         }
       });
       // Renderizar solo al final
+      window.clienteFilter.refreshFromStore();
       renderClientes();
+      
       // Reportar errores
       if (rechazados.length > 0) {
         notyf2.error(`${rechazados.length} cliente(s) no se pudieron importar`);

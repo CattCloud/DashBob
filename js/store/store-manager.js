@@ -27,7 +27,7 @@ const initialState = {
       try {
         // Intentar recuperar datos guardados
         const savedData = localStorage.getItem(STORAGE_KEY);
-        
+
         if (savedData) {
             // Si existen datos guardados, cargarlos en el estado
             state = JSON.parse(savedData);
@@ -59,6 +59,7 @@ const initialState = {
             // Actualizar timestamp
             //state.metadata.lastUpdated = new Date().toISOString();
             // Guardar en localStorage
+            console.log("LO QUE GUARDO ES "+ JSON.stringify(state));
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             return true;
         } catch (error) {

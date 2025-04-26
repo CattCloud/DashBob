@@ -53,5 +53,3 @@ const estadosEgresoValidos = [
     "pendiente",
     "completado"
   ];
-
-

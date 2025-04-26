@@ -14,15 +14,17 @@ function eliminarCliente(id) {
         try {
           if(window.templatesStore.deleteCliente(id)){
             notyf.success("Cliente eliminado exitosamente");
+            window.clienteFilter.refreshFromStore();
+            // renderClientes();
+             //cargarClientesSelect();
+             renderDashboard();
             //console.log("Cliente eliminado exitosamente:");
           }
         } catch (error) {
           notyf.error(error.message);
           //console.error("Error al eliminar cliente:", error.message);
         }
-        renderClientes();
-        //cargarClientesSelect();
-        renderDashboard();
+
       }
     });
 }
@@ -40,9 +42,10 @@ function aplicarregistroCliente(){
   //console.log("DataCliente",clienteData);
   try {
     const nuevoCliente=window.templatesStore.addCliente(clienteData);
-    //console.log("CLIENTE NUEVO",nuevoCliente);
-    notyf.success("Cliente agregado exitosamente");
-    renderClientes();
+    console.log(window.templatesStore.getClientes());
+    notyf.success("Cliente agregado exitosamente"); 
+    window.clienteFilter.refreshFromStore();
+    //renderClientes();
     //cargarClientesSelect();
   } catch (error) {
       notyf.error(error.message);
@@ -63,7 +66,8 @@ function aplicareditarCliente(idEditando){
   try {
     const editCliente=window.templatesStore.updateCliente(idEditando,clienteData);
     notyf.success("Cliente editado exitosamente");
-    renderClientes();
+    window.clienteFilter.refreshFromStore();
+    //renderClientes();
     //cargarClientesSelect();
   } catch (error) {
       notyf.error(error.message);

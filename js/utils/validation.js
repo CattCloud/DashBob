@@ -13,3 +13,12 @@ validarConceptoEgreso = texto => validarTexto(texto, conceptosEgresoValidos);
 validarEstadoIngreso = texto => validarTexto(texto, estadosIngresoValidos);
 validarEstadoEgreso = texto => validarTexto(texto, estadosEgresoValidos);
 
+
+
+
+function obtenerSoloFecha(fecha) {
+  return fecha.getFullYear() + "-" + 
+         (fecha.getMonth() + 1).toString().padStart(2, "0") + "-" + 
+         fecha.getDate().toString().padStart(2, "0");
+}
+
