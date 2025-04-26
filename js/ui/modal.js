@@ -277,6 +277,28 @@ function abrirModalFiltrosEgreso() {
 
 function cerrarModalReutilizable() {
   document.getElementById("modal-reutilizable").classList.add("hidden");
+
+}
+
+
+function cerrarModalVista() {
+  document.getElementById("modal-reutilizable").classList.add("hidden");
+  document.getElementById("modal-content").innerHTML="";
+
+}
+
+
+function abrirModalVista(templateVista) {
+  const modal = document.getElementById("modal-reutilizable");
+  //document.getElementById("modal-reutilizable-tittle").textContent = titulo;
+  document.getElementById("modal-reutilizable-tittle").classList.add("hidden");
+
+  // Reemplazar el form-modal con uno nuevo limpio
+  const bodyModal = document.getElementById("modal-content");
+  const form = document.getElementById("form-modal");
+  form.innerHTML="";
+  bodyModal.innerHTML=templateVista;
+  modal.classList.remove("hidden");
 }
 
 

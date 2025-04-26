@@ -43,6 +43,7 @@ function renderClientes() {
               <td class="px-3 py-2 hidden md:table-cell">${c.telefono}</td>
               <td class="px-3 py-2 hidden lg:table-cell">${c.tipoDocumento} ${c.numeroDocumento}</td>
               <td class="px-3 py-2 space-x-2">
+                <button onclick="vistaCliente('${c.id}')" class="text-gray-600 hover:underline">Vista</button>
                 <button onclick="editarCliente('${c.id}')" class="text-blue-600 hover:underline">Editar</button>
                 <button onclick="eliminarCliente('${c.id}')" class="text-red-600 hover:underline">Eliminar</button>
               </td>
@@ -66,4 +67,6 @@ function cargarClientesSelect() {
         clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join("");
     });
 }
-  
+
+
+

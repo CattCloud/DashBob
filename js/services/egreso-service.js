@@ -135,3 +135,7 @@ function eliminarEgreso(id) {
 
 
 
+
+function vistaEgreso(id){
+  abrirModalVista(getCardTransaccion(id,"egreso"));
+}

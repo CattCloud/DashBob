@@ -54,6 +54,7 @@ function renderIngresos() {
           class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(i.estado)}">${i.estado.toUpperCase()}</span>
       </td>
       <td class="px-3 py-2 space-x-2"> 
+      <button onclick="vistaIngreso('${i.id}')"class="text-gray-600 hover:underline">Vista</button>
       <button onclick="editarIngreso('${i.id}')"class="text-blue-600 hover:underline">Editar</button>
       <button onclick="eliminarIngreso('${i.id}')"class="text-red-600 hover:underline">Eliminar</button> </td>
     </tr>`).join("")}</tbody>
@@ -61,6 +62,7 @@ function renderIngresos() {
   `
   renderIngresosDevueltos();
 }
+
 
 
 function renderIngresosDevueltos() {
