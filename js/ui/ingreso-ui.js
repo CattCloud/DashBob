@@ -2,13 +2,28 @@
 
 function renderIngresos() {
   const contenedor = document.getElementById("tabla-ingresos");
-  const ingresos = window.templatesStore.getIngresos();
+  //const ingresos = window.templatesStore.getIngresos();
+
+
+
+  let ingresos=[];
+  if(window.ingresoFilter.hasFilters()){
+    ingresos= window.ingresoFilter.searchArray;
+  }else{
+    if(window.ingresoFilter.onlyOrdenamiento()){
+      ingresos= window.ingresoFilter.searchArray;
+    }else{
+      //Por defecto el ordenamiento es por fecha
+      ingresos=window.templatesStore.getIngresos().sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro)); 
+    }
+  }
+  
+
 
   //Extraer ingresos NO DEVUELTOS
-  const ingresosFiltrados = ingresos.filter(ingreso => ingreso.estado != "devuelto");
-
- 
-  if (!ingresosFiltrados.length) {
+  const ingresosNoDevueltos = ingresos.filter(ingreso => ingreso.estado != "devuelto");
+  //console.log(ingresosNoDevueltos);
+  if (!ingresosNoDevueltos.length) {
     contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos registrados.</p>";
     renderIngresosDevueltos();
     return;
@@ -29,7 +44,7 @@ function renderIngresos() {
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
-  ${ingresosFiltrados.map(i => `<tr>
+  ${ingresosNoDevueltos.map(i => `<tr>
       <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(i.clienteId).nombre}</td>
       <td class="px-3 py-2 hidden sm:table-cell">${i.banco.toUpperCase()}</td>
       <td class="px-3 py-2 hidden sm:table-cell">${i.medio}</td>
@@ -44,8 +59,6 @@ function renderIngresos() {
     </tr>`).join("")}</tbody>
   </table>
   `
-  console.log("asqsdd");
-
   renderIngresosDevueltos();
 }
 
@@ -57,7 +70,6 @@ function renderIngresosDevueltos() {
   //Extraer ingresos  DEVUELTOS
   const ingresosFiltrados = ingresos.filter(ingreso => ingreso.estado == "devuelto");
 
- console.log(ingresosFiltrados.length);
   if (!ingresosFiltrados.length) {
     contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos devueltos registrados.</p>";
     return;

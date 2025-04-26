@@ -15,6 +15,7 @@
   <script defer src="js/utils/formTemplate.js"></script>
   <script defer src="js/ui/modal.js"></script>
   <script defer src="js/models/filter-manager-cliente.js"></script>
+  <script defer src="js/models/filter.manager.transaccion.js"></script>
   <script defer src="js/ui/dom-helpers.js"></script>
   <script defer src="js/ui/dashboard-ui.js"></script>
   <script defer src="js/ui/cliente-ui.js"></script>
@@ -228,7 +229,40 @@
             Importar CSV
           </button>
         </div>
+<!-- 🔍 Barra de control de ingresos/egresos -->
+<div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
 
+  <!-- Campo de búsqueda -->
+  <input type="text"
+         id="input-busqueda-transaccion"
+         placeholder="Buscar por nombre de cliente o banco"
+         class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
+         oninput="window.ingresoFilter.setTexto(this.value)" />
+
+          <!-- Select de ordenamiento -->
+          <select id="select-orden-ingreso"
+                  class="border border-gray-300 rounded px-3 py-2"
+                  onchange="window.ingresoFilter.setOrden(this.value)">
+            <option value="fecha">Fecha de Registro</option>
+            <option value="nombre">Nombre Cliente (A-Z)</option>
+            <option value="mayorImporte">Mayor Importe</option>
+            <option value="menorImporte">Menor Importe</option>
+          </select>
+
+          <!-- Botón abrir filtros -->
+          <button onclick="abrirModalFiltrosIngreso()"
+                  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Filtros
+          </button>
+
+          <!-- Botón remover filtros -->
+          <button id="btn-remover-filtros-ingreso"
+                  onclick="window.ingresoFilter.resetFilters(); renderIngresos();"
+                  class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
+            Remover filtros
+          </button>
+
+        </div>
         <div id="tabla-ingresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
         </div>
@@ -253,6 +287,40 @@
             Importar CSV
           </button>
         </div>
+            <!-- 🔍 Barra de control de ingresos/egresos -->
+            <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
+
+              <!-- Campo de búsqueda -->
+              <input type="text"
+                    id="input-busqueda-egreso"
+                    placeholder="Buscar por nombre de cliente o banco"
+                    class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
+                    oninput="window.egresoFilter.setTexto(this.value)" />
+
+              <!-- Select de ordenamiento -->
+              <select id="select-orden-egreso"
+                      class="border border-gray-300 rounded px-3 py-2"
+                      onchange="window.egresoFilter.setOrden(this.value)">
+                <option value="fecha">Fecha de Registro</option>
+                <option value="nombre">Nombre Cliente (A-Z)</option>
+                <option value="mayorImporte">Mayor Importe</option>
+                <option value="menorImporte">Menor Importe</option>
+              </select>
+
+              <!-- Botón abrir filtros -->
+              <button onclick="abrirModalFiltrosEgreso()"
+                      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Filtros
+              </button>
+
+              <!-- Botón remover filtros -->
+              <button id="btn-remover-filtros-egreso"
+                      onclick="window.egresoFilter.resetFilters(); renderEgresos();"
+                      class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
+                Remover filtros
+              </button>
+
+            </div>
 
         <div id="tabla-egresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->

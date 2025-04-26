@@ -1,7 +1,20 @@
 
 function renderEgresos() {
     const contenedor = document.getElementById("tabla-egresos");
-    const egresos = window.templatesStore.getEgresos();
+    //const egresos = window.templatesStore.getEgresos();
+  
+      
+    let egresos=[];
+    if(window.egresoFilter.hasFilters()){
+      egresos= window.egresoFilter.searchArray;
+    }else{
+      if(window.egresoFilter.onlyOrdenamiento()){
+        egresos= window.egresoFilter.searchArray;
+      }else{
+        //Por defecto el ordenamiento es por fecha
+        egresos=window.templatesStore.getEgresos().sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro)); 
+      }
+    }
   
     if (!egresos.length) {
       contenedor.innerHTML = "<p class='text-gray-600'>No hay egresos registrados.</p>";

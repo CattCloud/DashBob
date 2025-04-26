@@ -24,7 +24,7 @@ const FormTemplatesModal = {
   
         <div>
           <label class="block mb-1 font-bold" for="editar-ingreso-importe">Importe</label>
-          <input type="number" id="editar-ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
+          <input type="number" step="0.01" id="editar-ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
         </div>
     `,
   
@@ -55,7 +55,7 @@ const FormTemplatesModal = {
   editarIngresoSaldoFavor: `
       <div>
         <label class="block mb-1 font-bold" for="editar-ingreso-importe">Importe</label>
-        <input type="number" id="editar-ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
+        <input type="number" step="0.01" id="editar-ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
     
       </div>
   
@@ -105,7 +105,7 @@ const FormTemplatesModal = {
   
     <div>
       <label class="block mb-1 font-bold" for="editar-egreso-importe">Importe</label>
-      <input type="number" id="editar-egreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
+      <input type="number" step="0.01" id="editar-egreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
     </div>
     `,
     editarEgresoCompletado: `
@@ -205,7 +205,7 @@ const FormTemplatesModal = {
   
         <div>
           <label class="block mb-1 font-bold" for="ingreso-importe">Importe</label>
-          <input type="number" id="ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
+          <input type="number" step="0.01" id="ingreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
         </div>
       `,
       registrarEgreso:
@@ -250,7 +250,7 @@ const FormTemplatesModal = {
   
         <div>
           <label class="block mb-1 font-bold" for="egreso-importe">Importe</label>
-          <input type="number" id="egreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
+          <input type="number" step="0.01" id="egreso-importe" class="p-2 border rounded w-full" name="importe" placeholder="Importe" required>
         </div>
       `,
       filtrosCliente:
@@ -298,6 +298,130 @@ const FormTemplatesModal = {
           <option value="saldoCero">Con saldo en cero</option>
         </select>
       </div>
-      `
-  };
+      `,
+      filtrosIngreso:`
+      <!-- Fecha desde / hasta -->
+      <div class="flex gap-2">
+        <div class="flex flex-col">
+          <label class="text-sm font-medium text-gray-700">Desde</label>
+          <input type="date" id="filtro-ingreso-fecha-desde" class="input p-2 border rounded">
+        </div>
+        <div class="flex flex-col">
+          <label class="text-sm font-medium text-gray-700">Hasta</label>
+          <input type="date" id="filtro-ingreso-fecha-hasta" class="input p-2 border rounded">
+        </div>
+      </div>
+    
+      <!-- Importe mínimo - máximo -->
+      <div class="flex gap-2">
+        <div class="flex flex-col">
+          <label class="text-sm font-medium text-gray-700">Importe Mínimo</label>
+          <input type="number" id="filtro-ingreso-importe-min" class="input p-2 border rounded">
+        </div>
+        <div class="flex flex-col">
+          <label class="text-sm font-medium text-gray-700">Importe Máximo</label>
+          <input type="number" id="filtro-ingreso-importe-max" class="input p-2 border rounded">
+        </div>
+      </div>
+    
+      <!-- Concepto -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Concepto</label>
+        <select id="filtro-ingreso-concepto" class="input p-2 border rounded">
+            <option value="todo">Todo</option>
+            ${getOpcionesConceptoIngreso()}
+        </select>
+      </div>
+    
+      <!-- Estado -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Estado</label>
+        <select id="filtro-ingreso-estado" class="input p-2 border rounded">
+        <option value="todo">Todo</option>
+        ${getOpcionesEstadoIngresoNoDevuelto()}
+        </select>
+      </div>
+    
+      <!-- Moneda -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Moneda</label>
+        <select id="filtro-ingreso-moneda" class="input p-2 border rounded">
+          <option value="todo">Todo</option>
+            ${getOpcionesMonedas()}
+        </select>
+      </div>
+    
+      <!-- Medio -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Medio de Pago</label>
+        <select id="filtro-ingreso-medio" class="input p-2 border rounded">
+          <option value="todo">Todo</option>
+          ${getOpcionesMediosPago()}
+        </select>
+      </div>
+    `,
+    filtrosEgreso:`
+    <!-- Fecha desde / hasta -->
+    <div class="flex gap-2">
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Desde</label>
+        <input type="date" id="filtro-egreso-fecha-desde" class="input p-2 border rounded">
+      </div>
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Hasta</label>
+        <input type="date" id="filtro-egreso-fecha-hasta" class="input p-2 border rounded">
+      </div>
+    </div>
   
+    <!-- Importe mínimo - máximo -->
+    <div class="flex gap-2">
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Importe Mínimo</label>
+        <input type="number" id="filtro-egreso-importe-min" class="input p-2 border rounded">
+      </div>
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Importe Máximo</label>
+        <input type="number" id="filtro-egreso-importe-max" class="input p-2 border rounded">
+      </div>
+    </div>
+  
+    <!-- Concepto -->
+    <div class="flex flex-col">
+      <label class="text-sm font-medium text-gray-700">Concepto</label>
+      <select id="filtro-egreso-concepto" class="input p-2 border rounded">
+          <option value="todo">Todo</option>
+          ${getOpcionesConceptoEgreso()}
+      </select>
+    </div>
+  
+    <!-- Estado -->
+    <div class="flex flex-col">
+      <label class="text-sm font-medium text-gray-700">Estado</label>
+      <select id="filtro-egreso-estado" class="input p-2 border rounded">
+        <option value="todo">Todo</option>
+        ${getOpcionesEstadoEgreso()}
+      </select>
+    </div>
+  
+    <!-- Moneda -->
+    <div class="flex flex-col">
+      <label class="text-sm font-medium text-gray-700">Moneda</label>
+      <select id="filtro-egreso-moneda" class="input p-2 border rounded">
+            <option value="todo">Todo</option>
+            ${getOpcionesMonedas()}
+      </select>
+    </div>
+  
+    <!-- Medio -->
+    <div class="flex flex-col">
+      <label class="text-sm font-medium text-gray-700">Medio de Pago</label>
+      <select id="filtro-egreso-medio" class="input p-2 border rounded">
+            <option value="todo">Todo</option>
+          ${getOpcionesMediosPago()}
+      </select>
+    </div>
+  `
+    
+  };
+
+

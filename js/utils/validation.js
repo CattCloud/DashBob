@@ -22,3 +22,17 @@ function obtenerSoloFecha(fecha) {
          fecha.getDate().toString().padStart(2, "0");
 }
 
+function obtenerFechaSinHora(fecha) {
+  const objFecha = new Date(fecha);
+  return objFecha.toISOString().split("T")[0]; // Extrae solo "YYYY-MM-DD"
+}
+
+function normalizarFecha(fechaInput) {
+  const partes = fechaInput.split("-"); // Divide "YYYY-MM-DD"
+  return this.obtenerFechaSinHora(new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))); // Año, Mes (0-based), Día
+}
+
+function crearFechaExacta(fechaStr) {
+  const partes = fechaStr.split("-");
+  return new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2])); // Año, mes (0-based), día
+}
