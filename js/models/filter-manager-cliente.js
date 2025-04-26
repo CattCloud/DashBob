@@ -61,34 +61,21 @@ class FilterManagerCliente {
         );
       }
     
-    //Si solo hay un ordenamiento diferente a fecha
-    onlyOrdenamiento(){
-        //Si el ordenamiento es diferente a fecha entonces
-        if(this.filters.orden != 'fecha'){
-            this.applyOrdenamiento();
-            return true
-        }else{
-            return false;
-        }
-    }
-    
 
-    obtenerFechaSinHora(fecha) {
-        const objFecha = new Date(fecha);
-        return objFecha.toISOString().split("T")[0]; // Extrae solo "YYYY-MM-DD"
-      }
-      
-    normalizarFecha(fechaInput) {
-        const partes = fechaInput.split("-"); // Divide "YYYY-MM-DD"
-        return this.obtenerFechaSinHora(new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]))); // Año, Mes (0-based), Día
+    onlyOrdenamiento() {
+      return this.filters.orden !== 'fecha';
     }
-    
-    crearFechaExacta(fechaStr) {
-        const partes = fechaStr.split("-");
-        return new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2])); // Año, mes (0-based), día
-      }
+  
+    renderOnlyOrdenamiento(){
+        console.log("es",this.filters.orden);
+        if(!this.onlyOrdenamiento){
+            this.applyOrdenamiento(); 
+        }
+        renderClientes();    
+    }
       
-      
+
+   
       
     applyFilters() {
       const { texto, fechaDesde, fechaHasta, tipoDocumento, observaciones, estadoCliente } = this.filters;
@@ -98,8 +85,8 @@ class FilterManagerCliente {
           .some(campo => campo?.toLowerCase().includes(texto));
 
 
-        const fechaMatch = (!fechaDesde || this.crearFechaExacta(cliente.fechaRegistro) >= this.crearFechaExacta(this.normalizarFecha(fechaDesde))) &&
-                           (!fechaHasta || this.crearFechaExacta(cliente.fechaRegistro) <= this.crearFechaExacta(this.normalizarFecha(fechaHasta)));
+        const fechaMatch = (!fechaDesde || crearFechaExacta(cliente.fechaRegistro) >= crearFechaExacta(normalizarFecha(fechaDesde))) &&
+                           (!fechaHasta || crearFechaExacta(cliente.fechaRegistro) <= crearFechaExacta(normalizarFecha(fechaHasta)));
 
         //console.log(this.crearFechaExacta(this.normalizarFecha(fechaDesde)));
         //console.log(cliente.fechaRegistro);
@@ -187,6 +174,7 @@ class FilterManagerCliente {
     }
   
     resetFilters() {
+      const orden=this.filters.orden;  
       this.filters = {
         texto: '',
         fechaDesde: '',
@@ -197,7 +185,8 @@ class FilterManagerCliente {
       };
       this.searchArray = [...this.originalArray];
       this.activeFilters = [];
-      this.applyOrdenamiento();
+      //this.applyOrdenamiento();
+      this.renderOnlyOrdenamiento();
       document.getElementById("btn-remover-filtros-cliente").classList.add("hidden");
     }
 
@@ -208,10 +197,7 @@ class FilterManagerCliente {
         if(this.hasFilters()){
             this.applyFilters(); 
         }else{
-            //Si no es un filtro de ordenamiento "fecha"
-            if(!this.onlyOrdenamiento()){
-                renderClientes();
-            }
+            this.renderOnlyOrdenamiento();
         }
     }
 

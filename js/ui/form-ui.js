@@ -41,7 +41,28 @@ function getOpcionesTiposDocumento() {
     ).join('');
 }
 
+function getOpcionesEstadoIngreso() {
+    return estadosIngresoValidos.map(estado =>
+        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
+    ).join('');
+}
+function getOpcionesEstadoIngreso() {
+    return estadosIngresoValidos.map(estado =>
+        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
+    ).join('');
+}
 
+function getOpcionesEstadoIngresoNoDevuelto() {
+    return estadosIngresoValidosNodevuelto.map(estado =>
+        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
+    ).join('');
+}
+
+function getOpcionesEstadoEgreso() {
+    return estadosEgresoValidos.map(estado =>
+        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
+    ).join('');
+}
 
 // Formulario registrar cliente
 //document.getElementById("cliente-tipo-documento").innerHTML = getOpcionesTiposDocumento();

@@ -43,7 +43,8 @@ async function importarIngresosDesdeCSV(event) {
       });
   
       // Renderizar solo al final
-      renderIngresos();
+      window.ingresoFilter.refreshFromStore();
+      //renderIngresos();
       // Reportar errores
       if (rechazados.length > 0) {
         notyf2.error(`${rechazados.length} ingreso(s) no se pudieron importar.`);
@@ -107,7 +108,10 @@ async function importarIngresosDesdeCSV(event) {
       });
   
       // Renderizar solo al final
-      renderEgresos();
+      //renderEgresos();
+      window.egresoFilter.refreshFromStore();
+
+      
       // Reportar errores
       if (rechazados.length > 0) {
         notyf2.error(`${rechazados.length} egreso(s) no se pudieron importar.`);

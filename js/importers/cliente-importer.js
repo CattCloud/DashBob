@@ -59,7 +59,7 @@ async function importarClientesDesdeCSV(event) {
       });
       // Renderizar solo al final
       window.clienteFilter.refreshFromStore();
-      renderClientes();
+      //renderClientes();
       
       // Reportar errores
       if (rechazados.length > 0) {

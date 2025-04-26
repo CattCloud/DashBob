@@ -180,9 +180,6 @@ function abrirModalFiltros(titulo, casoModal, onAceptar) {
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
   modal.classList.remove("hidden");
-  if(window.clienteFilter.hasFilters()){
-    cargarDatosFiltroCliente();
-  }
   newForm.addEventListener("submit", (e) => {
     e.preventDefault();
     onAceptar(); // Ejecuta la lógica del botón Aceptar
@@ -204,9 +201,79 @@ function abrirModalFiltrosCliente() {
     renderClientes(); // función que actualiza la tabla
     document.getElementById("btn-remover-filtros-cliente").classList.remove("hidden");
   });
+  if(window.clienteFilter.hasFilters()){
+    //En caso ya hallan filtros aplicado,se cargaran eso filtros en los campos
+    cargarDatosFiltroCliente();
+  }
 }
 
 
+
+function cargarDatosFiltroIngreso() {
+  //console.log(window.ingresoFilter.filters);
+  document.getElementById("filtro-ingreso-fecha-desde").value = window.ingresoFilter.filters.fechaDesde;
+  document.getElementById("filtro-ingreso-fecha-hasta").value = window.ingresoFilter.filters.fechaHasta;
+  document.getElementById("filtro-ingreso-importe-min").value = window.ingresoFilter.filters.importeMin;
+  document.getElementById("filtro-ingreso-importe-max").value = window.ingresoFilter.filters.importeMax;
+  document.getElementById("filtro-ingreso-concepto").value = window.ingresoFilter.filters.concepto;
+  document.getElementById("filtro-ingreso-estado").value = window.ingresoFilter.filters.estado;
+  document.getElementById("filtro-ingreso-moneda").value = window.ingresoFilter.filters.moneda;
+  document.getElementById("filtro-ingreso-medio").value = window.ingresoFilter.filters.medio;
+}
+
+
+function abrirModalFiltrosIngreso() {
+  abrirModalFiltros("Filtros de Ingresos", "filtrosIngreso", () => {
+    window.ingresoFilter.setFechaDesde(document.getElementById("filtro-ingreso-fecha-desde").value);
+    window.ingresoFilter.setFechaHasta(document.getElementById("filtro-ingreso-fecha-hasta").value);
+    window.ingresoFilter.setImporteMin(document.getElementById("filtro-ingreso-importe-min").value);
+    window.ingresoFilter.setImporteMax(document.getElementById("filtro-ingreso-importe-max").value);
+    window.ingresoFilter.setConcepto(document.getElementById("filtro-ingreso-concepto").value);
+    window.ingresoFilter.setEstado(document.getElementById("filtro-ingreso-estado").value);
+    window.ingresoFilter.setMoneda(document.getElementById("filtro-ingreso-moneda").value);
+    window.ingresoFilter.setMedio(document.getElementById("filtro-ingreso-medio").value);
+    window.ingresoFilter.applyFilters();
+    //renderTransacciones(); 
+    document.getElementById("btn-remover-filtros-ingreso").classList.remove("hidden");
+  });
+
+  if (window.ingresoFilter.hasFilters()) {
+    cargarDatosFiltroIngreso();
+  }
+}
+
+
+function cargarDatosFiltroEgreso() {
+  document.getElementById("filtro-egreso-fecha-desde").value = window.egresoFilter.filters.fechaDesde;
+  document.getElementById("filtro-egreso-fecha-hasta").value = window.egresoFilter.filters.fechaHasta;
+  document.getElementById("filtro-egreso-importe-min").value = window.egresoFilter.filters.importeMin;
+  document.getElementById("filtro-egreso-importe-max").value = window.egresoFilter.filters.importeMax;
+  document.getElementById("filtro-egreso-concepto").value = window.egresoFilter.filters.concepto;
+  document.getElementById("filtro-egreso-estado").value = window.egresoFilter.filters.estado;
+  document.getElementById("filtro-egreso-moneda").value = window.egresoFilter.filters.moneda;
+  document.getElementById("filtro-egreso-medio").value = window.egresoFilter.filters.medio;
+}
+
+
+function abrirModalFiltrosEgreso() {
+  abrirModalFiltros("Filtros de Egresos", "filtrosEgreso", () => {
+    window.egresoFilter.setFechaDesde(document.getElementById("filtro-egreso-fecha-desde").value);
+    window.egresoFilter.setFechaHasta(document.getElementById("filtro-egreso-fecha-hasta").value);
+    window.egresoFilter.setImporteMin(document.getElementById("filtro-egreso-importe-min").value);
+    window.egresoFilter.setImporteMax(document.getElementById("filtro-egreso-importe-max").value);
+    window.egresoFilter.setConcepto(document.getElementById("filtro-egreso-concepto").value);
+    window.egresoFilter.setEstado(document.getElementById("filtro-egreso-estado").value);
+    window.egresoFilter.setMoneda(document.getElementById("filtro-egreso-moneda").value);
+    window.egresoFilter.setMedio(document.getElementById("filtro-egreso-medio").value);
+    window.egresoFilter.applyFilters();
+    //renderTransacciones(); 
+    document.getElementById("btn-remover-filtros-egreso").classList.remove("hidden");
+  });
+
+  if (window.egresoFilter.hasFilters()) {
+    cargarDatosFiltroEgreso();
+  }
+}
 
 function cerrarModalReutilizable() {
   document.getElementById("modal-reutilizable").classList.add("hidden");
