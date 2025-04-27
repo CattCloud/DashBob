@@ -1,6 +1,8 @@
 
 //Listener para registrar un egreso
 
+
+
 function aplicarregistroEgreso(){
   const nuevoEgreso = {
     clienteId: document.getElementById("egreso-cliente").value,
@@ -139,3 +141,38 @@ function eliminarEgreso(id) {
 function vistaEgreso(id){
   abrirModalSoloBody(getCardTransaccion(id,"egreso"));
 }
+
+
+function aplicarRegistroEgresoDetalle() {
+  idCliente=document.getElementById("cliente-detalle-select").value;
+  if(idCliente){
+    const nuevoEgreso = {
+      clienteId: idCliente,
+      moneda: document.getElementById("egreso-moneda").value,
+      medio: document.getElementById("egreso-medio").value,
+      banco: document.getElementById("egreso-banco").value,
+      importe: document.getElementById("egreso-importe").value,
+      concepto: document.getElementById("egreso-concepto").value
+    };
+    try {
+      const egreso=window.templatesStore.addEgreso(nuevoEgreso);
+      //console.log(newEgreso);
+      notyf.success("Egreso registrado exitosamente");
+      cargarDetalleCliente(idCliente);
+      //renderDashboard();
+    } catch (error) {
+      notyf.error(error.message);
+    }
+  }
+
+}
+
+
+function registrarEgresoClienteDetalle() {
+  idCliente=document.getElementById("cliente-detalle-select").value;
+  cliente=window.templatesStore.getClienteById(idCliente);
+  if (idCliente.trim()) {
+    abrirModalRegistrar("Registrar Egreso", "registrarEgresoDetalle", aplicarRegistroEgresoDetalle,getDetalleShortCliente(cliente));
+  }
+}
+

@@ -100,13 +100,13 @@ function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transac
 
 
 
-function abrirModalRegistrar(titulo, casoModal, onAceptar) {
+function abrirModalRegistrar(titulo, casoModal, onAceptar,content="") {
   const modal = document.getElementById("modal-reutilizable");
   document.getElementById("modal-reutilizable-tittle").textContent = titulo;
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = getHTMLFormModal(casoModal) + botonesRegistrarFormReutilizable;
+  newForm.innerHTML = content+getHTMLFormModal(casoModal) + botonesRegistrarFormReutilizable;
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
   modal.classList.remove("hidden");

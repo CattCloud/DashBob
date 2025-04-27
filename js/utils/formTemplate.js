@@ -420,6 +420,79 @@ const FormTemplatesModal = {
           ${getOpcionesMediosPago()}
       </select>
     </div>
-  `
- 
+  `,
+ registrarIngresoDetalle : `
+  <div>
+    <label class="block mb-1 font-bold" for="ingreso-medio">Medio de pago</label>
+    <select id="ingreso-medio" class="p-2 border rounded w-full" required>
+      <option value="">Seleccione medio de pago</option>
+      ${getOpcionesMediosPago()}
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-1 font-bold" for="ingreso-banco">Banco</label>
+    <select id="ingreso-banco" class="p-2 border rounded w-full" required>
+      <option value="">Seleccione banco</option>
+      ${getOpcionesBanco()}
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-1 font-bold" for="ingreso-moneda">Moneda</label>
+    <select id="ingreso-moneda" class="p-2 border rounded w-full" required>
+      ${getOpcionesMonedas()}
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-1 font-bold" for="ingreso-concepto">Concepto</label>
+    <select id="ingreso-concepto" class="p-2 border rounded w-full" required>
+      ${getOpcionesConceptoIngreso()}
+    </select>
+  </div>
+
+  <div>
+    <label class="block mb-1 font-bold" for="ingreso-importe">Importe</label>
+    <input type="number" step="0.01" id="ingreso-importe" class="p-2 border rounded w-full" placeholder="Importe" required>
+  </div>
+`,
+  registrarEgresoDetalle : `
+    <div>
+    <label class="block mb-1 font-bold" for="egreso-medio">Medio de pago</label>
+    <select id="egreso-medio" class="p-2 border rounded w-full" required>
+      <option value="">Seleccione medio de pago</option>
+      ${getOpcionesMediosPago()}
+    </select>
+  </div>
+    <div>
+      <label class="block mb-1 font-bold" for="egreso-banco">Banco</label>
+      <select id="egreso-banco" class="p-2 border rounded w-full" required>
+        <option value="">Seleccione banco</option>
+        ${getOpcionesBanco()}
+      </select>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-bold" for="egreso-moneda">Moneda</label>
+      <select id="egreso-moneda" class="p-2 border rounded w-full" required>
+        ${getOpcionesMonedas()}
+      </select>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-bold" for="egreso-concepto">Concepto</label>
+      <select id="egreso-concepto" class="p-2 border rounded w-full" required>
+        ${getOpcionesConceptoEgreso()}
+      </select>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-bold" for="egreso-importe">Importe</label>
+      <input type="number" step="0.01" id="egreso-importe" class="p-2 border rounded w-full" placeholder="Importe" required>
+    </div>
+    `
+
+
+  
   };
