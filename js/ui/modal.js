@@ -184,7 +184,9 @@ function abrirModalFiltrosCliente() {
     console.log("Filtros aplicados",window.clienteFilter);
     window.clienteFilter.applyFilters();
     renderClientes(); // función que actualiza la tabla
-    document.getElementById("btn-remover-filtros-cliente").classList.remove("hidden");
+    if(window.clienteFilter.hasFilters()){
+      document.getElementById("btn-remover-filtros-cliente").classList.remove("hidden");
+    }
   });
   if(window.clienteFilter.hasFilters()){
     //En caso ya hallan filtros aplicado,se cargaran eso filtros en los campos
@@ -218,8 +220,11 @@ function abrirModalFiltrosIngreso() {
     window.ingresoFilter.setMoneda(document.getElementById("filtro-ingreso-moneda").value);
     window.ingresoFilter.setMedio(document.getElementById("filtro-ingreso-medio").value);
     window.ingresoFilter.applyFilters();
-    //renderTransacciones(); 
-    document.getElementById("btn-remover-filtros-ingreso").classList.remove("hidden");
+    //renderTransacciones();
+    if(window.ingresoFilter.hasFilters()){
+      document.getElementById("btn-remover-filtros-ingreso").classList.remove("hidden");
+    }
+
   });
 
   if (window.ingresoFilter.hasFilters()) {
@@ -252,7 +257,9 @@ function abrirModalFiltrosEgreso() {
     window.egresoFilter.setMedio(document.getElementById("filtro-egreso-medio").value);
     window.egresoFilter.applyFilters();
     //renderTransacciones(); 
-    document.getElementById("btn-remover-filtros-egreso").classList.remove("hidden");
+    if(window.egresoFilter.hasFilters()){
+      document.getElementById("btn-remover-filtros-ingreso").classList.remove("hidden");
+    }
   });
 
   if (window.egresoFilter.hasFilters()) {
@@ -288,6 +295,78 @@ function abrirModalSoloBody(templateVista) {
   modal.classList.remove("hidden");
 }
 
+
+
+function abrirModalFiltrosIngresoDetalle() {
+  abrirModalFiltros("Filtros de Ingresos", "filtrosIngreso", () => {
+    window.ingresoDetalleFilter.setFechaDesde(document.getElementById("filtro-ingreso-fecha-desde").value);
+    window.ingresoDetalleFilter.setFechaHasta(document.getElementById("filtro-ingreso-fecha-hasta").value);
+    window.ingresoDetalleFilter.setImporteMin(document.getElementById("filtro-ingreso-importe-min").value);
+    window.ingresoDetalleFilter.setImporteMax(document.getElementById("filtro-ingreso-importe-max").value);
+    window.ingresoDetalleFilter.setConcepto(document.getElementById("filtro-ingreso-concepto").value);
+    window.ingresoDetalleFilter.setEstado(document.getElementById("filtro-ingreso-estado").value);
+    window.ingresoDetalleFilter.setMoneda(document.getElementById("filtro-ingreso-moneda").value);
+    window.ingresoDetalleFilter.setMedio(document.getElementById("filtro-ingreso-medio").value);
+    window.ingresoDetalleFilter.applyFilters();
+    //renderIngresosCliente();
+    console.log(window.ingresoDetalleFilter.hasFilters());
+    if(window.ingresoDetalleFilter.hasFilters()){
+      
+      document.getElementById("btn-remover-filtros-ingreso-detalle").classList.remove("hidden");
+    }
+  });
+
+  if (window.ingresoDetalleFilter.hasFilters()) {
+    cargarDatosFiltroIngresoDetalle();
+  }
+}
+
+
+function cargarDatosFiltroIngresoDetalle() {
+  document.getElementById("filtro-ingreso-fecha-desde").value = window.ingresoDetalleFilter.filters.fechaDesde;
+  document.getElementById("filtro-ingreso-fecha-hasta").value = window.ingresoDetalleFilter.filters.fechaHasta;
+  document.getElementById("filtro-ingreso-importe-min").value = window.ingresoDetalleFilter.filters.importeMin;
+  document.getElementById("filtro-ingreso-importe-max").value = window.ingresoDetalleFilter.filters.importeMax;
+  document.getElementById("filtro-ingreso-concepto").value = window.ingresoDetalleFilter.filters.concepto;
+  document.getElementById("filtro-ingreso-estado").value = window.ingresoDetalleFilter.filters.estado;
+  document.getElementById("filtro-ingreso-moneda").value = window.ingresoDetalleFilter.filters.moneda;
+  document.getElementById("filtro-ingreso-medio").value = window.ingresoDetalleFilter.filters.medio;
+}
+
+
+function abrirModalFiltrosEgresoDetalle() {
+  abrirModalFiltros("Filtros de Egresos", "filtrosEgreso", () => {
+    window.egresoDetalleFilter.setFechaDesde(document.getElementById("filtro-egreso-fecha-desde").value);
+    window.egresoDetalleFilter.setFechaHasta(document.getElementById("filtro-egreso-fecha-hasta").value);
+    window.egresoDetalleFilter.setImporteMin(document.getElementById("filtro-egreso-importe-min").value);
+    window.egresoDetalleFilter.setImporteMax(document.getElementById("filtro-egreso-importe-max").value);
+    window.egresoDetalleFilter.setConcepto(document.getElementById("filtro-egreso-concepto").value);
+    window.egresoDetalleFilter.setEstado(document.getElementById("filtro-egreso-estado").value);
+    window.egresoDetalleFilter.setMoneda(document.getElementById("filtro-egreso-moneda").value);
+    window.egresoDetalleFilter.setMedio(document.getElementById("filtro-egreso-medio").value);
+    window.egresoDetalleFilter.applyFilters();
+    //renderIngresosCliente();
+    if(window.egresoDetalleFilter.hasFilters()){
+      document.getElementById("btn-remover-filtros-egreso-detalle").classList.remove("hidden");
+    }
+  });
+
+  if (window.egresoDetalleFilter.hasFilters()) {
+    cargarDatosFiltroEgresoDetalle();
+  }
+}
+
+
+function cargarDatosFiltroEgresoDetalle() {
+  document.getElementById("filtro-egreso-fecha-desde").value = window.egresoDetalleFilter.filters.fechaDesde;
+  document.getElementById("filtro-egreso-fecha-hasta").value = window.egresoDetalleFilter.filters.fechaHasta;
+  document.getElementById("filtro-egreso-importe-min").value = window.egresoDetalleFilter.filters.importeMin;
+  document.getElementById("filtro-egreso-importe-max").value = window.egresoDetalleFilter.filters.importeMax;
+  document.getElementById("filtro-egreso-concepto").value = window.egresoDetalleFilter.filters.concepto;
+  document.getElementById("filtro-egreso-estado").value = window.egresoDetalleFilter.filters.estado;
+  document.getElementById("filtro-egreso-moneda").value = window.egresoDetalleFilter.filters.moneda;
+  document.getElementById("filtro-egreso-medio").value = window.egresoDetalleFilter.filters.medio;
+}
 
 
 

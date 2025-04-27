@@ -71,7 +71,7 @@ class FilterManagerCliente {
         if(!this.onlyOrdenamiento){
             this.applyOrdenamiento(); 
         }
-        renderClientes();    
+        //renderClientes();    
     }
       
 
@@ -156,7 +156,7 @@ class FilterManagerCliente {
           });
           break;
         default:
-          clientes.sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro));
+          clientes.sort((a, b) => crearFechaExacta(b.fechaRegistro) - crearFechaExacta(a.fechaRegistro));
       }
       this.searchArray = clientes;
     }

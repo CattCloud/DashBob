@@ -131,3 +131,17 @@ function seleccionarClienteDesdeModal(clienteId) {
   cargarDetalleCliente(clienteId); // Cargas la información del cliente seleccionado
 }
 
+
+
+
+function irADashboardClienteActual() {
+  if (!document.getElementById('cliente-detalle-select')) {
+    notyf.error("Primero seleccione un cliente p");
+    return;
+  }
+  document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("dashboard-cliente").classList.remove("hidden");
+
+  // (Opcional) Puedes cargar automáticamente los datos del dashboard cliente aquí
+  //cargarDashboardCliente(clienteSeleccionadoDetalle);
+}
