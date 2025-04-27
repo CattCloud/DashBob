@@ -153,5 +153,5 @@ function eliminarIngreso(id) {
 
 
 function vistaIngreso(id){
-  abrirModalVista(getCardTransaccion(id,"ingreso"));
+  abrirModalSoloBody(getCardTransaccion(id,"ingreso"));
 }

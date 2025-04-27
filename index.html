@@ -22,6 +22,7 @@
   <script defer src="js/ui/cliente-ui.js"></script>
   <script defer src="js/ui/ingreso-ui.js"></script>
   <script defer src="js/ui/egreso-ui.js"></script>
+  <script defer src="js/ui/detalle-cliente-ui.js"></script>
   <script defer src="js/services/cliente-service.js"></script>
   <script defer src="js/services/ingreso-service.js"></script>
   <script defer src="js/services/egreso-service.js"></script>
@@ -140,7 +141,7 @@
     <main class="flex-1 p-4 md:p-6 overflow-y-auto">
       <!-- Dashboard -->
       <section id="dashboard-general" class="space-y-4">
-        <h1 class="text-xl md:text-2xl font-bold">Resumen General</h1>
+        <h2 class="text-xl md:text-2xl font-bold">Resumen General</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="bg-white p-4 rounded shadow">
             <p>Total Ingresos</p>
@@ -233,11 +234,11 @@
             Importar CSV
           </button>
         </div>
-<!-- 🔍 Barra de control de ingresos/egresos -->
-<div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
+        <!-- 🔍 Barra de control de ingresos/egresos -->
+        <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
 
-  <!-- Campo de búsqueda -->
-  <input type="text"
+        <!-- Campo de búsqueda -->
+      <input type="text"
          id="input-busqueda-transaccion"
          placeholder="Buscar por nombre de cliente o banco"
          class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
@@ -350,8 +351,41 @@
         Aun en proceso
       </section>
 
+
       <section id="detalle-cliente" class="space-y-4 hidden">
-        Aun en proceso
+        <!-- Selector de cliente -->
+          <h2 class="text-xl md:text-2xl font-bold">Detalle del Cliente</h2>
+
+          <div class="flex flex-col gap-2 mb-6 bg-white">
+
+            <label for="cliente-select" class="text-lg font-bold text-gray-700">Cliente</label>
+            <div class="flex items-center gap-2">
+              <!-- Select normal -->
+              <select id="cliente-detalle-select"
+                      onchange="cargarDetalleCliente(this.value)"
+                      class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2">
+                <!-- Opciones dinámicas generadas en JS -->
+              </select>
+
+              <!-- Botón buscar cliente -->
+              <button onclick="searchDetalleCliente()"
+                      class="hover:bg-gray-300 rounded-full p-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                      </svg>                      
+              </button>
+            </div>
+          </div>
+          <div id="info-cliente-detalle" class="m-2">
+                <!-- Opciones dinámicas generadas en JS -->
+          </div>
+          <!-- Cards informativas de cliente -->
+          <div id="cards-cliente-detalle" class="grid grid-cols-1 md:grid-cols-2 gap-4 m-2">
+            <!-- Aquí se inyectarán dinámicamente las tarjetas -->
+          </div>
+
+      
+          
       </section>
 
 
@@ -387,7 +421,11 @@
                           <form id="form-modal" class="mt-4 flex flex-wrap gap-4 w-auto">
                             <!-- Aquí se inyecta el contenido modal.js -->
                           </form>
-                  </div>                     
+                          <div id="modal-foot">
+                            <!-- Aquí se inyecta el contenido modal.js -->
+                        </div>  
+                  </div>
+
               </div>
         </div>
           
