@@ -421,7 +421,5 @@ const FormTemplatesModal = {
       </select>
     </div>
   `
-    
+ 
   };
-
-

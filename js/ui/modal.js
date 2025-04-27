@@ -5,7 +5,6 @@ function mostrarModalEliminacion({ titulo, mensaje, onConfirm }) {
   const btnCancelar = document.getElementById("btn-cancelar");
   const btnConfirmar = document.getElementById("btn-confirmar");
 
-
   tituloEl.textContent = titulo;
   mensajeEl.textContent = mensaje;
 
@@ -26,16 +25,6 @@ function mostrarModalEliminacion({ titulo, mensaje, onConfirm }) {
     onConfirm();
     modal.classList.add("hidden");
   };
-}
-
-
-const contentBodyModal={
-  pendiente:`<p id="saldo-final-cliente" class="md:col-span-2 text-gray-700 font-bold">Saldo cliente: S/ 0.00</p>
-  `,
-  facturado:`
-  `,
-  "saldo a favor":`
-  `  
 }
 
 
@@ -67,10 +56,6 @@ const botonesEditarFormReutilizable=
 
 function getHTMLFormModal(casoModal){
   return FormTemplatesModal[casoModal] || `<p>Error:No se reconoce el caso para abrir el modal</p>`;
-}
-
-function getHTMLBodyModal(estado){
-  return contentBodyModal[estado] || `<p>Error:No se reconoce el estado para abrir el modal</p>`;
 }
 
 
@@ -281,24 +266,28 @@ function cerrarModalReutilizable() {
 }
 
 
-function cerrarModalVista() {
-  document.getElementById("modal-reutilizable").classList.add("hidden");
+function cerrarModalSoloBody() {
   document.getElementById("modal-content").innerHTML="";
-
+  document.getElementById("modal-reutilizable-tittle").classList.remove("hidden");
+  document.getElementById("form-modal").classList.remove("hidden");
+  document.getElementById("modal-reutilizable").classList.add("hidden");
 }
 
 
-function abrirModalVista(templateVista) {
+
+function abrirModalSoloBody(templateVista) {
   const modal = document.getElementById("modal-reutilizable");
   //document.getElementById("modal-reutilizable-tittle").textContent = titulo;
   document.getElementById("modal-reutilizable-tittle").classList.add("hidden");
-
   // Reemplazar el form-modal con uno nuevo limpio
   const bodyModal = document.getElementById("modal-content");
   const form = document.getElementById("form-modal");
   form.innerHTML="";
   bodyModal.innerHTML=templateVista;
+  document.getElementById("form-modal").classList.add("hidden");
   modal.classList.remove("hidden");
 }
+
+
 
 

@@ -65,7 +65,7 @@ function getOpcionesEstadoEgreso() {
 }
 
 // Formulario registrar cliente
-//document.getElementById("cliente-tipo-documento").innerHTML = getOpcionesTiposDocumento();
+document.getElementById("cliente-detalle-select").innerHTML = `<option value="">Seleccione cliente</option>`+getOpcionesClientes();
 
 //Formulario registrar ingreso
 /*

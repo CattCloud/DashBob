@@ -32,5 +32,6 @@ inicializarApp();
 
 
 //localStorage.clear();
-//console.log(window.templatesStore.getClientes());
+console.log(window.templatesStore.getIngresosByCliente("C000"));
+console.log(window.templatesStore.getEgresosByCliente("C000"));
 

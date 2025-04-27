@@ -8,3 +8,4 @@ function getBadgeClase(estado) {
     };
     return clases[estado] || "bg-gray-200 text-gray-800";
 }
+
