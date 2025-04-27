@@ -1,7 +1,7 @@
 // === Clase FilterManagerTransaccion ===
 class FilterManagerTransaccion {
-    constructor(tipo,transaccionesOriginales) {
-      this.tipo=tipo;
+    constructor(tipo,transaccionesOriginales,detalle=false) {
+      this.tipo=tipo;//ingreso o egreso
       this.originalArray = transaccionesOriginales; // array original (sin filtros)
       this.searchArray = [...transaccionesOriginales];
       this.filters = {
@@ -17,10 +17,10 @@ class FilterManagerTransaccion {
         orden: 'fecha'
       };
       this.activeFilters = []; // visualización de filtros activos
+      this.isdetalleCliente=detalle;
     }
   
     setTexto(texto) {
-      
       this.filters.texto = texto.toLowerCase().trim();
       this.applyFilters();
     }
@@ -64,11 +64,22 @@ class FilterManagerTransaccion {
     renderTransaccion(){
         //console.log(this.tipo);
         //console.log("Es ingreso?",this.tipo=="ingreso");
-        if(this.tipo == "ingreso"){
-        renderIngresos()
+        if(this.isdetalleCliente){
+          if(this.tipo == "ingreso"){
+            console.log("Es resultado de busqueda es",this.searchArray);
+            renderIngresosCliente()
+            }else{
+            //console.log(this.searchArray);
+            renderEgresosCliente()
+            }
         }else{
-        renderEgresos()
+          if(this.tipo == "ingreso"){
+            renderIngresos()
+            }else{
+            renderEgresos()
+            }
         }
+
     }
 
 
@@ -78,9 +89,15 @@ class FilterManagerTransaccion {
       const transacciones = this.originalArray.filter(t => {
         const cliente = window.templatesStore.getClienteById(t.clienteId) || { nombre: '' };
   
-        const textoMatch = f.texto === '' || [cliente.nombre, t.banco]
+
+        let textoMatch=""
+        if(this.isdetalleCliente){
+          textoMatch = f.texto === '' || [t.banco]
           .some(campo => campo?.toLowerCase().includes(f.texto));
-  
+        }else{
+          textoMatch = f.texto === '' || [cliente.nombre, t.banco]
+          .some(campo => campo?.toLowerCase().includes(f.texto));
+        }
 
         const fechaMatch = (!f.fechaDesde || crearFechaExacta(t.fechaRegistro) >= crearFechaExacta(normalizarFecha(f.fechaDesde))) &&
                            (!f.fechaHasta || crearFechaExacta(t.fechaRegistro) <= crearFechaExacta(normalizarFecha(f.fechaHasta)));
@@ -99,9 +116,7 @@ class FilterManagerTransaccion {
   
 
 
-
       this.searchArray = [...transacciones];
-
       this.applyOrdenamiento();
       this.updateActiveFilters();
       this.renderTransaccion();     
@@ -126,7 +141,7 @@ class FilterManagerTransaccion {
           transacciones.sort((a, b) => a.importe - b.importe);
           break;
         default:
-          transacciones.sort((a, b) => new Date(b.fechaRegistro) - new Date(a.fechaRegistro));
+          transacciones.sort((a, b) => crearFechaExacta(b.fechaRegistro) - crearFechaExacta(a.fechaRegistro));
       }
   
       this.searchArray = transacciones;
@@ -164,11 +179,21 @@ class FilterManagerTransaccion {
       this.activeFilters = [];
       this.applyOrdenamiento();
       this.renderOnlyOrdenamiento();
-      if(this.tipo == "ingreso"){
-        document.getElementById("btn-remover-filtros-ingreso").classList.add("hidden");
+
+      if(this.isdetalleCliente){
+        if(this.tipo == "ingreso"){
+          document.getElementById("btn-remover-filtros-ingreso-detalle").classList.add("hidden");
+        }else{
+          document.getElementById("btn-remover-filtros-egreso-detalle").classList.add("hidden");
+        }
       }else{
-        document.getElementById("btn-remover-filtros-egreso").classList.add("hidden");
+        if(this.tipo == "ingreso"){
+          document.getElementById("btn-remover-filtros-ingreso").classList.add("hidden");
+        }else{
+          document.getElementById("btn-remover-filtros-egreso").classList.add("hidden");
+        }
       }
+
     }
   
     refreshFromStore() {
@@ -190,3 +215,7 @@ class FilterManagerTransaccion {
   window.ingresoFilter= ingresoFilter;
   const egresoFilter = new FilterManagerTransaccion("egreso",window.templatesStore.getEgresos()); 
   window.egresoFilter= egresoFilter;
+
+
+
+

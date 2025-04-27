@@ -221,9 +221,8 @@ function getCardsClienteDetalle(clienteId) {
 
   // Última fecha de movimiento
   let ultimaFechaMovimiento = '-';
-  const todasFechas = [...ingresos, ...egresos]
-    .map(t => crearFechaExacta(t.fechaRegistro))
-    .sort((a, b) => b - a); // más reciente primero
+  const todasFechas = [...ingresos, ...egresos].map(t => crearFechaExacta(t.fechaRegistro)).sort((a, b) => b - a); // más reciente primero
+  //console.log("ULTI",todasFechas);
   if (todasFechas.length > 0) {
     ultimaFechaMovimiento = obtenerSoloFecha(todasFechas[0]);
   }
