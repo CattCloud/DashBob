@@ -2,6 +2,8 @@
 
 
 
+
+
 function aplicarregistroIngreso(){
   const nuevoIngreso = {
     clienteId: document.getElementById("ingreso-cliente").value,
@@ -11,12 +13,15 @@ function aplicarregistroIngreso(){
     importe: document.getElementById("ingreso-importe").value,
     concepto: document.getElementById("ingreso-concepto").value
   };
-  //console.log("DataIngreso: ",nuevoIngreso);
-  const ingreso= window.templatesStore.addIngreso(nuevoIngreso);
-  notyf.success("Ingreso registrado exitosamente");
-  //console.log("Ingreso registrado: ",ingreso);
-  renderIngresos();
-  renderDashboard();
+    try {
+      const ingreso = window.templatesStore.addIngreso(nuevoIngreso);
+      notyf.success("Ingreso registrado exitosamente.");
+      renderIngresos();
+      renderDashboard();
+    
+  } catch (error) {
+      notyf.error(error.message);
+    } 
 }
 
 function registrarIngreso(){
@@ -155,3 +160,42 @@ function eliminarIngreso(id) {
 function vistaIngreso(id){
   abrirModalSoloBody(getCardTransaccion(id,"ingreso"));
 }
+
+
+
+
+
+
+function registrarIngresoClientDetalle() {
+  idCliente=document.getElementById("cliente-detalle-select").value;
+  cliente=window.templatesStore.getClienteById(idCliente);
+  if (idCliente.trim()) {
+    abrirModalRegistrar("Registrar Ingreso", "registrarIngresoDetalle", aplicarRegistroIngresoDetalle, getDetalleShortCliente(cliente));
+  }
+
+  function aplicarRegistroIngresoDetalle() {
+    idCliente=document.getElementById("cliente-detalle-select").value;
+    if(idCliente.trim()){
+      const nuevoIngreso = {
+        clienteId: idCliente,
+        moneda: document.getElementById("ingreso-moneda").value,
+        medio: document.getElementById("ingreso-medio").value,
+        banco: document.getElementById("ingreso-banco").value,
+        importe: document.getElementById("ingreso-importe").value,
+        concepto: document.getElementById("ingreso-concepto").value
+      };
+    
+      try {
+        const ingreso = window.templatesStore.addIngreso(nuevoIngreso);
+        notyf.success("Ingreso registrado exitosamente.");
+        cargarDetalleCliente(idCliente);
+      } catch (error) {
+        notyf.error(error.message);
+      }
+  
+    }
+  }
+}
+
+
+

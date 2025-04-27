@@ -247,4 +247,46 @@ function crearCardInfo(titulo, valor, clasesBg) {
 }
 
 
- 
+
+function getBotonesClienteDetalle(id) {
+  return `
+  <!-- Botones rápidos debajo de las tarjetas de saldo -->
+    <!-- Registrar ingreso -->
+    <button onclick="registrarIngresoClientDetalle()"
+            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2">
+       Registrar Ingreso
+    </button>
+
+    <!-- Registrar egreso -->
+    <button onclick="registrarEgresoClienteDetalle()"
+            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2">
+      Registrar Egreso
+    </button>
+
+    <!-- Generar reporte -->
+    <button onclick="generarReporteClienteActual()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2">
+       Generar Reporte
+    </button>
+
+    <!-- Ir a dashboard cliente -->
+    <button onclick="irADashboardClienteActual()"
+            class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2">
+       Dashboard Cliente
+    </button>
+  `;
+}
+
+
+function getDetalleShortCliente(cliente){
+  return  `
+      <div class="flex flex-row items-center justify-between w-full">
+            <h2 class="text-sm font-bold text-gray-800">
+            Cliente: ${cliente.nombre}
+            </h2>
+            <span class="inline-block bg-green-100 text-green-800 text-sm font-semibold px-4 py-2 rounded-full">
+            Saldo: S/.${window.templatesStore.calcularBalanceCliente(cliente.id)}
+            </span>
+      </div>
+    `
+}
