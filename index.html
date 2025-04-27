@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Financiero</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!--script src="https://cdn.jsdelivr.net/npm/chart.js"></!--script-->
   <script src="js/utils/datosValidos.js"></script>
   <script defer src="js/utils/validation.js"></script>
   <script defer src="js/utils/notificacion.js"></script>
@@ -140,26 +140,97 @@
     <!-- Main -->
     <main class="flex-1 p-4 md:p-6 overflow-y-auto">
       <!-- Dashboard -->
-      <section id="dashboard-general" class="space-y-4">
-        <h2 class="text-xl md:text-2xl font-bold">Resumen General</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded shadow">
-            <p>Total Ingresos</p>
-            <p class="text-xl md:text-2xl font-bold text-green-600" id="total-ingresos">0</p>
+      <section id="dashboard-general" class="space-y-6">
+
+        <!-- Título principal -->
+        <h2 class="text-2xl font-bold text-gray-800">Resumen General</h2>
+      
+        <!-- Grid de tarjetas KPI -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      
+          <!-- Tarjeta: Total Clientes -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Total Clientes</p>
+            <p class="text-2xl font-bold text-indigo-600" id="total-clientes">0</p>
           </div>
-          <div class="bg-white p-4 rounded shadow">
-            <p>Total Egresos</p>
-            <p class="text-xl md:text-2xl font-bold text-red-600" id="total-egresos">0</p>
+      
+          <!-- Tarjeta: Total Ingresos -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Total Ingresos</p>
+            <p class="text-2xl font-bold text-green-600" id="total-ingresos">0</p>
           </div>
-          <div class="bg-white p-4 rounded shadow">
-            <p>Balance General</p>
-            <p class="text-xl md:text-2xl font-bold text-blue-600" id="balance-general">0</p>
+      
+          <!-- Tarjeta: Total Egresos -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Total Egresos</p>
+            <p class="text-2xl font-bold text-red-600" id="total-egresos">0</p>
           </div>
+      
+          <!-- Tarjeta: Balance General -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Balance General</p>
+            <p class="text-2xl font-bold" id="balance-general">0</p>
+          </div>
+      
+          <!-- Tarjeta: Ingresos Devueltos -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Ingresos Devueltos</p>
+            <p class="text-2xl font-bold text-yellow-500" id="total-devueltos">0</p>
+          </div>
+      
+          <!-- Tarjeta: Clientes con Saldo a Favor -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Clientes con Saldo a Favor</p>
+            <p class="text-2xl font-bold text-teal-500" id="clientes-saldo-favor">0</p>
+          </div>
+      
+          <!-- Tarjeta: Clientes sin Transacciones -->
+          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
+            <p class="text-gray-500 text-sm">Clientes sin Transacciones</p>
+            <p class="text-2xl font-bold text-gray-500" id="clientes-sin-transacciones">0</p>
+          </div>
+      
         </div>
-        <div class="w-full h-64 md:h-80">
-          <canvas id="chart-ingresos-egresos"></canvas>
+      
+
+      
+        <!-- Sección de Gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+          <!-- Gráfico 1: Ingresos vs Egresos -->
+          <div class="bg-white p-5 rounded-xl shadow-md">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Ingresos vs Egresos</h3>
+            <div id="chart-ingresos-egresos"></div>
+          </div>
+                <!-- Gráfico 4: Balance Mensual -->
+          <div class="bg-white p-5 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-gray-700 mb-4">Balance Mensual</h3>
+              <div id="chart-balance-mensual"></div>
+          </div>
+
+          <!-- Gráfico 2: Distribución Estados Ingresos -->
+          <div class="bg-white p-5 rounded-xl shadow-md">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Estados de Ingresos</h3>
+            <div id="chart-estados-ingresos"></div>
+          </div>
+      
+          <!-- Gráfico 3: Distribución Estados Egresos -->
+          <div class="bg-white p-5 rounded-xl shadow-md">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Estados de Egresos</h3>
+            <div id="chart-estados-egresos"></div>
+          </div>
+      
+
+          <!-- Gráfico 5: Top 5 Clientes -->
+          <div class="bg-white p-5 rounded-xl shadow-md lg:col-span-2">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Top 5 Clientes por Ingresos</h3>
+            <div id="chart-top-clientes"></div>
+          </div>
+      
         </div>
+      
       </section>
+      
 
       <!-- Clientes -->
       <section id="clientes" class="hidden space-y-4">
@@ -514,6 +585,7 @@
   <footer class="w-full bg-gray-100 p-4 text-center text-sm text-gray-600 border-t border-gray-200">
     © 2025 BOB SUBASTAS. Todos los derechos reservados.
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 </body>
 </html>
