@@ -19,6 +19,7 @@
   <script defer src="js/models/filter.manager.transaccion.js"></script>
   <script defer src="js/ui/dom-helpers.js"></script>
   <script defer src="js/ui/dashboard-ui.js"></script>
+  <script defer src="js/ui/dashboard-cliente-ui.js"></script>
   <script defer src="js/ui/cliente-ui.js"></script>
   <script defer src="js/ui/ingreso-ui.js"></script>
   <script defer src="js/ui/egreso-ui.js"></script>
@@ -231,6 +232,65 @@
       
       </section>
       
+     
+      <section id="dashboard-cliente" class="space-y-6 hidden">
+        <h2 class="text-xl md:text-2xl font-bold">Dashboard de Cliente</h2>
+
+        <!-- Selector de Cliente -->
+        <div class="flex flex-col gap-2 mb-6 bg-white p-4 rounded shadow">
+          <label for="cliente-dashboard-select" class="text-lg font-bold text-gray-700">Cliente</label>
+          <div class="flex items-center gap-2">
+            <!-- Select dinámico -->
+            <select id="cliente-dashboard-select"
+                    onchange="cargarDashboardCliente(this.value)"
+                    class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2">
+              <!-- Opciones generadas por JS -->
+            </select>
+      
+            <!-- Botón buscar cliente -->
+            <button onclick="searchDashboardCliente()"
+                    class="hover:bg-gray-300 rounded-full p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>                      
+            </button>
+              <button onclick="irADetalleClienteActual()"
+              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2">
+              Detalle del Cliente
+            </button>
+          </div>
+
+        </div>
+      
+        <!-- Tarjetas Informativas -->
+        <div id="cards-cliente-dashboard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Cards inyectadas dinámicamente -->
+        </div>
+      
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded shadow p-4">
+            <h3 class="text-center font-bold mb-4">Ingresos vs Egresos</h3>
+            <div id="chart-cliente-ingresos-egresos"></div>
+          </div>
+      
+          <div class="bg-white rounded shadow p-4">
+            <h3 class="text-center font-bold mb-4">Distribución Estados Ingresos</h3>
+            <div id="chart-cliente-estados-ingresos"></div>
+          </div>
+      
+          <div class="bg-white rounded shadow p-4">
+            <h3 class="text-center font-bold mb-4">Distribución Estados Egresos</h3>
+            <div id="chart-cliente-estados-egresos"></div>
+          </div>
+      
+          <div class="bg-white rounded shadow p-4">
+            <h3 class="text-center font-bold mb-4">Saldo Histórico</h3>
+            <div id="chart-cliente-saldo"></div>
+          </div>
+        </div>
+      </section>
+       
 
       <!-- Clientes -->
       <section id="clientes" class="hidden space-y-4">
@@ -416,9 +476,8 @@
         <div id="resultado-reporte" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto"></div>
       </section>
 
-      <section id="dashboard-cliente" class="space-y-4 hidden">
-        Aun en proceso
-      </section>
+
+
 
 
       <section id="detalle-cliente" class="space-y-4 hidden">
@@ -444,6 +503,7 @@
                       </svg>                      
               </button>
             </div>
+
           </div>
           <div id="info-cliente-detalle" class="m-2">
                 <!-- Opciones dinámicas generadas en JS -->
@@ -582,9 +642,7 @@
   </div>
 
   
-  <footer class="w-full bg-gray-100 p-4 text-center text-sm text-gray-600 border-t border-gray-200">
-    © 2025 BOB SUBASTAS. Todos los derechos reservados.
-  </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 </body>

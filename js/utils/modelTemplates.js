@@ -207,6 +207,49 @@ function getbusquedaClienteDetalle(){
 }
 
 
+
+function getbusquedaClienteDashboard(){
+  return `
+  <div class="w-full">
+
+      <div class="flex justify-end w-full">
+              <button 
+                    class="hover:text-red-500 text-xl font-bold"
+                    onclick="cerrarModalSoloBody()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
+      </div>
+    <!-- Título -->
+      <h2 class="text-2xl font-bold text-center mb-4">Buscar Cliente</h2>
+
+    <!-- Campo de búsqueda -->
+    <input type="text" id="input-buscar-dashboard-cliente"
+          placeholder="Buscar por nombre o número de documento"
+          class="border border-gray-300 rounded px-4 py-2 w-full mb-4"
+          oninput="filtrarDashboardClientes()">
+
+    <!-- Tabla resultados -->
+    <div class="overflow-y-auto max-h-80">
+      <table class="min-w-full text-sm text-left">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="px-4 py-2">Nombre</th>
+            <th class="px-4 py-2">Documento</th>
+            <th class="px-4 py-2">Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-resultados-dashboard-clientes">
+          <!-- Resultados dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  `
+}
+
+
 function getCardsClienteDetalle(clienteId) {
   const cliente = window.templatesStore.getClienteById(clienteId);
   if (!cliente) return "<p>Cliente no encontrado.</p>";
