@@ -1,25 +1,23 @@
 document.getElementById('input-csv-clientes').addEventListener('change', function(event) {
-    const archivoNombre = document.getElementById('archivo-nombre');
-    const file = event.target.files[0];
-    if (file) {
-      archivoNombre.textContent = file.name; // Muestra el nombre del archivo seleccionado
-    } else {
-      archivoNombre.textContent = "Ningún archivo seleccionado"; // Muestra un mensaje predeterminado
-    }
-  });
-  
-  document.getElementById('importar-btn').addEventListener('click', function() {
-    const inputFile =document.getElementById('input-csv-clientes') ;
-    if (inputFile.files.length > 0) {
-      importarClientesDesdeCSV({ target: { files: inputFile.files } });
-    } else {
-      notyf.error("Por favor, selecciona el archivo que desea importar.");
-    }
-  });
+  const file = event.target.files[0];
+  if (file) {
+    importarClientesDesdeCSV({ target: { files: [file] } }); // 🔹 Ejecuta la importación automáticamente
+  } else {
+    notyf.error("Por favor, selecciona un archivo CSV válido."); // 🔹 Manejo de error si no selecciona archivo
+  }
+});
+
+// === Evento al hacer clic en el botón "Importar CSV" ===
+document.getElementById('importar-btn').addEventListener('click', function() {
+  document.getElementById('input-csv-clientes').click(); // 🔹 Activa la ventana para seleccionar archivo
+});
+
   
 //Boton para registrar cliente
   document.getElementById("nuevo-cliente-btn").addEventListener("click", () => {
     console.log("Botón 'Nuevo Cliente' clickeado.");
     registrarCliente();
   });
+
+
 

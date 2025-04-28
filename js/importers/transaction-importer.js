@@ -56,8 +56,7 @@ async function importarIngresosDesdeCSV(event) {
         notyf.success("Todos los ingresos se importaron correctamente.");
       }
       // Limpiar input para permitir reimportar si se desea
-      archivoNombreIngreso=document.getElementById("archivo-nombre-ingreso");
-      archivoNombreIngreso.textContent = "Ningún archivo seleccionado";
+
       event.target.value = '';
     };
   
@@ -123,8 +122,6 @@ async function importarIngresosDesdeCSV(event) {
         notyf.success("Todos los egresos se importaron correctamente.");
       }
       // Limpiar input para permitir reimportar si se desea
-      archivoNombreEgreso=document.getElementById("archivo-nombre-egreso");
-      archivoNombreEgreso.textContent = "Ningún archivo seleccionado";
       event.target.value = '';
     };
   

@@ -7,7 +7,7 @@ function getOpcionesClientes() {
 
 function getOpcionesBanco() {
     return bancosValidos.map(banco =>
-        `<option value="${banco}">${banco.charAt(0).toUpperCase() + banco.slice(1)}</option>`
+        `<option value="${banco}">${banco.toUpperCase()}</option>`
     ).join('');
 }
 
@@ -46,17 +46,7 @@ function getOpcionesEstadoIngreso() {
         `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
     ).join('');
 }
-function getOpcionesEstadoIngreso() {
-    return estadosIngresoValidos.map(estado =>
-        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
-    ).join('');
-}
 
-function getOpcionesEstadoIngresoNoDevuelto() {
-    return estadosIngresoValidosNodevuelto.map(estado =>
-        `<option value="${estado}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</option>`
-    ).join('');
-}
 
 function getOpcionesEstadoEgreso() {
     return estadosEgresoValidos.map(estado =>

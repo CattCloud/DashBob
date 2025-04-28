@@ -33,26 +33,17 @@ function mostrarModalEliminacion({ titulo, mensaje, onConfirm }) {
 
 
 
-const botonesRegistrarFormReutilizable=
-        `
-        <div class="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Registrar</button>
-          <button type="reset" onclick="cerrarModalReutilizable()" class="bg-gray-300 px-4 py-2 rounded w-full sm:w-auto">Cancelar</button>
-        </div>
-        `
 
-const botonesEditarFormReutilizable=
-        `
-          <div id="btns-form" class="mt-6 flex justify-end space-x-2 w-full">
-          <button type="reset" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded"
+const botonesFormReutilizable= 
+    `
+        <button type="reset" form="form-modal" class="bg-red-700 hover:bg-red-400 text-white  px-4 py-2 rounded w-full sm:w-1/2"
                   onclick="cerrarModalReutilizable()">Cancelar</button>
-          <button id="btn-aceptar" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+        <button  id="btn-aceptar-form-modal" type="submit" form="form-modal" class="bg-[#f8a703] hover:bg-yellow-300 text-white px-4 py-2 rounded w-full sm:w-1/2">
             Aceptar
-          </button>
-          </div>
-        `
+        </button>
+    `
 
-
+    
 
 function getHTMLFormModal(casoModal){
   return FormTemplatesModal[casoModal] || `<p>Error:No se reconoce el caso para abrir el modal</p>`;
@@ -84,9 +75,10 @@ function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transac
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = getHTMLFormModal(casoModal) + botonesEditarFormReutilizable;
+  newForm.innerHTML = getHTMLFormModal(casoModal);
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
+  document.getElementById("modal-foot").innerHTML=botonesFormReutilizable;
   modal.classList.remove("hidden");
   // Cargar datos según el tipo (ingreso o egreso)
   cargarDatosEditarTransaccion(`editar-${tipo}`, campos, transaccion);
@@ -106,9 +98,10 @@ function abrirModalRegistrar(titulo, casoModal, onAceptar,content="") {
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = content+getHTMLFormModal(casoModal) + botonesRegistrarFormReutilizable;
+  newForm.innerHTML = content+getHTMLFormModal(casoModal);
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
+  document.getElementById("modal-foot").innerHTML=botonesFormReutilizable;
   modal.classList.remove("hidden");
   newForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -124,9 +117,11 @@ function abrirModalEditarCliente(titulo, casoModal, onAceptar,cliente) {
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = getHTMLFormModal(casoModal) + botonesEditarFormReutilizable;
+  newForm.innerHTML = getHTMLFormModal(casoModal);
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
+  document.getElementById("modal-foot").innerHTML=botonesFormReutilizable;
+
   modal.classList.remove("hidden");
   cargarDatosEditarCliente(cliente);
   newForm.addEventListener("submit", (e) => {
@@ -161,9 +156,10 @@ function abrirModalFiltros(titulo, casoModal, onAceptar) {
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = getHTMLFormModal(casoModal) + botonesRegistrarFormReutilizable;
+  newForm.innerHTML = getHTMLFormModal(casoModal);
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
+  document.getElementById("modal-foot").innerHTML=botonesFormReutilizable;
   modal.classList.remove("hidden");
   newForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -275,6 +271,7 @@ function cerrarModalReutilizable() {
 
 function cerrarModalSoloBody() {
   document.getElementById("modal-content").innerHTML="";
+  document.getElementById("modal-foot").classList.remove("hidden");
   document.getElementById("modal-reutilizable-tittle").classList.remove("hidden");
   document.getElementById("form-modal").classList.remove("hidden");
   document.getElementById("modal-reutilizable").classList.add("hidden");
@@ -289,9 +286,12 @@ function abrirModalSoloBody(templateVista) {
   // Reemplazar el form-modal con uno nuevo limpio
   const bodyModal = document.getElementById("modal-content");
   const form = document.getElementById("form-modal");
+  const footModal = document.getElementById("modal-foot");
   form.innerHTML="";
+  footModal.innerHTML="";
   bodyModal.innerHTML=templateVista;
   document.getElementById("form-modal").classList.add("hidden");
+  document.getElementById("modal-foot").classList.add("hidden");
   modal.classList.remove("hidden");
 }
 

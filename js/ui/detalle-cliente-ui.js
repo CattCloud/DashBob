@@ -4,6 +4,7 @@ let  egresoDetalleFilter;
   function cargarDetalleCliente(clienteId){
     if(clienteId){
 
+        document.getElementById("content-detalle-cliente").classList.remove("hidden");
         ingresoDetalleFilter = new FilterManagerTransaccion("ingreso", window.templatesStore.getIngresosByCliente(clienteId),true);
         window.ingresoDetalleFilter=ingresoDetalleFilter;
         egresoDetalleFilter = new FilterManagerTransaccion("egreso",  window.templatesStore.getEgresosByCliente(clienteId),true);

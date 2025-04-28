@@ -256,16 +256,17 @@ const FormTemplatesModal = {
       filtrosCliente:
       `
       <!-- Fecha desde / hasta -->
-      <div class="flex gap-2">
-        <div class="flex flex-col">
-          <label class="text-sm block mb-1 font-bold">Desde</label>
-          <input type="date" id="filtro-fecha-desde" class="input p-2 border rounded">
+      <div class="col-span-2 grid grid-cols-2 gap-2">
+        <div>
+          <label>Desde</label>
+          <input type="date" id="filtro-fecha-desde" class="input p-2 border rounded w-full">
         </div>
-        <div class="flex flex-col">
-          <label class="text-sm font-medium text-gray-700">Hasta</label>
-          <input type="date" id="filtro-fecha-hasta" class="input p-2 border rounded">
+        <div>
+          <label>Hasta</label>
+          <input type="date" id="filtro-fecha-hasta" class="input p-2 border rounded w-full">
         </div>
       </div>
+
 
       <!-- Tipo de Documento -->
       <div class="flex flex-col">
@@ -301,28 +302,31 @@ const FormTemplatesModal = {
       `,
       filtrosIngreso:`
       <!-- Fecha desde / hasta -->
-      <div class="flex gap-2">
-        <div class="flex flex-col">
-          <label class="text-sm font-medium text-gray-700">Desde</label>
-          <input type="date" id="filtro-ingreso-fecha-desde" class="input p-2 border rounded">
+      <div class="col-span-2 grid grid-cols-2 gap-2">
+        <div>
+          <label>Desde</label>
+          <input type="date" id="filtro-ingreso-fecha-desde" class="input p-2 border rounded w-full">
         </div>
-        <div class="flex flex-col">
-          <label class="text-sm font-medium text-gray-700">Hasta</label>
-          <input type="date" id="filtro-ingreso-fecha-hasta" class="input p-2 border rounded">
+        <div>
+          <label>Hasta</label>
+          <input type="date" id="filtro-ingreso-fecha-hasta" class="input p-2 border rounded w-full">
         </div>
       </div>
     
+
+
       <!-- Importe mínimo - máximo -->
-      <div class="flex gap-2">
-        <div class="flex flex-col">
+      <div class="col-span-2 grid grid-cols-2 gap-2">
+        <div>
           <label class="text-sm font-medium text-gray-700">Importe Mínimo</label>
-          <input type="number" id="filtro-ingreso-importe-min" class="input p-2 border rounded">
+          <input type="number" id="filtro-ingreso-importe-min" class="input p-2 border rounded w-full">
         </div>
-        <div class="flex flex-col">
+        <div>
           <label class="text-sm font-medium text-gray-700">Importe Máximo</label>
-          <input type="number" id="filtro-ingreso-importe-max" class="input p-2 border rounded">
+          <input type="number" id="filtro-ingreso-importe-max" class="input p-2 border rounded w-full">
         </div>
       </div>
+
     
       <!-- Concepto -->
       <div class="flex flex-col">
@@ -338,7 +342,7 @@ const FormTemplatesModal = {
         <label class="text-sm font-medium text-gray-700">Estado</label>
         <select id="filtro-ingreso-estado" class="input p-2 border rounded">
         <option value="todo">Todo</option>
-        ${getOpcionesEstadoIngresoNoDevuelto()}
+        ${getOpcionesEstadoIngreso()}
         </select>
       </div>
     
@@ -361,29 +365,31 @@ const FormTemplatesModal = {
       </div>
     `,
     filtrosEgreso:`
-    <!-- Fecha desde / hasta -->
-    <div class="flex gap-2">
-      <div class="flex flex-col">
-        <label class="text-sm font-medium text-gray-700">Desde</label>
-        <input type="date" id="filtro-egreso-fecha-desde" class="input p-2 border rounded">
+
+          <!-- Fecha desde / hasta -->
+      <div class="col-span-2 grid grid-cols-2 gap-2">
+        <div>
+          <label>Desde</label>
+          <input type="date" id="filtro-egreso-fecha-desde" class="input p-2 border rounded w-full">
+        </div>
+        <div>
+          <label>Hasta</label>
+          <input type="date" id="filtro-egreso-fecha-hasta" class="input p-2 border rounded w-full">
+        </div>
       </div>
-      <div class="flex flex-col">
-        <label class="text-sm font-medium text-gray-700">Hasta</label>
-        <input type="date" id="filtro-egreso-fecha-hasta" class="input p-2 border rounded">
+    
+      <!-- Importe mínimo - máximo -->
+      <div class="col-span-2 grid grid-cols-2 gap-2">
+        <div>
+          <label class="text-sm font-medium text-gray-700">Importe Mínimo</label>
+          <input type="number" id="filtro-egreso-importe-min" class="input p-2 border rounded w-full">
+        </div>
+        <div>
+          <label class="text-sm font-medium text-gray-700">Importe Máximo</label>
+          <input type="number" id="filtro-egreso-importe-max" class="input p-2 border rounded w-full">
+        </div>
       </div>
-    </div>
   
-    <!-- Importe mínimo - máximo -->
-    <div class="flex gap-2">
-      <div class="flex flex-col">
-        <label class="text-sm font-medium text-gray-700">Importe Mínimo</label>
-        <input type="number" id="filtro-egreso-importe-min" class="input p-2 border rounded">
-      </div>
-      <div class="flex flex-col">
-        <label class="text-sm font-medium text-gray-700">Importe Máximo</label>
-        <input type="number" id="filtro-egreso-importe-max" class="input p-2 border rounded">
-      </div>
-    </div>
   
     <!-- Concepto -->
     <div class="flex flex-col">
