@@ -12,17 +12,18 @@ document.querySelectorAll("aside .section-btn").forEach((btn) => {
     //Muestra solo la seccion seleccionada
     document.getElementById(seccion).classList.remove("hidden");
 
-    if (["ingresos", "egresos", "reportes"].includes(seccion)) {
-      cargarClientesSelect();
-    }
+ 
     if (seccion === "dashboard-general") {
       renderDashboard();
     }
     if(seccion === "dashboard-cliente"){
-
+      document.getElementById("cliente-dashboard-select").innerHTML = getOpcionesClientes();
+      cargarDashboardCliente(document.getElementById("cliente-dashboard-select").value);
     }
     if(seccion === "detalle-cliente"){
-      //Limpiarlo
+      //console.log("asa");
+      document.getElementById("cliente-detalle-select").innerHTML = getOpcionesClientes();
+      cargarDetalleCliente(document.getElementById("cliente-detalle-select").value);
     }
     if (seccion === "ingresos") {
       renderIngresos();
@@ -45,6 +46,7 @@ inicializarApp();
 
 
 //localStorage.clear();
-console.log(window.templatesStore.getIngresosByCliente("C000"));
-console.log(window.templatesStore.getEgresosByCliente("C000"));
+console.log(window.templatesStore.getClientes());
+//console.log(window.templatesStore.getIngresosByCliente("C000"));
+//console.log(window.templatesStore.getEgresosByCliente("C000"));
 

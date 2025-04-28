@@ -113,6 +113,12 @@ function editarEgreso(id) {
 }
 
 
+function editarEgresoDetalle(id) {
+  const egresoOriginal = window.templatesStore.getEgresoById(id);
+  const campos = obtenerCamposEgresoEditablesPorEstado(egresoOriginal.estado);
+  abrirModalEditarEgreso("Editar egreso",getCaseModalEgreso[egresoOriginal.estado],aplicarEditarEgreso,egresoOriginal,campos,true);
+}
+
 
 // === Eliminar cliente ===
 function eliminarEgreso(id) {
@@ -135,6 +141,26 @@ function eliminarEgreso(id) {
     });
 }
 
+
+// === Eliminar cliente ===
+function eliminarEgresoDetalle(id) {
+  //const egresoEliminar= window.templatesStore.getEgresoById(id);
+  mostrarModalEliminacion({
+    titulo: "¿Eliminar egreso?",
+    mensaje: "Esta acción eliminará el egreso permanentemente.",
+    onConfirm: () => {
+      try {
+          if(window.templatesStore.deleteEgreso(id)){
+              notyf.success("Egreso eliminado exitosamente");
+              cargarDetalleCliente(document.getElementById("cliente-detalle-select").value);
+          }
+        
+      } catch (error) {
+        notyf.error(error.message);
+      }
+    }
+  });
+}
 
 
 

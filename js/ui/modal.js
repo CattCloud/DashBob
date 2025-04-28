@@ -68,7 +68,7 @@ function cargarDatosEditarCliente(dataCliente){
 }
 
 
-function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transaccion, campos) {
+function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transaccion, campos,isDetalle=false) {
   const modal = document.getElementById("modal-reutilizable");
   document.getElementById("modal-reutilizable-tittle").textContent = titulo;
 
@@ -86,6 +86,10 @@ function abrirModalEditarTransaccion(tipo, titulo, casoModal, onAceptar, transac
     e.preventDefault();
     onAceptar(transaccion.id); // Ejecuta la lógica del botón Aceptar
     modal.classList.add("hidden");
+    if(isDetalle){
+      console.log(isDetalle);
+      cargarDetalleCliente(transaccion.clienteId);
+    }
   });
 }
 
@@ -98,15 +102,18 @@ function abrirModalRegistrar(titulo, casoModal, onAceptar,content="") {
   // Reemplazar el form-modal con uno nuevo limpio
   const oldForm = document.getElementById("form-modal");
   const newForm = oldForm.cloneNode(false); // Sin hijos ni eventos
-  newForm.innerHTML = content+getHTMLFormModal(casoModal);
+  newForm.innerHTML = getHTMLFormModal(casoModal);
   oldForm.replaceWith(newForm);
   newForm.id = "form-modal";
+  document.getElementById("modal-content").innerHTML=content;
   document.getElementById("modal-foot").innerHTML=botonesFormReutilizable;
   modal.classList.remove("hidden");
   newForm.addEventListener("submit", (e) => {
     e.preventDefault();
     onAceptar(); // Ejecuta la lógica del botón Aceptar
     modal.classList.add("hidden");
+    document.getElementById("modal-content").innerHTML="";
+    document.getElementById("modal-foot").innerHTML=""
   });
 }
 
@@ -132,12 +139,15 @@ function abrirModalEditarCliente(titulo, casoModal, onAceptar,cliente) {
 }
 
 
-function abrirModalEditarIngreso(titulo, casoModal, onAceptar, ingreso, campos) {
-  abrirModalEditarTransaccion("ingreso", titulo, casoModal, onAceptar, ingreso, campos);
+function abrirModalEditarIngreso(titulo, casoModal, onAceptar, ingreso, campos,isDetalle=false) {
+  abrirModalEditarTransaccion("ingreso", titulo, casoModal, onAceptar, ingreso, campos,isDetalle);
 }
 
-function abrirModalEditarEgreso(titulo, casoModal, onAceptar, egreso, campos) {
-  abrirModalEditarTransaccion("egreso", titulo, casoModal, onAceptar, egreso, campos);
+
+
+
+function abrirModalEditarEgreso(titulo, casoModal, onAceptar, egreso, campos,isDetalle=false) {
+  abrirModalEditarTransaccion("egreso", titulo, casoModal, onAceptar, egreso, campos,isDetalle);
 }
 
 
@@ -264,6 +274,7 @@ function abrirModalFiltrosEgreso() {
 }
 
 function cerrarModalReutilizable() {
+  document.getElementById("modal-content").innerHTML="";
   document.getElementById("modal-reutilizable").classList.add("hidden");
 
 }
