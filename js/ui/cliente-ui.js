@@ -30,6 +30,9 @@ function renderClientes() {
             <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Email</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Teléfono</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden lg:table-cell">Documento</th>
+            <th class="hidden">tipodocumento</th>
+            <th class="hidden">nrodocumento</th>
+            <th class="hidden">observaciones</th>
             <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
           </tr>
         </thead>
@@ -40,6 +43,9 @@ function renderClientes() {
               <td class="px-3 py-2 hidden sm:table-cell">${c.email}</td>
               <td class="px-3 py-2 hidden md:table-cell">${c.telefono}</td>
               <td class="px-3 py-2 hidden lg:table-cell">${c.tipoDocumento.toUpperCase()} ${c.numeroDocumento}</td>
+              <td class="hidden">${c.tipoDocumento}</td>
+              <td class="hidden">${c.numeroDocumento}</td>
+              <td class="hidden">${c.observaciones}</td>
               <td class="px-3 py-2 space-x-2">
                 <button title="Vista de Cliente" onclick="vistaCliente('${c.id}')" class="text-gray-600 hover:text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

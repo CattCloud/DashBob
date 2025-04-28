@@ -16,9 +16,6 @@ function renderIngresos() {
     }
   }
 
-
-
-
   //console.log(ingresosNoDevueltos);
   if (!ingresos.length) {
     contenedor.innerHTML = "<p class='text-gray-600'>No hay ingresos registrados.</p>";
@@ -27,24 +24,30 @@ function renderIngresos() {
 
   contenedor.innerHTML =
     `
-    <table class="min-w-full divide-y divide-gray-200 text-sm">
+    <table id="tabla-general-ingresos" class="min-w-full divide-y divide-gray-200 text-sm">
     <thead class="bg-gray-100">
-      <tr>
-        <th class="px-3 py-2 text-left text-gray-600">Cliente</th>
-        <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Banco</th>
-        <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Medio</th>
-        <th class="px-3 py-2 text-left text-gray-600">Importe</th>
-        <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
-        <th class="px-3 py-2 text-left text-gray-600">Estado</th>
-        <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
-      </tr>
+          <tr>
+            <th class="hidden">idCliente</th>
+            <th class="px-3 py-2 text-left text-gray-600">Cliente</th>
+            <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Banco</th>
+            <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Medio</th>
+            <th class="hidden">moneda</th>
+            <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+            <th class="hidden">importe</th>
+            <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
+            <th class="px-3 py-2 text-left text-gray-600">Estado</th>
+            <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
+          </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
   ${ingresos.map(i => `<tr>
+      <td class="hidden">${i.clienteId}</td>
       <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(i.clienteId).nombre}</td>
       <td class="px-3 py-2 hidden sm:table-cell">${i.banco.toUpperCase()}</td>
       <td class="px-3 py-2 hidden sm:table-cell">${i.medio.charAt(0).toUpperCase() + i.medio.slice(1)} </td>
+      <td class="hidden">${i.moneda}</td>
       <td class="px-3 py-2">S/. ${parseFloat(i.importe).toFixed(2)}</td>
+      <td class="hidden">${i.importe}</td>
       <td class="px-3 py-2 hidden md:table-cell">${i.concepto.charAt(0).toUpperCase() + i.concepto.slice(1)}</td>
       <td class="px-3 py-2"> <span
           class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(i.estado)}">${i.estado.toUpperCase()}</span>
@@ -100,13 +103,16 @@ function renderIngresosCliente() {
     }
 
     contenedor.innerHTML = `
-      <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <table id="tabla-cliente-ingresos" class="min-w-full divide-y divide-gray-200 text-sm">
         <thead class="bg-gray-100">
           <tr>
             <th class="px-3 py-2 text-left text-gray-600">Fecha</th>
+            <th class="hidden">idCliente</th>
             <th class="px-3 py-2 text-left text-gray-600">Banco</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Medio</th>
+            <th class="hidden">moneda</th>
             <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+            <th class="hidden">importe</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
             <th class="px-3 py-2 text-left text-gray-600">Estado</th>
             <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
@@ -116,9 +122,12 @@ function renderIngresosCliente() {
           ${ingresos.map(i => `
             <tr>
               <td class="px-3 py-2">${i.fechaRegistro}</td>
+              <td class="hidden">${i.clienteId}</td>
               <td class="px-3 py-2">${i.banco.toUpperCase()}</td>
               <td class="px-3 py-2 hidden md:table-cell">${i.medio.charAt(0).toUpperCase() + i.medio.slice(1)}</td>
+              <td class="hidden">${i.moneda}</td>
               <td class="px-3 py-2">S/ ${parseFloat(i.importe).toFixed(2)}</td>
+              <td class="hidden">${i.importe}</td>
               <td class="px-3 py-2 hidden md:table-cell">${i.concepto.charAt(0).toUpperCase() + i.concepto.slice(1)}</td>
               <td class="px-3 py-2">
                 <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(i.estado)}">
