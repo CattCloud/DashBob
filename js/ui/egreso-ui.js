@@ -22,13 +22,16 @@ function renderEgresos() {
     }
   
     contenedor.innerHTML = `
-      <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <table id="tabla-general-egresos" class="min-w-full divide-y divide-gray-200 text-sm">
         <thead class="bg-gray-100">
           <tr>
+            <th class="hidden">idCliente</th>
             <th class="px-3 py-2 text-left text-gray-600">Cliente</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Banco</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden sm:table-cell">Medio</th>
+            <th class="hidden">moneda</th>
             <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+            <th class="hidden">importe</th>
             <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
             <th class="px-3 py-2 text-left text-gray-600">Estado</th>
             <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
@@ -37,10 +40,13 @@ function renderEgresos() {
         <tbody class="divide-y divide-gray-200">
           ${egresos.map(e => `
             <tr>
+              <td class="hidden">${e.clienteId}</td>
               <td class="px-3 py-2 font-medium">${window.templatesStore.getClienteById(e.clienteId).nombre}</td>
               <td class="px-3 py-2 hidden sm:table-cell">${e.banco.toUpperCase()}</td>
               <td class="px-3 py-2 hidden sm:table-cell">${e.medio.charAt(0).toUpperCase() + e.medio.slice(1)}</td>
+              <td class="hidden">${e.moneda}</td>
               <td class="px-3 py-2">S/. ${parseFloat(e.importe).toFixed(2)}</td>
+              <td class="hidden">${e.importe}</td>
               <td class="px-3 py-2 hidden md:table-cell">${e.concepto.charAt(0).toUpperCase() + e.concepto.slice(1)}</td>
               <td class="px-3 py-2">
                 <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(e.estado)}">${e.estado.toUpperCase()}</span>
@@ -95,25 +101,31 @@ function renderEgresos() {
       }
     
       contenedor.innerHTML = `
-        <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <table id="tabla-cliente-egresos" class="min-w-full divide-y divide-gray-200 text-sm">
           <thead class="bg-gray-100">
-            <tr>
-              <th class="px-3 py-2 text-left text-gray-600">Fecha</th>
-              <th class="px-3 py-2 text-left text-gray-600">Banco</th>
-              <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Medio</th>
-              <th class="px-3 py-2 text-left text-gray-600">Importe</th>
-              <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
-              <th class="px-3 py-2 text-left text-gray-600">Estado</th>
-              <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
-            </tr>
+          <tr>
+            <th class="px-3 py-2 text-left text-gray-600">Fecha</th>
+            <th class="hidden">idCliente</th>
+            <th class="px-3 py-2 text-left text-gray-600">Banco</th>
+            <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Medio</th>
+            <th class="hidden">moneda</th>
+            <th class="px-3 py-2 text-left text-gray-600">Importe</th>
+            <th class="hidden">importe</th>
+            <th class="px-3 py-2 text-left text-gray-600 hidden md:table-cell">Concepto</th>
+            <th class="px-3 py-2 text-left text-gray-600">Estado</th>
+            <th class="px-3 py-2 text-left text-gray-600">Acciones</th>
+          </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
             ${egresos.map(e => `
               <tr>
                 <td class="px-3 py-2">${e.fechaRegistro}</td>
+                <td class="hidden">${e.clienteId}</td>
                 <td class="px-3 py-2">${e.banco.toUpperCase()}</td>
                 <td class="px-3 py-2 hidden md:table-cell">${e.medio.charAt(0).toUpperCase() + e.medio.slice(1)}</td>
+                <td class="hidden">${e.moneda}</td>
                 <td class="px-3 py-2">S/ ${parseFloat(e.importe).toFixed(2)}</td>
+                <td class="hidden">${e.importe}</td>
                 <td class="px-3 py-2 hidden md:table-cell">${e.concepto.charAt(0).toUpperCase() + e.concepto.slice(1)}</td>
                 <td class="px-3 py-2">
                   <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold ${getBadgeClase(e.estado)}">
