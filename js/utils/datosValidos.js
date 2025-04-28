@@ -55,8 +55,3 @@ const estadosEgresoValidos = [
   ];
 
 
-const estadosIngresoValidosNodevuelto = [
-    "pendiente",
-    "facturado",
-    "saldo a favor"
-];

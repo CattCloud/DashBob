@@ -1,6 +1,9 @@
 function cargarDashboardCliente(clienteId) {
     if (!clienteId) return;
-  
+
+    document.getElementById("charts-dashboard-cliente").classList.remove("hidden");
+    document.getElementById("irdetalle-cliente-btn").classList.remove("hidden");
+    
     const cliente = window.templatesStore.getClienteById(clienteId);
     const ingresos = window.templatesStore.getIngresosByCliente(clienteId);
     const egresos = window.templatesStore.getEgresosByCliente(clienteId);
@@ -31,30 +34,43 @@ function renderCardsClienteDashboard(cliente, ingresos, egresos) {
       .reverse()[0] || 'Sin movimientos';
   
     document.getElementById("cards-cliente-dashboard").innerHTML = `
-      <div class="bg-white p-4 rounded shadow">
-        <p>Saldo Actual</p>
-        <p class="text-2xl font-bold ${saldo >= 0 ? 'text-green-600' : 'text-red-600'}">S/ ${saldo.toFixed(2)}</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p>Total Ingresos</p>
-        <p class="text-2xl font-bold text-green-600">S/ ${totalIngresos.toFixed(2)}</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p>Total Egresos</p>
-        <p class="text-2xl font-bold text-red-600">S/ ${totalEgresos.toFixed(2)}</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p>N° Transacciones</p>
-        <p class="text-2xl font-bold text-blue-600">${numTransacciones}</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p>Estado Cliente</p>
-        <p class="text-2xl font-bold">${estadoCliente}</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p>Última Fecha Movimiento</p>
-        <p class="text-2xl font-bold">${ultimaFecha.split('T')[0]}</p>
-      </div>
+        <!-- Tarjeta: Saldo Actual -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Saldo Actual</p>
+            <p class="text-2xl font-bold ${saldo >= 0 ? 'text-green-700' : 'text-red-600'}">S/ ${saldo.toFixed(2)}</p>
+        </div>
+
+        <!-- Tarjeta: Total Ingresos -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Total Ingresos</p>
+            <p class="text-2xl font-bold text-green-600">S/ ${totalIngresos.toFixed(2)}</p>
+        </div>
+
+        <!-- Tarjeta: Total Egresos -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md  flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Total Egresos</p>
+            <p class="text-2xl font-bold text-red-600">S/ ${totalEgresos.toFixed(2)}</p>
+        </div>
+
+        <!-- Tarjeta: N° Transacciones -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md  flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">N° Transacciones</p>
+            <p class="text-2xl font-bold text-blue-600">${numTransacciones}</p>
+        </div>
+
+        <!-- Tarjeta: Estado Cliente -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md  flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Estado Cliente</p>
+            <p class="text-2xl font-bold text-teal-600">${estadoCliente}</p>
+        </div>
+
+        <!-- Tarjeta: Última Fecha Movimiento -->
+        <div class="bg-gray-50 p-5 rounded-xl shadow-md  flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Última Fecha Movimiento</p>
+            <p class="text-2xl font-bold text-gray-700">${ultimaFecha.split('T')[0]}</p>
+        </div>
+
+
     `;
   }
 

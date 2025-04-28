@@ -6,7 +6,7 @@ const secciones = document.querySelectorAll("main > section");
 document.querySelectorAll("aside .section-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const seccion = btn.dataset.section;
-
+    console.log("SI");
     //Oculta las secciones
     secciones.forEach((s) => s.classList.add("hidden"));
     //Muestra solo la seccion seleccionada
@@ -17,6 +17,12 @@ document.querySelectorAll("aside .section-btn").forEach((btn) => {
     }
     if (seccion === "dashboard-general") {
       renderDashboard();
+    }
+    if(seccion === "dashboard-cliente"){
+
+    }
+    if(seccion === "detalle-cliente"){
+      //Limpiarlo
     }
     if (seccion === "ingresos") {
       renderIngresos();

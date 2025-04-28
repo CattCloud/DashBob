@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +28,7 @@
   <script defer src="js/services/cliente-service.js"></script>
   <script defer src="js/services/ingreso-service.js"></script>
   <script defer src="js/services/egreso-service.js"></script>
+  <script defer src="js/services/reporter-service.js"></script>
   <script defer src="js/listeners/cliente-listeners.js"></script>
   <script defer src="js/listeners/egresos-listeners.js"></script>
   <script defer src="js/listeners/ingreso-listeners.js"></script>
@@ -37,6 +39,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
+
 <body class="bg-gray-100 flex flex-col min-h-screen m-0">
   <div class="flex flex-col md:flex-row flex-1">
     <!-- Sidebar - móvil: arriba, tablet/desktop: izquierda -->
@@ -48,27 +51,37 @@
       <!-- Dashboard -->
       <nav class="space-y-2">
         <div class="group">
-          <button class="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-cyan-700" onclick="toggleSubMenu('dashboard-menu')">
+          <button class="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-cyan-700"
+            onclick="toggleSubMenu('dashboard-menu')">
             <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
               </svg>
               <span>Dashboards</span>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
             </svg>
           </button>
           <div id="dashboard-menu" class="ml-4 space-y-2 hidden">
-            <button data-section="dashboard-general" class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+            <button data-section="dashboard-general"
+              class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
               </svg>
-              Dashboard General            
+              Dashboard General
             </button>
-            <button data-section="dashboard-cliente" class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+            <button data-section="dashboard-cliente"
+              class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
               </svg>
               Dashboard por Cliente
             </button>
@@ -77,61 +90,80 @@
 
         <!-- Clientes -->
         <div class="group">
-          <button class="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-cyan-700" onclick="toggleSubMenu('clientes-menu')">
+          <button class="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-cyan-700"
+            onclick="toggleSubMenu('clientes-menu')">
             <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-              </svg>              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+              </svg>
               <span>Clientes</span>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
             </svg>
           </button>
           <div id="clientes-menu" class="ml-4 space-y-2 hidden">
-            
-            <button data-section="clientes" class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-              </svg> 
+
+            <button data-section="clientes"
+              class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+              </svg>
               Gestión de Clientes
             </button>
-            <button data-section="detalle-cliente" class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
+            <button data-section="detalle-cliente"
+              class="section-btn w-full text-left px-4 py-2 rounded hover:bg-cyan-700 flex items-center gap-2">
 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-              </svg>             
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
               Detalle del Cliente
             </button>
           </div>
         </div>
-    
+
         <!-- Ingresos -->
-        <button data-section="ingresos" class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+        <button data-section="ingresos"
+          class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
           </svg>
           <span>Ingresos</span>
         </button>
-    
+
         <!-- Egresos -->
-        <button data-section="egresos" class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+        <button data-section="egresos"
+          class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
           </svg>
           <span>Egresos</span>
         </button>
-    
+
         <!-- Reportes -->
-        <button data-section="reportes" class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+        <button data-section="reportes"
+          class="section-btn w-full flex items-center px-4 py-2 rounded hover:bg-cyan-700 gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
           </svg>
           <span>Reportes</span>
         </button>
       </nav>
     </aside>
-    
+
     <script>
       function toggleSubMenu(menuId) {
         document.getElementById(menuId).classList.toggle("hidden");
@@ -145,68 +177,68 @@
 
         <!-- Título principal -->
         <h2 class="text-2xl font-bold text-gray-800">Resumen General</h2>
-      
+
         <!-- Grid de tarjetas KPI -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      
+        <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
+
           <!-- Tarjeta: Total Clientes -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Total Clientes</p>
-            <p class="text-2xl font-bold text-indigo-600" id="total-clientes">0</p>
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Total Clientes</p>
+            <p class="text-2xl font-bold text-blue-800" id="total-clientes">0</p>
           </div>
-      
+
           <!-- Tarjeta: Total Ingresos -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Total Ingresos</p>
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Total Ingresos</p>
             <p class="text-2xl font-bold text-green-600" id="total-ingresos">0</p>
           </div>
-      
+
           <!-- Tarjeta: Total Egresos -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Total Egresos</p>
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Total Egresos</p>
             <p class="text-2xl font-bold text-red-600" id="total-egresos">0</p>
           </div>
-      
+
           <!-- Tarjeta: Balance General -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Balance General</p>
-            <p class="text-2xl font-bold" id="balance-general">0</p>
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Balance General</p>
+            <p class="text-2xl font-bold text-blue-700" id="balance-general">0</p>
           </div>
-      
+
           <!-- Tarjeta: Ingresos Devueltos -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Ingresos Devueltos</p>
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Ingresos Devueltos</p>
             <p class="text-2xl font-bold text-yellow-500" id="total-devueltos">0</p>
           </div>
-      
-          <!-- Tarjeta: Clientes con Saldo a Favor -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Clientes con Saldo a Favor</p>
-            <p class="text-2xl font-bold text-teal-500" id="clientes-saldo-favor">0</p>
-          </div>
-      
-          <!-- Tarjeta: Clientes sin Transacciones -->
-          <div class="bg-white p-5 rounded-xl shadow-md flex flex-col gap-2">
-            <p class="text-gray-500 text-sm">Clientes sin Transacciones</p>
-            <p class="text-2xl font-bold text-gray-500" id="clientes-sin-transacciones">0</p>
-          </div>
-      
-        </div>
-      
 
-      
+          <!-- Tarjeta: Clientes con Saldo a Favor -->
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Clientes con Saldo a Favor</p>
+            <p class="text-2xl font-bold text-teal-600" id="clientes-saldo-favor">0</p>
+          </div>
+
+          <!-- Tarjeta: Clientes sin Transacciones -->
+          <div class="bg-gray-50 p-5 rounded-xl shadow-md flex flex-col items-center gap-2">
+            <p class="text-gray-600 text-sm font-bold">Clientes sin Transacciones</p>
+            <p class="text-2xl font-bold text-gray-600" id="clientes-sin-transacciones">0</p>
+          </div>
+
+        </div>
+
+
+
         <!-- Sección de Gráficos -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+
           <!-- Gráfico 1: Ingresos vs Egresos -->
           <div class="bg-white p-5 rounded-xl shadow-md">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Ingresos vs Egresos</h3>
             <div id="chart-ingresos-egresos"></div>
           </div>
-                <!-- Gráfico 4: Balance Mensual -->
+          <!-- Gráfico 4: Balance Mensual -->
           <div class="bg-white p-5 rounded-xl shadow-md">
-              <h3 class="text-lg font-semibold text-gray-700 mb-4">Balance Mensual</h3>
-              <div id="chart-balance-mensual"></div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Balance Mensual</h3>
+            <div id="chart-balance-mensual"></div>
           </div>
 
           <!-- Gráfico 2: Distribución Estados Ingresos -->
@@ -214,134 +246,186 @@
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Estados de Ingresos</h3>
             <div id="chart-estados-ingresos"></div>
           </div>
-      
+
           <!-- Gráfico 3: Distribución Estados Egresos -->
           <div class="bg-white p-5 rounded-xl shadow-md">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Estados de Egresos</h3>
             <div id="chart-estados-egresos"></div>
           </div>
-      
+
 
           <!-- Gráfico 5: Top 5 Clientes -->
           <div class="bg-white p-5 rounded-xl shadow-md lg:col-span-2">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Top 5 Clientes por Ingresos</h3>
             <div id="chart-top-clientes"></div>
           </div>
-      
-        </div>
-      
-      </section>
-      
-     
-      <section id="dashboard-cliente" class="space-y-6 hidden">
-        <h2 class="text-xl md:text-2xl font-bold">Dashboard de Cliente</h2>
 
-        <!-- Selector de Cliente -->
-        <div class="flex flex-col gap-2 mb-6 bg-white p-4 rounded shadow">
-          <label for="cliente-dashboard-select" class="text-lg font-bold text-gray-700">Cliente</label>
-          <div class="flex items-center gap-2">
+        </div>
+
+      </section>
+
+
+      <section id="dashboard-cliente" class="space-y-6 hidden">
+        <div class="flex justify-between sm:items-center flex-col sm:flex-row">
+          <h2 class="text-xl md:text-2xl font-bold">Dashboard de Cliente</h2>
+
+          <!-- Selector de Cliente -->
+          <div class="flex items-center justify-end gap-3 grow mt-6 sm:mt-0">
+
+            <!-- Label -->
+            <label for="cliente-dashboard-select" class="text-lg font-bold text-gray-700">Cliente</label>
+
             <!-- Select dinámico -->
-            <select id="cliente-dashboard-select"
-                    onchange="cargarDashboardCliente(this.value)"
-                    class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2">
+            <select id="cliente-dashboard-select" onchange="cargarDashboardCliente(this.value)"
+              class="border border-gray-300 bg-white rounded px-4 py-2 w-full md:w-1/2">
               <!-- Opciones generadas por JS -->
             </select>
-      
+
             <!-- Botón buscar cliente -->
             <button onclick="searchDashboardCliente()"
-                    class="hover:bg-gray-300 rounded-full p-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>                      
+              class="bg-[#f8a703] hover:bg-yellow-300 text-white rounded p-2 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
             </button>
-              <button onclick="irADetalleClienteActual()"
-              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2">
-              Detalle del Cliente
-            </button>
-          </div>
 
+
+            <div id="container-irdetalle-cliente">
+              <!-- Botón Detalle del Cliente (solo se muestra si hay un cliente seleccionado) -->
+              <button onclick="irADetalleClienteActual()"
+                class="bg-[#34898d] hover:bg-blue-300 text-white rounded p-2 flex items-center hidden"
+                id="irdetalle-cliente-btn" title="Ir Detalle del Cliente">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
-      
+
+
         <!-- Tarjetas Informativas -->
-        <div id="cards-cliente-dashboard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="cards-cliente-dashboard" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
           <!-- Cards inyectadas dinámicamente -->
         </div>
-      
+
         <!-- Gráficos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div id="charts-dashboard-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 hidden">
           <div class="bg-white rounded shadow p-4">
             <h3 class="text-center font-bold mb-4">Ingresos vs Egresos</h3>
             <div id="chart-cliente-ingresos-egresos"></div>
           </div>
-      
+
           <div class="bg-white rounded shadow p-4">
             <h3 class="text-center font-bold mb-4">Distribución Estados Ingresos</h3>
             <div id="chart-cliente-estados-ingresos"></div>
           </div>
-      
+
           <div class="bg-white rounded shadow p-4">
             <h3 class="text-center font-bold mb-4">Distribución Estados Egresos</h3>
             <div id="chart-cliente-estados-egresos"></div>
           </div>
-      
+
           <div class="bg-white rounded shadow p-4">
             <h3 class="text-center font-bold mb-4">Saldo Histórico</h3>
             <div id="chart-cliente-saldo"></div>
           </div>
         </div>
       </section>
-       
+
 
       <!-- Clientes -->
       <section id="clientes" class="hidden space-y-4">
-        <h2 class="text-xl md:text-2xl font-bold">Gestión de Clientes</h2>
-        <button id="nuevo-cliente-btn" class="bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Cliente</button>
+        <div class="flex justify-between sm:items-center flex-col sm:flex-row ">
+          <h2 class="text-xl md:text-2xl font-bold">Gestión de Clientes</h2>
 
-        <div class="flex items-center space-x-4">
-          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
-            Seleccionar archivo
-            <input type="file" id="input-csv-clientes" accept=".csv" class="hidden">
-          </label>
-          <span id="archivo-nombre" class="text-gray-600 italic">Ningún archivo seleccionado</span>
-          <button id="importar-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
-            Importar CSV
-          </button>
+          <div class="flex gap-4 items-center mt-3 sm:mt-0">
+            <button id="nuevo-cliente-btn"
+              class="bg-[#f8a703] hover:bg-yellow-300 text-white justify-center px-4 py-2 gap-2 flex items-center rounded w-full sm:w-auto font-bold ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+              </svg>
+              Nuevo Cliente
+            </button>
+            <div class="flex items-center space-x-4">
+              <input type="file" id="input-csv-clientes" accept=".csv" class="hidden">
+              <button id="importar-btn" title="Importar CSV de clientes"
+                class="bg-[#34898d] font-bold text-white p-2 rounded shadow-lg hover:bg-blue-400 transition duration-200">
+                <svg fill="#ffffff" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"
+                  class="size-6">
+                  <g id="SVGRepo_bgCarrier" stroke-width="2"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="m807.186 686.592 272.864 272.864H0v112.94h1080.05l-272.864 272.978 79.736 79.849 409.296-409.183-409.296-409.184-79.736 79.736ZM1870.419 434.69l-329.221-329.11C1509.688 74.07 1465.979 56 1421.48 56H451.773v730.612h112.94V168.941h790.584v451.762h451.762v1129.405H564.714v-508.233h-112.94v621.173H1920V554.52c0-45.176-17.619-87.754-49.58-119.83Zm-402.181-242.37 315.443 315.442h-315.443V192.319Z"
+                      fill-rule="evenodd"></path>
+                  </g>
+                </svg> </button>
+            </div>
+          </div>
         </div>
-                  <!-- 🔍 Barra de control de tabla -->
-          <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
 
+
+
+        <!-- 🔍 Barra de control de tabla -->
+        <div class="flex items-center justify-between mb-4 flex-col sm:flex-row sm:gap-1">
+          
+                  <!-- Select de ordenamiento -->
+                  <select id="select-orden-cliente"
+                  class="border border-gray-300 bg-white rounded px-3 py-2 mb-3 sm:mb-0 w-full sm:w-auto"
+                  onchange="window.clienteFilter.setOrden(this.value)">
+                  <option value="fecha">Fecha de Registro</option>
+                  <option value="nombre">Nombre (A-Z)</option>
+                  <option value="mayorSaldo">Mayor saldo</option>
+                  <option value="menorSaldo">Menor saldo</option>
+                  <option value="mayorIngreso">Mayor ingreso</option>
+                  <option value="mayorEgreso">Mayor egreso</option>
+                </select>
+  
+  
+
+          <div class="flex w-full justify-end gap-2">
             <!-- Campo de búsqueda -->
-            <input type="text"
-                  id="input-busqueda-cliente"
-                  placeholder="Buscar por nombre, documento, teléfono o email"
-                  class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
-                  oninput="window.clienteFilter.setTexto(this.value)" />
-
-            <!-- Select de ordenamiento -->
-            <select id="select-orden-cliente"
-                    class="border border-gray-300 rounded px-3 py-2"
-                    onchange="window.clienteFilter.setOrden(this.value)">
-                    <option value="fecha">Fecha de Registro</option>
-                    <option value="nombre">Nombre (A-Z)</option>
-                    <option value="mayorSaldo">Mayor saldo</option>
-                    <option value="menorSaldo">Menor saldo</option>
-                    <option value="mayorIngreso">Mayor ingreso</option>
-                    <option value="mayorEgreso">Mayor egreso</option>
-            </select>
+            <input type="text" id="input-busqueda-cliente" placeholder="Buscar por nombre, documento, teléfono o email"
+              class="border border-gray-300 bg-white rounded px-4 py-2 w-full md:w-1/2"
+              oninput="window.clienteFilter.setTexto(this.value)" />
 
             <!-- Botón para abrir sección de filtros -->
-            <button onclick="abrirModalFiltrosCliente()"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Filtros
+            <button onclick="abrirModalFiltrosCliente()" class="bg-blue-600  p-2 rounded hover:bg-blue-700"
+              title="Abrir Filtros">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
             </button>
-
             <!-- Botón para remover filtros -->
-            <button id="btn-remover-filtros-cliente"
-                    onclick="window.clienteFilter.resetFilters(); renderClientes();"
-                    class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
-              Remover filtros
+            <button id="btn-remover-filtros-cliente" onclick="window.clienteFilter.resetFilters(); renderClientes();"
+              class="bg-red-500 p-2 rounded hover:bg-red-400 hidden" title="Remover filtros">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
             </button>
           </div>
+
+
+        </div>
 
         <div id="tabla-clientes" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
@@ -350,111 +434,195 @@
 
       <!-- Ingresos -->
       <section id="ingresos" class="hidden space-y-4">
-        <h2 class="text-xl md:text-2xl font-bold">Gestión de Ingresos</h2>
-        <button id="nuevo-ingreso-btn" class="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Ingreso</button>
-        <div class="flex items-center space-x-4">
-          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
-            Seleccionar archivo
-            <input type="file" id="input-csv-ingresos" accept=".csv" class="hidden">
-          </label>
-          <span id="archivo-nombre-ingreso" class="text-gray-600 italic">Ningún archivo seleccionado</span>
-          <button id="importar-ingreso-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
-            Importar CSV
-          </button>
+
+        <div class="flex justify-between sm:items-center flex-col sm:flex-row ">
+          <h2 class="text-xl md:text-2xl font-bold">Gestión de Ingresos</h2>
+
+          <div class="flex gap-4 items-center mt-3 sm:mt-0">
+            <button id="nuevo-ingreso-btn"
+              class="bg-[#f8a703] hover:bg-yellow-300 text-white justify-center px-4 py-2 gap-2 flex items-center rounded w-full sm:w-auto font-bold ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Nuevo Ingreso
+            </button>
+
+            <div class="flex items-center space-x-4">
+              <input type="file" id="input-csv-ingresos" accept=".csv" class="hidden">
+              <button id="importar-ingreso-btn" title="Importar CSV de ingresos"
+                class="bg-[#34898d] font-bold text-white p-2 rounded shadow-lg hover:bg-blue-400 transition duration-200">
+                <svg fill="#ffffff" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"
+                  class="size-6">
+                  <g id="SVGRepo_bgCarrier" stroke-width="2"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="m807.186 686.592 272.864 272.864H0v112.94h1080.05l-272.864 272.978 79.736 79.849 409.296-409.183-409.296-409.184-79.736 79.736ZM1870.419 434.69l-329.221-329.11C1509.688 74.07 1465.979 56 1421.48 56H451.773v730.612h112.94V168.941h790.584v451.762h451.762v1129.405H564.714v-508.233h-112.94v621.173H1920V554.52c0-45.176-17.619-87.754-49.58-119.83Zm-402.181-242.37 315.443 315.442h-315.443V192.319Z"
+                      fill-rule="evenodd"></path>
+                  </g>
+                </svg> </button>
+              </button>
+            </div>
+
+          </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
 
-        <!-- Campo de búsqueda -->
-      <input type="text"
-         id="input-busqueda-transaccion"
-         placeholder="Buscar por nombre de cliente o banco"
-         class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
-         oninput="window.ingresoFilter.setTexto(this.value)" />
+
+
+        <!-- 🔍 Barra de control de tabla -->
+
+        <div class="flex items-center justify-between mb-4 flex-col sm:flex-row sm:gap-1">
 
           <!-- Select de ordenamiento -->
-          <select id="select-orden-ingreso"
-                  class="border border-gray-300 rounded px-3 py-2"
-                  onchange="window.ingresoFilter.setOrden(this.value)">
+          <select id="select-orden-ingreso" class="border border-gray-300 mb-3 sm:mb-0 bg-white rounded px-3 py-2 w-full sm:w-auto"
+            onchange="window.ingresoFilter.setOrden(this.value)">
             <option value="fecha">Fecha de Registro</option>
             <option value="nombre">Nombre Cliente (A-Z)</option>
             <option value="mayorImporte">Mayor Importe</option>
             <option value="menorImporte">Menor Importe</option>
           </select>
 
-          <!-- Botón abrir filtros -->
-          <button onclick="abrirModalFiltrosIngreso()"
-                  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Filtros
-          </button>
+          <div class="flex w-full justify-end gap-2">
+            <!-- Campo de búsqueda -->
+            <input type="text" id="input-busqueda-transaccion" placeholder="Buscar por nombre de cliente o banco"
+              class="border border-gray-300 bg-white rounded px-4 py-2 w-full md:w-1/2"
+              oninput="window.ingresoFilter.setTexto(this.value)" />
 
-          <!-- Botón remover filtros -->
-          <button id="btn-remover-filtros-ingreso"
-                  onclick="window.ingresoFilter.resetFilters(); renderIngresos();"
-                  class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
-            Remover filtros
-          </button>
+
+
+            <!-- Botón abrir filtros -->
+            <button onclick="abrirModalFiltrosIngreso()" title="Abrir Filtros"
+              class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+            </button>
+
+            <!-- Botón remover filtros -->
+            <button id="btn-remover-filtros-ingreso" title="Remover filtros" onclick="window.ingresoFilter.resetFilters(); renderIngresos();"
+              class="bg-red-500 p-2 rounded hover:bg-red-400 hidden">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+
 
         </div>
+      
         <div id="tabla-ingresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
         </div>
 
-        <h3 class="text-lg md:text-xl font-bold">Ingresos Devueltos</h3>
-        <div id="tabla-ingresos-devuelto" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
-          <!-- Tabla responsiva generada dinámicamente -->
-        </div>
+
       </section>
 
 
       <!-- Egresos -->
       <section id="egresos" class="hidden space-y-4">
-        <h2 class="text-xl md:text-2xl font-bold">Gestión de Egresos</h2>
-        <button id="nuevo-egreso-btn" class="bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto">Nuevo Egreso</button>
-        <div class="flex items-center space-x-4">
-          <label class="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded transition hover:bg-gray-300">
-            Seleccionar archivo
-            <input type="file" id="input-csv-egresos" accept=".csv" class="hidden">
-          </label>
-          <span id="archivo-nombre-egreso" class="text-gray-600 italic">Ningún archivo seleccionado</span>
-          <button id="importar-egreso-btn" class="bg-purple-600 text-white px-4 py-2 rounded shadow-lg hover:bg-purple-700 transition duration-200">
-            Importar CSV
-          </button>
-        </div>
-            <!-- 🔍 Barra de control de ingresos/egresos -->
-            <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
 
-              <!-- Campo de búsqueda -->
-              <input type="text"
-                    id="input-busqueda-egreso"
-                    placeholder="Buscar por nombre de cliente o banco"
-                    class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
-                    oninput="window.egresoFilter.setTexto(this.value)" />
+        <div class="flex justify-between sm:items-center flex-col sm:flex-row ">
+          <h2 class="text-xl md:text-2xl font-bold">Gestión de Egresos</h2>
 
-              <!-- Select de ordenamiento -->
-              <select id="select-orden-egreso"
-                      class="border border-gray-300 rounded px-3 py-2"
-                      onchange="window.egresoFilter.setOrden(this.value)">
-                <option value="fecha">Fecha de Registro</option>
-                <option value="nombre">Nombre Cliente (A-Z)</option>
-                <option value="mayorImporte">Mayor Importe</option>
-                <option value="menorImporte">Menor Importe</option>
-              </select>
+          <div class="flex gap-4 items-center mt-3 sm:mt-0">
 
-              <!-- Botón abrir filtros -->
-              <button onclick="abrirModalFiltrosEgreso()"
-                      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Filtros
+            <button id="nuevo-egreso-btn"  class="bg-[#f8a703] hover:bg-yellow-300 text-white justify-center px-4 py-2 gap-2 flex items-center rounded w-full sm:w-auto font-bold ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Nuevo Egreso
+            </button>
+  
+            <div class="flex items-center space-x-4">
+              <input type="file" id="input-csv-egresos" accept=".csv" class="hidden">
+              <button id="importar-egreso-btn" title="Importar CSV de egresos"
+              class="bg-[#34898d] font-bold text-white p-2 rounded shadow-lg hover:bg-blue-400 transition duration-200">
+              <svg fill="#ffffff" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"
+              class="size-6">
+              <g id="SVGRepo_bgCarrier" stroke-width="2"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="m807.186 686.592 272.864 272.864H0v112.94h1080.05l-272.864 272.978 79.736 79.849 409.296-409.183-409.296-409.184-79.736 79.736ZM1870.419 434.69l-329.221-329.11C1509.688 74.07 1465.979 56 1421.48 56H451.773v730.612h112.94V168.941h790.584v451.762h451.762v1129.405H564.714v-508.233h-112.94v621.173H1920V554.52c0-45.176-17.619-87.754-49.58-119.83Zm-402.181-242.37 315.443 315.442h-315.443V192.319Z"
+                  fill-rule="evenodd"></path>
+              </g>
+            </svg>
               </button>
-
-              <!-- Botón remover filtros -->
-              <button id="btn-remover-filtros-egreso"
-                      onclick="window.egresoFilter.resetFilters(); renderEgresos();"
-                      class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
-                Remover filtros
-              </button>
-
             </div>
+  
+          </div>
+
+
+        </div>
+
+
+ 
+
+
+        <!-- 🔍 Barra de control de ingresos/egresos -->
+        <div class="flex items-center justify-between mb-4 flex-col sm:flex-row sm:gap-1">
+
+          <!-- Select de ordenamiento -->
+          <select id="select-orden-egreso" class="border border-gray-300 mb-3 sm:mb-0 bg-white rounded px-3 py-2 w-full sm:w-auto"
+            onchange="window.egresoFilter.setOrden(this.value)">
+            <option value="fecha">Fecha de Registro</option>
+            <option value="nombre">Nombre Cliente (A-Z)</option>
+            <option value="mayorImporte">Mayor Importe</option>
+            <option value="menorImporte">Menor Importe</option>
+          </select>
+
+          <div class="flex w-full justify-end gap-2">
+            <!-- Campo de búsqueda -->
+            <input type="text" id="input-busqueda-egreso" placeholder="Buscar por nombre de cliente o banco"
+            class="border border-gray-300 bg-white rounded px-4 py-2 w-full md:w-1/2"
+            oninput="window.egresoFilter.setTexto(this.value)" />
+
+
+            <!-- Botón abrir filtros -->
+            <button onclick="abrirModalFiltrosEgreso()" title="Abrir Filtros"
+              class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+            </button>
+            
+            <!-- Botón remover filtros -->
+            <button id="btn-remover-filtros-egreso" onclick="window.egresoFilter.resetFilters(); renderEgresos();"
+            class="bg-red-500 p-2 rounded hover:bg-red-400 hidden">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+
+        </div>
 
         <div id="tabla-egresos" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto">
           <!-- Tabla responsiva generada dinámicamente -->
@@ -470,7 +638,8 @@
           </select>
           <input type="date" id="fecha-inicio" class="p-2 border rounded w-full" />
           <div class="md:col-span-3 space-y-2 sm:space-y-0">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Generar Reporte</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Generar
+              Reporte</button>
           </div>
         </form>
         <div id="resultado-reporte" class="bg-white p-4 rounded shadow mt-4 overflow-x-auto"></div>
@@ -481,169 +650,232 @@
 
 
       <section id="detalle-cliente" class="space-y-4 hidden">
-        <!-- Selector de cliente -->
+
+        <div class="flex justify-between sm:items-center flex-col sm:flex-row">
           <h2 class="text-xl md:text-2xl font-bold">Detalle del Cliente</h2>
-
-          <div class="flex flex-col gap-2 mb-6 bg-white">
-
+          <div class="flex items-center justify-end gap-3 grow mt-6 sm:mt-0">
             <label for="cliente-select" class="text-lg font-bold text-gray-700">Cliente</label>
-            <div class="flex items-center gap-2">
               <!-- Select normal -->
-              <select id="cliente-detalle-select"
-                      onchange="cargarDetalleCliente(this.value)"
-                      class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2">
-                <!-- Opciones dinámicas generadas en JS -->
-              </select>
-
+            <select id="cliente-detalle-select" onchange="cargarDetalleCliente(this.value)"
+                class="border border-gray-300 bg-white rounded px-4 py-2 w-full md:w-1/2">
+            <!-- Opciones dinámicas generadas en JS -->
+            </select>
               <!-- Botón buscar cliente -->
-              <button onclick="searchDetalleCliente()"
-                      class="hover:bg-gray-300 rounded-full p-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                      </svg>                      
-              </button>
-            </div>
-
+            <button onclick="searchDetalleCliente()" 
+              class="bg-[#f8a703] hover:bg-yellow-300 text-white rounded p-2 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </button>
           </div>
-          <div id="info-cliente-detalle" class="m-2">
+        </div>
+
+
+        <div id="content-detalle-cliente" class="hidden space-y-4 ">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex gap-2 flex-col w-full sm:w-1/2">
+              <div id="info-cliente-detalle" class="w-full h-full">
                 <!-- Opciones dinámicas generadas en JS -->
+              </div>
+                
+              <div id="botones-cliente-detalle" class="grid grid-cols-1 md:grid-cols-2  gap-1 sm:gap-2  w-full">
+              </div>
+            </div>
+  
+              <!-- Cards informativas de cliente -->
+              <div id="cards-cliente-detalle" class="grid grid-cols-1 md:grid-cols-2  gap-2 sm:gap-3 w-full sm:w-1/2"">
+                <!-- Aquí se inyectarán dinámicamente las tarjetas -->
+              </div>  
+  
           </div>
-          <!-- Cards informativas de cliente -->
-          <div id="cards-cliente-detalle" class="grid grid-cols-1 md:grid-cols-2 gap-4 m-2">
-            <!-- Aquí se inyectarán dinámicamente las tarjetas -->
-          </div>
+  
+  
+          <hr class="border-gray-200 my-5 border">
+  
+  
+  
+  
+          <div class="flex items-center justify-start sm:justify-between mb-4 flex-col sm:flex-row sm:gap-1 ">
+            <h3 class="text-xl md:text-xl font-semibold">Ingresos del Cliente</h3>
 
-          <div id="botones-cliente-detalle" class="flex flex-wrap gap-4 justify-center md:justify-start my-6">
-
-          </div>
-
-
-          
-          <h3 class="text-xl md:text-xl font-semibold">Ingresos del Cliente</h3>
-          <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
-            <!-- Campo de búsqueda -->
-            <input type="text"
-                   id="input-busqueda-ingreso-detalle"
-                   placeholder="Buscar por banco"
-                   class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
-                   oninput="window.ingresoDetalleFilter.setTexto(this.value)" />
-            
-            <!-- Select de ordenamiento -->
-            <select id="select-orden-ingreso-detalle"
-                    class="border border-gray-300 rounded px-3 py-2"
-                    onchange="window.ingresoDetalleFilter.setOrden(this.value); renderIngresosCliente();">
+            <select id="select-orden-ingreso-detalle" class="border border-gray-300 mb-3 sm:mb-0 bg-white rounded px-3 py-2 w-full sm:w-auto"
+              onchange="window.ingresoDetalleFilter.setOrden(this.value); renderIngresosCliente();">
               <option value="fecha">Fecha de Registro</option>
               <option value="mayorImporte">Mayor Importe</option>
               <option value="menorImporte">Menor Importe</option>
             </select>
-          
-            <!-- Botón abrir filtros -->
-            <button onclick="abrirModalFiltrosIngresoDetalle()"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Filtros
-            </button>
-          
-            <!-- Botón remover filtros -->
-            <button id="btn-remover-filtros-ingreso-detalle"
+            
+        </div>
+
+          <div class="flex w-full justify-end gap-2 ">
+                  <!-- Campo de búsqueda -->
+                  <input type="text" id="input-busqueda-ingreso-detalle" placeholder="Buscar por banco"
+                    class="border border-gray-300 bg-white rounded px-4 py-2 w-full"
+                    oninput="window.ingresoDetalleFilter.setTexto(this.value)" />
+  
+                  <!-- Select de ordenamiento -->
+  
+  
+                  <!-- Botón abrir filtros -->
+                  <button onclick="abrirModalFiltrosIngresoDetalle()" title="Abrir Filtros"
+                    class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z"
+                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                  </button>
+  
+                  <!-- Botón remover filtros -->
+                  <button id="btn-remover-filtros-ingreso-detalle" title="Remover filtros"
                     onclick="window.ingresoDetalleFilter.resetFilters(); renderIngresosCliente();"
-                    class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
-              Remover filtros
-            </button>
-          
-          </div>
+                    class="bg-red-500 p-2 rounded hover:bg-red-400 hidden">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11"
+                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                  </button>
+           </div>
+  
+
+            
+       
+  
+  
           <div id="tabla-ingresos-detalle-cliente" class="bg-white p-4 rounded shadow mt-1 overflow-x-auto">
             <!-- Aquí se genera dinámicamente la tabla de ingresos del cliente -->
           </div>
-
-
-
-          <h3 class="text-xl md:text-xl font-semibold">Egresos del Cliente</h3>
-          <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-white shadow rounded mb-4">
-            <!-- Campo de búsqueda -->
-            <input type="text"
-                   id="input-busqueda-egreso-detalle"
-                   placeholder="Buscar por banco"
-                   class="border border-gray-300 rounded px-4 py-2 w-full md:w-1/2"
-                   oninput="window.egresoDetalleFilter.setTexto(this.value);" />
-            
+  
+          <hr class="border-gray-200 my-5 border">
+  
+          <div class="flex sm:items-center justify-between mb-4 flex-col items-start sm:flex-row gap-1">
+            <h3 class="text-xl md:text-xl font-semibold ">Egresos del Cliente</h3>
+  
             <!-- Select de ordenamiento -->
-            <select id="select-orden-egreso-detalle"
-                    class="border border-gray-300 rounded px-3 py-2"
-                    onchange="window.egresoDetalleFilter.setOrden(this.value);">
+            <select id="select-orden-egreso-detalle" class="border border-gray-300 mb-3 sm:mb-0 bg-white rounded px-3 py-2 w-full sm:w-auto"
+              onchange="window.egresoDetalleFilter.setOrden(this.value);">
               <option value="fecha">Fecha de Registro</option>
               <option value="mayorImporte">Mayor Importe</option>
               <option value="menorImporte">Menor Importe</option>
             </select>
-          
-            <!-- Botón abrir filtros -->
-            <button onclick="abrirModalFiltrosEgresoDetalle()"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Filtros
-            </button>
-          
-            <!-- Botón remover filtros -->
-            <button id="btn-remover-filtros-egreso-detalle"
-                    onclick="window.egresoDetalleFilter.resetFilters(); renderEgresosCliente();"
-                    class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 hidden">
-              Remover filtros
-            </button>
-          
+            
           </div>
-          
+            <div class="flex w-full justify-end gap-2">
+              <!-- Campo de búsqueda -->
+              <input type="text" id="input-busqueda-egreso-detalle" placeholder="Buscar por banco"
+                class="border border-gray-300 rounded bg-white px-4 py-2 w-full "
+                oninput="window.egresoDetalleFilter.setTexto(this.value);" />
+  
+  
+  
+              <!-- Botón abrir filtros -->
+              <button onclick="abrirModalFiltrosEgresoDetalle()"  title="Abrir Filtros"
+              class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z"
+                      stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </g>
+                </svg>
+              </button>
+  
+              <!-- Botón remover filtros -->
+              <button id="btn-remover-filtros-egreso-detalle" title="Remover filtros"
+                onclick="window.egresoDetalleFilter.resetFilters(); renderEgresosCliente();"
+                class="bg-red-500 p-2 rounded hover:bg-red-400 hidden">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="size-6">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11"
+                      stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </g>
+                </svg>
+              </button>
+  
+            </div>
+
+    
+  
           <div id="tabla-egresos-detalle-cliente" class="bg-white p-4 rounded shadow mt-1 overflow-x-auto">
             <!-- Aquí se genera dinámicamente la tabla de egresos del cliente -->
           </div>
-          
+        </div>
+
+
       </section>
 
 
-          <!-- Modal reutilizable para eliminacion -->
-          <div id="modal-confirmacion" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
-            <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-4 text-center">
-              <h2 class="text-xl font-bold text-gray-800" id="modal-titulo">¿Estás seguro?</h2>
-              <p class="text-gray-600" id="modal-mensaje">Esta acción no se puede deshacer.</p>
-          
-              <div class="flex justify-center gap-4 mt-6">
-                <button id="btn-cancelar" class="px-4 py-2 border text-gray-800 rounded hover:bg-gray-200">
-                  Cancelar
-                </button>
-                <button id="btn-confirmar" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-                  Eliminar
-                </button>
-              </div>
-            </div>
+      <!-- Modal reutilizable para eliminacion -->
+      <div id="modal-confirmacion" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-4 text-center">
+          <h2 class="text-xl font-bold text-gray-800" id="modal-titulo">¿Estás seguro?</h2>
+          <p class="text-gray-600" id="modal-mensaje">Esta acción no se puede deshacer.</p>
+
+          <div class="flex justify-center gap-4 mt-6">
+            <button id="btn-cancelar" class="px-4 py-2 border text-gray-800 rounded hover:bg-gray-200">
+              Cancelar
+            </button>
+            <button id="btn-confirmar" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+              Eliminar
+            </button>
           </div>
-
-
-          <!-- Modal Reutilizable -->
-      <div id="modal-reutilizable" class="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50 hidden">
-              <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-                          
-                        <!-- Título -->
-                  <h2 id="modal-reutilizable-tittle" class="text-2xl font-bold text-center mb-4">Título del Modal</h2>
-                        <!-- Formulario dinámico -->
-                  <div class="modal-body space-y-3">
-                          <div id="modal-content">
-                              <!-- Aquí se inyecta el contenido modal.js -->
-                          </div>      
-                          <form id="form-modal" class="mt-4 flex flex-wrap gap-4 w-auto">
-                            <!-- Aquí se inyecta el contenido modal.js -->
-                          </form>
-                          <div id="modal-foot">
-                            <!-- Aquí se inyecta el contenido modal.js -->
-                        </div>  
-                  </div>
-
-              </div>
         </div>
-          
-          
+      </div>
+
+
+      <!-- Modal Reutilizable -->
+      <div id="modal-reutilizable"
+      class="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+    
+        <!-- Título -->
+        <h2 id="modal-reutilizable-tittle" class="text-2xl font-bold text-center mb-4">Título del Modal</h2>
+    
+        <!-- Formulario dinámico -->
+        <div class="modal-body space-y-3">
+          <div id="modal-content">
+            <!-- Aquí se inyecta el contenido modal.js -->
+          </div>
+    
+          <form id="form-modal" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Aquí se inyecta el contenido modal.js -->
+          </form>
+    
+          <div id="modal-foot" class="flex flex-col sm:flex-row justify-end gap-2 mt-4">
+            <!-- Botones dinámicos -->
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    
+
+
     </main>
   </div>
 
-  
+
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
+
 </html>
