@@ -18,7 +18,6 @@ function aplicarregistroIngreso(){
       notyf.success("Ingreso registrado exitosamente.");
       renderIngresos();
       renderDashboard();
-    
   } catch (error) {
       notyf.error(error.message);
     } 
@@ -85,11 +84,9 @@ function aplicarEditarIngreso(id){
         console.log( input.value);
         if (input) nuevoIngreso[campo] = input.value;
       });
-    console.log("Nuevo->",nuevoIngreso); 
     switch  (ingresoOriginal.estado){
         case "pendiente":
         case "saldo a favor":
-        
             if(validarImporteIngresoEditar(nuevoIngreso)){
                 try {
                     window.templatesStore.updateIngreso(id,nuevoIngreso);
@@ -128,6 +125,13 @@ function editarIngreso(id) {
     abrirModalEditarIngreso("Editar ingreso",getCaseModalIngreso[ingresoOriginal.estado],aplicarEditarIngreso,ingresoOriginal,campos);
 }
 
+function editarIngresoDetalle(id) {
+  const ingresoOriginal = window.templatesStore.getIngresoById(id);
+  const campos = obtenerCamposEditablesPorEstado(ingresoOriginal.estado);
+  console.log("Ingreso a editar",ingresoOriginal);
+  abrirModalEditarIngreso("Editar ingreso",getCaseModalIngreso[ingresoOriginal.estado],aplicarEditarIngreso,ingresoOriginal,campos,true);
+}
+
 
 
 // === Eliminar cliente ===
@@ -152,6 +156,29 @@ function eliminarIngreso(id) {
         }
       }
     });
+}
+
+
+function eliminarIngresoDetalle(id) {
+  const ingresoEliminar= window.templatesStore.getIngresoById(id);
+  mostrarModalEliminacion({
+    titulo: "¿Eliminar ingreso?",
+    mensaje: "Esta acción eliminará el ingreso permanentemente.",
+    onConfirm: () => {
+      try {
+        if(validarImporteIngresoEliminar(ingresoEliminar)){
+          if(window.templatesStore.deleteIngreso(id)){
+              notyf.success("Ingreso eliminado exitosamente");
+              cargarDetalleCliente(document.getElementById("cliente-detalle-select").value);
+          }
+        }else{
+          notyf.error("Error: No es posible eliminar el ingreso, el cliente quedaria con saldo negativo");
+        }
+      } catch (error) {
+        notyf.error(error.message);
+      }
+    }
+  });
 }
 
 
@@ -188,7 +215,6 @@ function registrarIngresoClientDetalle() {
       try {
         const ingreso = window.templatesStore.addIngreso(nuevoIngreso);
         notyf.success("Ingreso registrado exitosamente.");
-        cargarDetalleCliente(idCliente);
       } catch (error) {
         notyf.error(error.message);
       }

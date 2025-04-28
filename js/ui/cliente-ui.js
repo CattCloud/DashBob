@@ -76,12 +76,12 @@ function renderClientes() {
 function cargarClientesSelect() {
     const clientes=window.templatesStore.getClientes();
     const selects = [
-      document.getElementById("reporte-cliente")
+      document.getElementById("cliente-dashboard-select"),
+      document.getElementById("cliente-detalle-select")
     ];
     selects.forEach(select => {
       if (!select) return;
-      select.innerHTML = '<option value="">Seleccione un cliente</option>' +
-        clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join("");
+      getOpcionesClientes();
     });
 }
 

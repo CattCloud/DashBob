@@ -71,13 +71,20 @@ import { getState, updateState, _generateId } from './store-manager.js';
         const docExists = clientes.some(c => 
             c.tipoDocumento === clienteData.tipoDocumento && 
             c.numeroDocumento === clienteData.numeroDocumento);
-            
+        
+        const telefonoExists = clientes.some(c => 
+                c.telefono === clienteData.telefono);    
+
         if (emailExists) {
             throw new Error(`Ya existe un cliente con el email ${clienteData.email}`);
         }
         
         if (docExists) {
             throw new Error(`Ya existe un cliente con el documento ${clienteData.tipoDocumento}: ${clienteData.numeroDocumento}`);
+        }
+
+        if (telefonoExists) {
+            throw new Error(`Ya existe un cliente con el telefono ${clienteData.telefono}`);
         }
 
         if(!validarTipoDocumento(clienteData.tipoDocumento)){
@@ -127,6 +134,17 @@ import { getState, updateState, _generateId } from './store-manager.js';
                 
             if (emailExists) {
                 throw new Error(`Ya existe otro cliente con el email ${clienteData.email}`);
+            }
+        }
+
+        if (clienteData.telefono && 
+            clienteData.telefono !== clienteActual.telefono) {
+            
+            const telefonoExists = clientes.some(c => 
+                c.id !== id && c.telefono === clienteData.telefono);
+                
+            if (telefonoExists) {
+                throw new Error(`Ya existe otro cliente con el telefono ${clienteData.telefono}`);
             }
         }
         

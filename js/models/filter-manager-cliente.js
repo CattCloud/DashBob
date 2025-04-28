@@ -71,7 +71,7 @@ class FilterManagerCliente {
         if(!this.onlyOrdenamiento){
             this.applyOrdenamiento(); 
         }
-        //renderClientes();    
+        renderClientes();    
     }
       
 

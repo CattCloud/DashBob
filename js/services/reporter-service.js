@@ -58,27 +58,28 @@ function prepareTransaccionDetalleTableForExportCSV(nombreArchivo, idTabla) {
 }
 
 
+function exportarTablaCSV(nombreArchivo, tableObject) {
+    let csv = [];
+    const filas = tableObject.querySelectorAll("tr");
 
+    filas.forEach((fila, index) => {
+        const celdas = fila.querySelectorAll("th, td");
+
+        const filaDatos = Array.from(celdas).map(celda => {
+            let texto = celda.innerText.replace(/"/g, '""').trim();
+            return index === 0 ? `"${texto.toLowerCase()}"` : `"${texto}"`;
+        });
+
+        csv.push(filaDatos.join(","));
+    });
+
+    const csvString = "\uFEFF" + csv.join("\n"); 
+    const csvBlob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(csvBlob);
+    link.download = nombreArchivo + ".csv";
+    link.click();
+}
   
-  function exportarSeccionPDF(idSeccion, nombreArchivo) {
-    console.log("Aqui llegue");
-    const seccion = document.getElementById(idSeccion);
-    if (!seccion) {
-      console.error(`No se encontró la sección con id ${idSeccion}`);
-      return;
-    }
-  
-    const opt = {
-      margin:       0.5,
-      filename:     nombreArchivo + '.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    html2pdf().from(seccion).set({
-        html2canvas: { scale: 1, logging: true, useCORS: true },
-      }).save();
-      
-    //html2pdf().from(seccion).set(opt).save();
-  }
-  
+ 

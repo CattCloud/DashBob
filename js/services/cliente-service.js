@@ -42,7 +42,7 @@ function aplicarregistroCliente(){
   //console.log("DataCliente",clienteData);
   try {
     const nuevoCliente=window.templatesStore.addCliente(clienteData);
-    console.log(window.templatesStore.getClientes());
+    //console.log(window.templatesStore.getClientes());
     notyf.success("Cliente agregado exitosamente"); 
     window.clienteFilter.refreshFromStore();
     //renderClientes();
@@ -84,6 +84,7 @@ function editarCliente(id){
   const clienteActual = window.templatesStore.getClienteById(id);
   abrirModalEditarCliente("Editar Cliente","registrar_editar_Cliente",aplicareditarCliente,clienteActual);
 }
+
 
 
 function vistaCliente(id){
@@ -174,6 +175,7 @@ function irADashboardClienteActual() {
     notyf.error("Primero seleccione un cliente");
     return;
   }
+  document.getElementById("cliente-dashboard-select").innerHTML = getOpcionesClientes();
   document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
   document.getElementById("dashboard-cliente").classList.remove("hidden");
 
@@ -190,6 +192,7 @@ function irADetalleClienteActual() {
     notyf.error("Primero seleccione un cliente");
     return;
   }
+  document.getElementById("cliente-detalle-select").innerHTML = getOpcionesClientes();
   document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
   document.getElementById("detalle-cliente").classList.remove("hidden");
 
