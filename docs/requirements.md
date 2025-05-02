@@ -108,7 +108,148 @@ La implementación de una solución web para este problema permitirá:
 - Vista de balance por cliente
 - Función de cambio de estado para las transacciones
 - Documentación de uso básico del sistema
-- Código fuente comentado y organizado
+- Código fuente comentado y organizado# Requerimientos Actualizados: Sistema de Gestión de Ingresos, Egresos y Balance de Bob Subastas
+
+## 1. Descripción General del Sistema
+
+Bob Subastas es una empresa de economía circular que facilita la subasta de activos en desuso (vehículos) entre proveedores y clientes. El sistema desarrollado permite la gestión integral de clientes, ingresos (garantías), egresos (devoluciones) y balances financieros, resolviendo los problemas de control manual y falta de automatización.
+
+### 1.2 Pain Point Principal
+Actualmente, la gestión de datos de ingresos y egresos entre Bob Subastas y sus clientes se realiza mediante Google Forms y cálculos manuales en hojas de cálculo. Esto genera:
+
+- Ineficiencia en el procesamiento de la información
+- Mayor probabilidad de errores en los cálculos de saldos
+- Dificultad para dar seguimiento a los saldos a favor de los clientes
+- Imposibilidad de generar reportes automáticos para clientes
+- Proceso manual y tedioso para calcular el balance de cada cliente
+- Falta de centralización en la gestión de garantías de subasta y sus devoluciones
+
+### 1.3 Beneficios Esperados
+La implementación de una solución web para este problema permitirá:
+
+- Centralizar la información de ingresos y egresos en un solo sistema
+- Automatizar los cálculos de balance por cliente
+- Reducir errores humanos en el manejo de datos financieros
+- Mejorar la experiencia de usuario tanto para el equipo interno como para los clientes
+- Generar reportes personalizados para los clientes sobre su historial financiero
+- Optimizar el tiempo dedicado a estas tareas administrativas
+- Mayor transparencia en las transacciones
+- Facilitar el seguimiento del estado de las garantías (FACTURADO, DEVUELTO, etc.)
+
+## 2. Características Funcionales Principales
+
+### 2.1 Gestión de Clientes
+
+* Registro manual de clientes a través de formulario
+* Importación masiva desde archivo CSV
+* Edición de clientes
+* Eliminación solo si no tiene transacciones asociadas
+* Búsqueda, ordenamiento y filtros:
+
+  * Nombre, documento, email
+  * Fechas desde-hasta
+  * Observaciones (con/sin)
+  * Tipo documento
+  * Estado cliente (activo, sin transacciones, saldo positivo/cero)
+* Exportación a CSV
+
+### 2.2 Gestión de Ingresos
+
+* Registro manual de ingresos
+* Importación masiva desde CSV
+* Asociación directa al cliente (no a subasta ni vehículo)
+* Campos: banco, medio, moneda, importe, concepto, estado, fecha
+* Edición de ingresos según estado:
+
+  * PENDIENTE: todos los campos editables excepto ID y fecha
+  * FACTURADO: solo medio, banco y concepto
+  * SALDO A FAVOR: medio, banco, concepto e importe
+  * DEVUELTO: no editable
+* Eliminación permitida si no deja saldo negativo
+* Búsqueda, ordenamiento y filtros
+* Exportación a CSV
+
+### 2.3 Gestión de Egresos
+
+* Registro manual de egresos
+* Importación desde CSV
+* Asociado solo al cliente
+* Campos: banco, medio, moneda, importe, concepto, estado, fecha
+* Edición permitida según estado:
+
+  * PENDIENTE: se puede editar medio, banco, concepto e importe
+  * COMPLATADO: no editable
+* Eliminación permitida si no deja saldo negativo
+* Búsqueda, ordenamiento y filtros
+* Exportación a CSV
+
+### 2.4 Balance y Cálculos
+
+* Cálculo automático de saldo por cliente: suma ingresos válidos - suma egresos
+* Estados de ingresos considerados en el balance:
+
+  * PENDIENTE, FACTURADO, SALDO A FAVOR (cuentan)
+  * DEVUELTO (no cuenta)
+* Validación de saldo antes de egreso o edición/eliminación
+
+### 2.5 Dashboards
+
+#### Dashboard General
+
+* Tarjetas informativas: total clientes, ingresos, egresos, saldos, transacciones
+* Gráficos interactivos con ApexCharts:
+
+  * Comparación ingresos/egresos
+  * Distribuciones por estado (ingresos y egresos)
+  * Balance mensual
+  * Top 5 clientes por ingresos
+* Exportación a CSV (PDF no implementado)
+
+#### Dashboard por Cliente
+
+* Selección de cliente
+* Tarjetas informativas individuales (saldo, ingresos, egresos, último movimiento)
+* Gráficos personalizados por cliente
+
+### 2.6 Detalle del Cliente
+
+* Vista detallada de la información del cliente
+* Tarjetas con saldos y transacciones
+* Botones rápidos: registrar ingreso/egreso, ir a dashboard del cliente
+* Tabla de ingresos filtrada solo para ese cliente
+* Tabla de egresos filtrada solo para ese cliente
+* Filtros por fechas, importe, estado, concepto, etc.
+* Exportación a CSV
+
+### 2.7 Reportes
+
+* Exportación de datos filtrados en cada sección (CSV)
+* Reportes por sección:
+
+  * Dashboard general
+  * Dashboard cliente
+  * Tabla clientes, ingresos, egresos
+  * Detalle del cliente
+* Exportación a PDF planificada (no implementada)
+
+## 3. Estados de Transacciones
+
+### Ingresos
+
+| Estado        | Descripción                                               |
+| ------------- | --------------------------------------------------------- |
+| PENDIENTE     | Aún no se ha definido su uso. Cuenta como saldo.          |
+| FACTURADO     | Ya se emitió factura, pero el dinero sigue en la empresa. |
+| SALDO A FAVOR | Dinero disponible que el cliente puede usar.              |
+| DEVUELTO      | El dinero ya se devolvió. No cuenta como saldo.           |
+
+### Egresos
+
+| Estado     | Descripción                       |
+| ---------- | --------------------------------- |
+| PENDIENTE  | Solicitado pero aún no completado |
+| COMPLETADO | Ya se hizo la devolución          |
+
 
 ## 3. Wireframes y Flujos Básicos
 
@@ -117,36 +258,17 @@ La implementación de una solución web para este problema permitirá:
 ```
 - Página de Inicio (Dashboard)
   |-- Resumen de Balance General
-  |-- Acceso rápido a últimas transacciones
-  |-- Accesos directos a secciones principales
+  |-- Dashboard por cliente
 
 - Gestión de Clientes
   |-- Listado de Clientes
-  |-- Formulario de Nuevo Cliente
-  |-- Vista Detalle de Cliente
-      |-- Datos del cliente
-      |-- Balance del cliente
-      |-- Historial de transacciones
+  |-- Detalle de Cliente
 
 - Gestión de Ingresos (Garantías)
-  |-- Listado de Ingresos
-  |-- Formulario de Nuevo Ingreso
-      |-- Información del cliente
-      |-- Información del vehículo y subasta
-      |-- Detalles del pago
-      |-- Datos de facturación
-  |-- Filtros y búsqueda
 
 - Gestión de Egresos (Devoluciones)
-  |-- Listado de Egresos
-  |-- Formulario de Nuevo Egreso
-  |-- Filtros y búsqueda
 
-- Reportes
-  |-- Selector de cliente
-  |-- Filtros de fecha
-  |-- Vista previa de reporte
-  |-- Opciones de exportación
+
 ```
 
 ### 3.2 Interfaces Clave
@@ -154,9 +276,6 @@ La implementación de una solución web para este problema permitirá:
 #### Dashboard Principal
 - Header con logo de Bob Subastas y menú de navegación
 - Panel resumen con total de ingresos, egresos y balance general
-- Lista de últimas transacciones (5 más recientes)
-- Accesos directos a "Nuevo Ingreso", "Nuevo Egreso" y "Nuevo Cliente"
-- Buscador rápido de clientes
 
 #### Listado de Clientes
 - Barra de búsqueda y filtros
@@ -176,7 +295,6 @@ La implementación de una solución web para este problema permitirá:
   - Celular (requerido)
   - Tipo de documento (DNI/RUC)
   - Número de documento (requerido)
-  - Datos de facturación (RUC/DNI, nombre o razón social)
   - Observaciones (opcional)
 - Botones de "Guardar" y "Cancelar"
 
@@ -194,16 +312,7 @@ La implementación de una solución web para este problema permitirá:
 #### Formulario de Registro de Ingreso (Garantía)
 - Selector de cliente (con búsqueda)
 - Fecha y hora (con valor predeterminado actual)
-- Sección de información del vehículo:
-  - Placa
-  - Empresa del vehículo (Santander, Acceso, Otro)
-  - Fecha de subasta
-  - Número de lote
-- Sección de información del pago:
-  - Entidad financiera
-  - Número de cuenta origen
   - Monto de la garantía
-  - Indicación de comprobante (sí/no)
 - Datos de facturación:
   - RUC/DNI
   - Nombre completo o razón social
@@ -220,13 +329,6 @@ La implementación de una solución web para este problema permitirá:
 - Campo para concepto/motivo
 - Botones de "Guardar" y "Cancelar"
 
-#### Reporte de Cliente
-- Encabezado con datos del cliente
-- Período del reporte
-- Tabla de ingresos con detalle
-- Tabla de egresos con detalle
-- Balance final destacado
-- Opción para imprimir o exportar
 
 ### 3.3 Flujos Básicos de Usuario
 
@@ -259,7 +361,7 @@ La implementación de una solución web para este problema permitirá:
 7. Guarda el formulario
 8. Sistema actualiza el balance del cliente
 9. Muestra confirmación de la operación
-
+    
 #### Flujo: Cambio de Estado de una Transacción
 1. Usuario accede al listado de ingresos o a la vista detalle de cliente
 2. Identifica la transacción y accede a su detalle
@@ -267,12 +369,6 @@ La implementación de una solución web para este problema permitirá:
 4. Guarda los cambios
 5. Sistema actualiza el estado y muestra confirmación
 
-#### Flujo: Generación de Reporte para Cliente
-1. Usuario accede a la vista detalle de un cliente
-2. Hace clic en "Generar Reporte"
-3. Selecciona el rango de fechas (opcional)
-4. Sistema genera un reporte con el historial de transacciones y balance
-5. Usuario puede exportar, imprimir o enviar el reporte
 
 ## 4. Datos y Estructuras
 
@@ -285,8 +381,6 @@ La implementación de una solución web para este problema permitirá:
   telefono: "999056488",
   tipoDocumento: "DNI", // DNI o RUC
   numeroDocumento: "12345678",
-  facturacionRuc: "20123456789", // Opcional
-  facturacionNombre: "Empresa SAC", // Opcional
   observaciones: "Cliente frecuente",
   fechaRegistro: "2023-07-15T10:30:00"
 }
@@ -297,19 +391,8 @@ La implementación de una solución web para este problema permitirá:
 {
   id: "I001", // Autogenerado
   clienteId: "C001", // Referencia al cliente
-  fecha: "2023-07-16T15:20:00",
-  // Información del vehículo
-  placaVehiculo: "ABC123",
-  empresaVehiculo: "Santander", // Santander, Acceso, Otro
-  fechaSubasta: "2023-07-30",
-  numeroLote: "L01176_SL11_V01",
-  // Información del pago
-  entidadFinanciera: "BCP",
-  numeroCuentaOrigen: "00320000300638595534",
   moneda: "PEN", // PEN, USD
   importe: 1000.00,
-  tieneComprobante: true,
-  // Datos adicionales
   concepto: "Garantía para subasta de vehículo Toyota",
   estado: "PENDIENTE", // PENDIENTE, FACTURADO, DEVUELTO, SALDO A FAVOR
   registradoPor: "Admin", // Usuario que registra
@@ -322,13 +405,11 @@ La implementación de una solución web para este problema permitirá:
 {
   id: "E001", // Autogenerado
   clienteId: "C001", // Referencia al cliente
-  fecha: "2023-07-20T11:45:00",
   medio: "Transferencia", // Transferencia, Depósito, etc.
   banco: "BCP",
-  numeroCuentaDestino: "19326367750-1-89",
   moneda: "PEN", // PEN, USD
   importe: 500.00,
-  concepto: "Devolución parcial de garantía",
+  concepto: "Garantía para subasta de vehículo Toyota",
   estado: "COMPLETADO", // PENDIENTE, COMPLETADO
   registradoPor: "Admin", // Usuario que registra
   fechaRegistro: "2023-07-20T11:50:00"
@@ -352,18 +433,10 @@ La implementación de una solución web para este problema permitirá:
 - Los datos deben ser validados antes de almacenarse
 - El sistema debe prevenir la pérdida accidental de datos
 
-## 6. Entregables Adicionales (Opcionales)
+## 6. Limitaciones y Futuras Mejoras
 
-### 6.1 Características de Valor Agregado
-- Modo oscuro/claro para la interfaz
-- Exportación de reportes en formato PDF o CSV
-- Gráficos visuales de ingresos vs egresos
-- Notificaciones para saldos bajos o negativos
-- Importación de datos desde CSV/Excel
-- Respaldo y restauración de datos
-
-### 6.2 Consideraciones de Seguridad
-- Encriptación básica de datos sensibles en localStorage
-- Protección contra manipulación de datos en el cliente
-- Validación de todos los inputs para prevenir inyecciones
-- Sistema simple de usuarios y permisos para distinguir diferentes áreas (ventas, post-venta, contabilidad)
+* PDF no implementado
+* Sin autenticación de usuarios
+* No hay historial de cambios ni bitácora
+* Interacción multiusuario no soportada (solo LocalStorage)
+* Posibilidad de dividir ingresos en futuros desarrollos
