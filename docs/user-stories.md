@@ -1,388 +1,182 @@
-# Historias de Usuario - Sistema de Gestión de Ingresos, Egresos y Balance de Bob Subastas
+# Historias de Usuario - Sistema de Gestión de Ingresos, Egresos y Balance - Bob Subastas
 
 ## Módulo: Gestión de Clientes
 
-### Historia de Usuario: Registro de nuevo cliente
-Como administrador del sistema  
-Quiero poder registrar nuevos clientes con su información completa  
-Para mantener una base de datos actualizada de los participantes en las subastas  
+### HU01 - Registrar nuevo cliente
+**Como** administrador  
+**Quiero** registrar un cliente de forma manual o por CSV  
+**Para** tener una base actualizada de participantes en subastas.
 
 #### Criterios de Aceptación:
-1. Dado que estoy en la sección de clientes  
-   Cuando hago clic en "Nuevo Cliente" y completo el formulario con datos válidos  
-   Entonces el sistema debe guardar los datos y mostrar un mensaje de confirmación
+- Permite registrar cliente manualmente llenando un formulario con validaciones.
+- Permite importar múltiples clientes desde un archivo CSV con validación automática de duplicados.
+- No permite registrar clientes con telefono, emails o nro de documentos(DNI-RUC) repetidos.
 
-2. Dado que estoy registrando un nuevo cliente  
-   Cuando dejo campos requeridos vacíos (correo, nombre, teléfono, documento)  
-   Entonces el sistema debe mostrar mensajes de error y no permitir guardar
+### HU02 - Visualizar clientes
+**Como** usuario  
+**Quiero** ver un listado filtrable y ordenable de clientes  
+**Para** tener acceso rápido a la información.
 
-3. Dado que estoy registrando un nuevo cliente  
-   Cuando ingreso un correo o documento que ya existe en el sistema  
-   Entonces el sistema debe alertar sobre la duplicidad y no permitir guardar
+#### Funcionalidades:
+- Búsqueda por nombre, documento, email o teléfono.
+- Orden por fecha, nombre, saldo, total de ingresos o egresos.
+- Filtros por: tipo documento, observaciones, estado del cliente, fechas.
+- Exportación a CSV con filtros aplicados.
 
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de registro, validación de campos, almacenamiento en LocalStorage
-- Modelo de datos: Cliente (id, email, nombre, telefono, tipoDocumento, numeroDocumento, facturacionRuc, facturacionNombre, observaciones, fechaRegistro)
-- Interacciones: Validar formato de correo, validar formato de número de documento según tipo
+### HU03 - Editar o eliminar cliente
+**Como** administrador  
+**Quiero** editar información de clientes existentes o eliminarlos si es válido  
+**Para** mantener la base de datos limpia y actualizada.
 
-### Historia de Usuario: Listado de clientes
-Como administrador del sistema  
-Quiero visualizar un listado de todos los clientes registrados  
-Para poder acceder rápidamente a su información y gestionar sus operaciones  
+#### Reglas:
+- Solo pueden eliminarse clientes sin transacciones asociadas.
+- El sistema muestra advertencias antes de eliminar.
+- Al editar se mantiene la validación de datos únicos (email/documento).
 
-#### Criterios de Aceptación:
-1. Dado que accedo a la sección de clientes  
-   Cuando la página carga completamente  
-   Entonces debo ver una tabla con todos los clientes registrados y su información básica
+### HU04 - Vista detalle del cliente
+**Como** usuario  
+**Quiero** ver todos los datos y movimientos de un cliente específico  
+**Para** conocer su historial y estado financiero.
 
-2. Dado que estoy en el listado de clientes  
-   Cuando utilizo el buscador con un criterio específico (nombre, documento)  
-   Entonces la tabla debe filtrar y mostrar solo los clientes que coincidan
+#### Funcionalidades:
+- Vista con ficha del cliente y tarjetas de resumen (saldo, ingresos, egresos, transacciones, último movimiento).
+- Tablas de ingresos y egresos del cliente con filtros.
+- Acceso directo al Dashboard del cliente o para registrar ingreso/egreso.
 
-3. Dado que estoy en el listado de clientes  
-   Cuando hago clic en las opciones de un cliente específico  
-   Entonces debo poder acceder a ver detalle, editar, o registrar operaciones
+---
 
-#### Notas Técnicas:
-- Componentes necesarios: Tabla de clientes, sistema de búsqueda y filtrado, acciones por cliente
-- Modelo de datos: Lista de objetos Cliente desde LocalStorage
-- Interacciones: Ordenamiento de columnas, filtrado dinámico, acciones contextuales
+## Módulo: Ingresos
 
-### Historia de Usuario: Edición de datos de cliente
-Como administrador del sistema  
-Quiero poder modificar la información de los clientes  
-Para mantener sus datos actualizados y corregir posibles errores  
+### HU05 - Registrar ingreso
+**Como** administrador  
+**Quiero** registrar un nuevo ingreso manualmente o desde CSV  
+**Para** llevar un control financiero detallado.
 
-#### Criterios de Aceptación:
-1. Dado que estoy en el listado de clientes  
-   Cuando hago clic en "Editar" para un cliente específico  
-   Entonces debo ver un formulario con los datos actuales del cliente
+#### Reglas:
+- Estados posibles: pendiente, facturado, saldo a favor, devuelto.
+- Validaciones según estado y saldo.
+- Importación CSV masiva con reporte de errores y omisiones.
 
-2. Dado que estoy editando la información de un cliente  
-   Cuando modifico los campos y guardo los cambios  
-   Entonces el sistema debe actualizar los datos y mostrar confirmación
+### HU06 - Visualizar ingresos
+**Como** usuario  
+**Quiero** consultar ingresos registrados con filtros y ordenamientos  
+**Para** revisar movimientos y generar reportes.
 
-3. Dado que estoy editando la información de un cliente  
-   Cuando decido cancelar la operación  
-   Entonces el sistema debe volver al listado sin realizar cambios
+#### Funcionalidades:
+- Filtros por cliente, fecha, estado, moneda, importe, concepto, medio, banco.
+- Tabla dividida entre ingresos devueltos y no devueltos.
+- Exportación CSV con filtros aplicados.
 
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de edición, validación de campos, actualización en LocalStorage
-- Modelo de datos: Actualización del objeto Cliente existente
-- Interacciones: Pre-llenado de datos existentes, validaciones de formato
+### HU07 - Editar/eliminar ingreso
+**Como** usuario  
+**Quiero** editar o eliminar ingresos  
+**Para** corregir errores y mantener la integridad del sistema.
 
-### Historia de Usuario: Vista detalle de cliente
-Como administrador del sistema  
-Quiero visualizar toda la información de un cliente específico junto con su historial de transacciones  
-Para tener una visión completa de su relación con la empresa  
+#### Reglas:
+- Solo estados permitidos: pendiente, saldo a favor, facturado.
+- Validar que el nuevo importe no deje al cliente con saldo negativo.
+- Los ingresos devueltos no pueden editarse ni eliminarse.
 
-#### Criterios de Aceptación:
-1. Dado que estoy en el listado de clientes  
-   Cuando hago clic en "Ver detalle" para un cliente específico  
-   Entonces debo ver sus datos completos y su balance actual
+---
 
-2. Dado que estoy en la vista detalle de un cliente  
-   Cuando reviso la sección de historial  
-   Entonces debo ver todas las transacciones (ingresos y egresos) asociadas al cliente
+## Módulo: Egresos
 
-3. Dado que estoy en la vista detalle de un cliente  
-   Cuando hago clic en "Registrar ingreso" o "Registrar egreso"  
-   Entonces el sistema debe redirigirme al formulario correspondiente con el cliente preseleccionado
+### HU08 - Registrar egreso
+**Como** usuario  
+**Quiero** registrar egresos manualmente o desde CSV  
+**Para** devolver saldos o pagar proveedores.
 
-#### Notas Técnicas:
-- Componentes necesarios: Vista detalle cliente, historial de transacciones, cálculo de balance
-- Modelo de datos: Cliente, relación con Ingresos y Egresos mediante clienteId
-- Interacciones: Navegación a formularios relacionados, filtros de historial por fecha o tipo
+#### Reglas:
+- Solo se permite registrar si el cliente tiene saldo disponible suficiente.
+- Importación masiva con validaciones.
 
-## Módulo: Gestión de Ingresos (Garantías)
+### HU09 - Visualizar egresos
+**Como** usuario  
+**Quiero** consultar egresos con filtros  
+**Para** conocer pagos y devoluciones realizadas.
 
-### Historia de Usuario: Registro de nueva garantía
-Como administrador del sistema  
-Quiero registrar los pagos de garantía realizados por los clientes para participar en subastas  
-Para mantener un control preciso de los ingresos y actualizar el balance del cliente  
+#### Funcionalidades:
+- Filtros por fecha, cliente, estado, concepto, importe, banco.
+- Ordenamiento por fecha, cliente o monto.
+- Exportación a CSV.
 
-#### Criterios de Aceptación:
-1. Dado que estoy en la sección de ingresos  
-   Cuando completo el formulario de nuevo ingreso con todos los datos requeridos  
-   Entonces el sistema debe registrar la garantía y actualizar el balance del cliente
+### HU10 - Editar o eliminar egreso
+**Como** administrador  
+**Quiero** modificar o eliminar egresos  
+**Para** mantener los datos correctos.
 
-2. Dado que estoy registrando un nuevo ingreso  
-   Cuando selecciono un cliente existente  
-   Entonces el sistema debe cargar automáticamente sus datos de facturación
+#### Reglas:
+- Solo se permiten cambios si el estado es pendiente.
+- No se puede editar clienteId ni moneda.
+- La eliminación recalcula el saldo del cliente y verifica que no quede negativo.
 
-3. Dado que estoy registrando un nuevo ingreso  
-   Cuando no completo campos obligatorios  
-   Entonces el sistema debe mostrar alertas y no permitir guardar
+---
 
-4. Dado que registro un nuevo ingreso exitosamente  
-   Cuando la operación se completa  
-   Entonces el sistema debe mostrar confirmación y ofrecer opciones para continuar
+## Módulo: Dashboards
 
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de ingreso con múltiples secciones, selector de cliente
-- Modelo de datos: Ingreso (id, clienteId, fecha, datos del vehículo, datos del pago, estado)
-- Interacciones: Carga automática de datos del cliente, validaciones específicas por campo
+### HU11 - Dashboard General
+**Como** usuario  
+**Quiero** ver un resumen general de ingresos, egresos y clientes  
+**Para** tener un panorama global de la situación financiera.
 
-### Historia de Usuario: Visualización de historial de ingresos
-Como administrador del sistema  
-Quiero ver un listado completo de todos los ingresos registrados  
-Para tener control y seguimiento de las garantías recibidas  
+#### Contenido:
+- Tarjetas informativas (totales, saldos, clientes sin transacción, ingresos devueltos).
+- Gráficos: barras comparativas, pastel por estados, top clientes, balance mensual.
 
-#### Criterios de Aceptación:
-1. Dado que accedo a la sección de ingresos  
-   Cuando la página carga completamente  
-   Entonces debo ver una tabla con todos los ingresos ordenados por fecha
+### HU12 - Dashboard por Cliente
+**Como** usuario  
+**Quiero** seleccionar un cliente y ver su resumen financiero  
+**Para** tomar decisiones individualizadas.
 
-2. Dado que estoy en el listado de ingresos  
-   Cuando aplico filtros por cliente, fecha o estado  
-   Entonces la tabla debe actualizarse para mostrar solo los registros que coincidan
+#### Contenido:
+- Tarjetas informativas del cliente.
+- Gráficos de distribución por concepto y estado.
+- Evolución del saldo.
 
-3. Dado que estoy en el listado de ingresos  
-   Cuando hago clic en un registro específico  
-   Entonces debo poder ver los detalles completos de ese ingreso
-
-#### Notas Técnicas:
-- Componentes necesarios: Tabla de ingresos, sistema de filtros, detalles expandibles
-- Modelo de datos: Lista de objetos Ingreso desde LocalStorage con referencias a Cliente
-- Interacciones: Ordenamiento por columnas, filtros combinados, navegación a detalles
-
-### Historia de Usuario: Edición de ingreso registrado
-Como administrador del sistema  
-Quiero poder modificar la información de un ingreso previamente registrado  
-Para corregir errores o actualizar su estado  
-
-#### Criterios de Aceptación:
-1. Dado que estoy en el listado de ingresos  
-   Cuando hago clic en "Editar" para un ingreso específico  
-   Entonces debo ver un formulario con los datos actuales del ingreso
-
-2. Dado que estoy editando un ingreso  
-   Cuando modifico su estado de "PENDIENTE" a "FACTURADO"  
-   Entonces el sistema debe actualizar el estado y mantener la trazabilidad
-
-3. Dado que estoy editando un ingreso  
-   Cuando guardo los cambios realizados  
-   Entonces el sistema debe actualizar los datos y recalcular el balance del cliente si es necesario
-
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de edición, manejo de estados, actualización en LocalStorage
-- Modelo de datos: Actualización del objeto Ingreso existente
-- Interacciones: Validación del cambio de estado según flujo permitido
-
-## Módulo: Gestión de Egresos (Devoluciones)
-
-### Historia de Usuario: Registro de devolución de garantía
-Como administrador del sistema  
-Quiero registrar las devoluciones de garantías a los clientes  
-Para mantener un control preciso de los egresos y actualizar su balance  
-
-#### Criterios de Aceptación:
-1. Dado que estoy en la sección de egresos  
-   Cuando selecciono un cliente para registrar una devolución  
-   Entonces el sistema debe mostrar automáticamente su saldo disponible
-
-2. Dado que estoy registrando un nuevo egreso  
-   Cuando intento ingresar un monto mayor al saldo disponible del cliente  
-   Entonces el sistema debe alertarme y no permitir continuar
-
-3. Dado que estoy registrando un nuevo egreso  
-   Cuando completo todos los datos requeridos y guardo  
-   Entonces el sistema debe registrar la devolución y actualizar el balance del cliente
-
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de egreso, validación de saldo, cálculo de balance
-- Modelo de datos: Egreso (id, clienteId, fecha, medio, banco, cuenta, importe, concepto, estado)
-- Interacciones: Validación en tiempo real del monto vs saldo disponible
-
-### Historia de Usuario: Visualización de historial de egresos
-Como administrador del sistema  
-Quiero ver un listado completo de todas las devoluciones realizadas  
-Para tener control y seguimiento de los egresos efectuados  
-
-#### Criterios de Aceptación:
-1. Dado que accedo a la sección de egresos  
-   Cuando la página carga completamente  
-   Entonces debo ver una tabla con todos los egresos ordenados por fecha
-
-2. Dado que estoy en el listado de egresos  
-   Cuando aplico filtros por cliente, fecha o concepto  
-   Entonces la tabla debe actualizarse para mostrar solo los registros que coincidan
-
-3. Dado que estoy en el listado de egresos  
-   Cuando hago clic en un registro específico  
-   Entonces debo poder ver los detalles completos de ese egreso
-
-#### Notas Técnicas:
-- Componentes necesarios: Tabla de egresos, sistema de filtros, detalles expandibles
-- Modelo de datos: Lista de objetos Egreso desde LocalStorage con referencias a Cliente
-- Interacciones: Ordenamiento por columnas, filtros combinados, navegación a detalles
-
-### Historia de Usuario: Edición de egreso registrado
-Como administrador del sistema  
-Quiero poder modificar la información de un egreso previamente registrado  
-Para corregir errores o actualizar su estado  
-
-#### Criterios de Aceptación:
-1. Dado que estoy en el listado de egresos  
-   Cuando hago clic en "Editar" para un egreso específico  
-   Entonces debo ver un formulario con los datos actuales del egreso
-
-2. Dado que estoy editando un egreso  
-   Cuando modifico los datos y guardo  
-   Entonces el sistema debe actualizar la información y recalcular el balance si es necesario
-
-#### Notas Técnicas:
-- Componentes necesarios: Formulario de edición, actualización en LocalStorage
-- Modelo de datos: Actualización del objeto Egreso existente
-- Interacciones: Validación de cambios que afecten el balance
-
-## Módulo: Gestión de Estados y Balance
-
-### Historia de Usuario: Visualización de balance por cliente
-Como administrador del sistema  
-Quiero visualizar el balance actual de cada cliente  
-Para conocer su saldo disponible y tomar decisiones informadas  
-
-#### Criterios de Aceptación:
-1. Dado que estoy en la vista detalle de un cliente  
-   Cuando reviso la sección de balance  
-   Entonces debo ver el total de ingresos, total de egresos y saldo actual
-
-2. Dado que estoy en el dashboard principal  
-   Cuando busco un cliente específico  
-   Entonces debo poder acceder rápidamente a su información de balance
-
-#### Notas Técnicas:
-- Componentes necesarios: Cálculo de balance, panel de información resumida
-- Modelo de datos: Cálculo basado en Ingresos y Egresos asociados al cliente
-- Interacciones: Actualización automática al registrar nuevas transacciones
-
-### Historia de Usuario: Cambio de estado de transacciones
-Como administrador del sistema  
-Quiero cambiar el estado de las transacciones según su avance  
-Para reflejar correctamente el flujo del proceso  
-
-#### Criterios de Aceptación:
-1. Dado que estoy visualizando un ingreso  
-   Cuando cambio su estado de "PENDIENTE" a "FACTURADO"  
-   Entonces el sistema debe actualizar el estado y mantener un registro del cambio
-
-2. Dado que estoy visualizando un ingreso  
-   Cuando cambio su estado a "DEVUELTO"  
-   Entonces el sistema debe solicitar registrar el egreso correspondiente
-
-3. Dado que estoy visualizando un egreso  
-   Cuando cambio su estado de "PENDIENTE" a "COMPLETADO"  
-   Entonces el sistema debe actualizar el estado y recalcular el balance
-
-#### Notas Técnicas:
-- Componentes necesarios: Selector de estados, validación de flujos permitidos
-- Modelo de datos: Campo estado en objetos Ingreso y Egreso
-- Interacciones: Reglas de transición entre estados según el flujo de negocio
+---
 
 ## Módulo: Reportes
 
-### Historia de Usuario: Generación de reporte por cliente
-Como administrador del sistema  
-Quiero generar reportes detallados del historial de transacciones de un cliente  
-Para proporcionar información clara sobre su actividad financiera con la empresa  
+### HU13 - Exportar reportes
+**Como** usuario  
+**Quiero** generar reportes CSV de las secciones del sistema  
+**Para** descargar y compartir información financiera.
 
-#### Criterios de Aceptación:
-1. Dado que estoy en la vista detalle de un cliente  
-   Cuando hago clic en "Generar Reporte"  
-   Entonces el sistema debe mostrar una vista previa del reporte con todas sus transacciones
+#### Secciones con botón de reporte:
+- Gestión de Clientes → Exporta tabla filtrada
+- Ingresos → Exporta tabla filtrada
+- Egresos → Exporta tabla filtrada
+- Detalle del Cliente → Exporta su ficha y sus transacciones
+- Dashboards → Exportación CSV (implementado) y PDF (pendiente)
 
-2. Dado que estoy visualizando un reporte de cliente  
-   Cuando selecciono un rango de fechas específico  
-   Entonces el reporte debe actualizarse para mostrar solo las transacciones de ese período
+---
 
-3. Dado que estoy visualizando un reporte de cliente  
-   Cuando hago clic en "Exportar"  
-   Entonces el sistema debe generar un archivo CSV con la información del reporte
+## Módulo: Sistema y Funcionalidad
 
-#### Notas Técnicas:
-- Componentes necesarios: Generador de reportes, selector de fechas, exportación a CSV
-- Modelo de datos: Ingresos y Egresos filtrados por cliente y fecha
-- Interacciones: Vista previa, filtros dinámicos, descarga de archivo
+### HU14 - Persistencia y performance
+**Como** usuario  
+**Quiero** que los datos no se pierdan al cerrar el navegador  
+**Para** mantener el registro sin base de datos externa.
 
-### Historia de Usuario: Dashboard con resumen general
-Como administrador del sistema  
-Quiero visualizar un panel de control con información resumida  
-Para tener una visión general del estado financiero de las operaciones  
+- LocalStorage como base de datos.
+- Control y modularización con StoreManager.
 
-#### Criterios de Aceptación:
-1. Dado que inicio sesión en el sistema  
-   Cuando accedo al dashboard principal  
-   Entonces debo ver totales de ingresos, egresos y balance general
+### HU15 - Interfaz Responsive
+**Como** usuario  
+**Quiero** que el sistema funcione correctamente en móvil y escritorio  
+**Para** acceder desde cualquier dispositivo.
 
-2. Dado que estoy en el dashboard  
-   Cuando reviso la sección de últimas transacciones  
-   Entonces debo ver las 5 operaciones más recientes con sus datos básicos
+---
 
-3. Dado que estoy en el dashboard  
-   Cuando utilizo los accesos directos  
-   Entonces debo poder navegar rápidamente a las funciones principales
+## Estados de Ingresos y Egresos (Referencia rápida)
 
-#### Notas Técnicas:
-- Componentes necesarios: Panel de estadísticas, lista de transacciones recientes, navegación rápida
-- Modelo de datos: Resumen calculado de todos los Ingresos y Egresos
-- Interacciones: Actualización automática, accesos directos contextuales
+| Transacción | Estado        | Cuenta en saldo | Editable | Eliminable |
+|-------------|---------------|------------------|----------|-------------|
+| Ingreso     | Pendiente     | ✅ Sí            | ✅ Sí    | ✅ Sí (con validación) |
+| Ingreso     | Facturado     | ✅ Sí            | ✅ Parcial | ✅ Sí (con validación) |
+| Ingreso     | Saldo a favor | ✅ Sí            | ✅ Parcial | ✅ Sí (con validación) |
+| Ingreso     | Devuelto      | ❌ No            | ❌ No     | ❌ No |
+| Egreso      | Pendiente     | ✅ Sí            | ✅ Parcial | ✅ Sí (con validación) |
+| Egreso      | Completado    | ✅ Sí            | ❌ No     | ❌ No |
 
-## Módulo: Sistema y Persistencia
 
-### Historia de Usuario: Persistencia de datos
-Como usuario del sistema  
-Quiero que todos los datos registrados se mantengan entre sesiones  
-Para no perder información importante al cerrar o recargar el navegador  
-
-#### Criterios de Aceptación:
-1. Dado que he registrado clientes y transacciones  
-   Cuando cierro el navegador y vuelvo a acceder al sistema  
-   Entonces debo encontrar todos los datos previamente registrados
-
-2. Dado que estoy utilizando el sistema  
-   Cuando ocurre un error o problema técnico  
-   Entonces el sistema debe proteger los datos y evitar pérdidas
-
-#### Notas Técnicas:
-- Componentes necesarios: Patrón Storage, uso optimizado de LocalStorage
-- Modelo de datos: Estructuras JSON para almacenamiento
-- Interacciones: Guardado automático, sistemas de respaldo básico
-
-### Historia de Usuario: Seguridad básica
-Como administrador del sistema  
-Quiero que los datos sensibles tengan protección básica  
-Para mantener la confidencialidad de la información  
-
-#### Criterios de Aceptación:
-1. Dado que el sistema almacena datos financieros  
-   Cuando se guarda información sensible  
-   Entonces debe aplicarse algún nivel básico de protección
-
-2. Dado que estoy utilizando el sistema  
-   Cuando se detecta inactividad prolongada  
-   Entonces el sistema debe considerar medidas de protección
-
-#### Notas Técnicas:
-- Componentes necesarios: Encriptación básica para datos sensibles
-- Modelo de datos: Protección de campos críticos
-- Interacciones: Validaciones contra manipulación directa de LocalStorage
-
-### Historia de Usuario: Interfaz responsive
-Como usuario del sistema  
-Quiero poder acceder y utilizar el sistema desde diferentes dispositivos  
-Para tener flexibilidad en el trabajo diario  
-
-#### Criterios de Aceptación:
-1. Dado que accedo al sistema desde un dispositivo móvil  
-   Cuando navego por las diferentes secciones  
-   Entonces la interfaz debe adaptarse correctamente al tamaño de pantalla
-
-2. Dado que utilizo el sistema en una tablet  
-   Cuando interactúo con formularios y tablas  
-   Entonces todos los elementos deben ser utilizables y visibles
-
-#### Notas Técnicas:
-- Componentes necesarios: Diseño responsive con CSS Flexbox/Grid
-- Modelo de datos: N/A
-- Interacciones: Adaptación de tablas y formularios a diferentes tamaños
