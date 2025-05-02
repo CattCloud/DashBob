@@ -9,8 +9,7 @@ La aplicación permite:
 - Registrar ingresos (garantías de subasta)
 - Procesar egresos (devoluciones)
 - Calcular balances automatizados
-- Generar reportes básicos
-
+- Exportar en CSV las tablas de informacion(clientes,ingreso,egreso)
 
 BOB es una empresa especializada en subastas industriales que opera como intermediario en la compraventa de vehículos, maquinarias y materiales de segundo uso. Actualmente, BOB enfrenta desafíos en el seguimiento del dinero transferido por sus clientes para:
 
@@ -28,8 +27,8 @@ Esta solución reemplaza el proceso manual actual basado en Google Forms y hojas
 - **HTML5 Semántico**: Estructura de contenido accesible y optimizada para SEO
 - **CSS3 con Flexbox y Grid**: Layouts responsivos y adaptables a diferentes dispositivos
 - **JavaScript ES6+**: Programación orientada a objetos para la lógica de negocio del cliente
-- **Bootstrap 5**: Framework CSS para agilizar el desarrollo de interfaces con componentes prediseñados
-- **Chart.js**: Biblioteca para visualización de datos y generación de gráficos interactivos
+- **Tailwind**: Framework CSS para agilizar el desarrollo de interfaces 
+- **ApexChart.js**: Biblioteca para visualización de datos y generación de gráficos interactivos
 
 ### Backend (Implementación Cliente-Side)
 
@@ -43,19 +42,13 @@ Esta solución reemplaza el proceso manual actual basado en Google Forms y hojas
 - **Git y GitHub**: Control de versiones y colaboración
 - **Trello**: Gestión de proyecto con metodología Agile
 - **VS Code**: Editor de código con extensiones para desarrollo web
-- **Jest**: Framework para pruebas unitarias y de integración (opcional)
+
 
 ### Despliegue
 
 - **GitHub Pages**: Hosting gratuito para la aplicación web
-- **Netlify/Vercel**: Alternativas para CI/CD y despliegue automático
-=======
-- **HTML5 Semántico**: Estructura del sitio con etiquetas modernas y accesibles
-- **CSS3**: Estilización con Flexbox y Grid para layouts responsivos
-- **JavaScript (ES6+)**: Lógica de negocio y manipulación del DOM
-- **Tailwind CSS**: Framework de utilidades CSS para agilizar el desarrollo visual
-- **LocalStorage API**: Persistencia de datos en el navegador
 
+  
 ### Patrones de Diseño
 - **Patrón Storage**: Para la gestión y persistencia de datos
 - **Event Handling**: Para la interacción entre componentes
@@ -81,32 +74,6 @@ La arquitectura del sistema sigue un enfoque Frontend-Only, adaptado a las limit
 - **Serialización**: Conversión de objetos JavaScript a JSON y viceversa
 - **Recuperación**: Estrategias para recuperar datos en caso de error
 
-### Diagrama de Arquitectura
-
-
-```bash
-+----------------+      +----------------+      +---------------+
-|  Transferencia |      |    Cliente     |      |    Subasta    |
-+----------------+      +----------------+      +---------------+
-| - id           |      | - id           |      | - id          |
-| - cliente      |<--->| - nombre       |      | - titulo      |
-| - monto        |      | - contacto     |      | - fechas      |
-| - fecha        |      +----------------+      | - estado      |
-| - estado       |                              +---------------+
-| - subasta      |<----------------------------->|
-+----------------+
-        ^
-        |
-+----------------+
-|    Comision    |
-+----------------+
-| - transferencia|
-| - porcentaje   |
-| - monto        |
-+----------------+
-```bash
-```bash
-```bash
 
 ## Instalación y Uso
 
@@ -137,9 +104,9 @@ La arquitectura del sistema sigue un enfoque Frontend-Only, adaptado a las limit
 │  │  Clientes     │    │  Ingresos     │    │  Egresos      │        │
 │  └───────────────┘    └───────────────┘    └───────────────┘        │
 │                                                                     │
-│  ┌───────────────┐    ┌───────────────┐    ┌───────────────┐        │
-│  │  Balance      │    │  Reportes     │    │  Dashboard    │        │
-│  └───────────────┘    └───────────────┘    └───────────────┘        │
+│  ┌───────────────┐    ┌───────────────┐                             │
+│  │  Balance      │    │  Dashboard     │                            │
+│  └───────────────┘    └───────────────┘                             │
 └─────────────────────────────────────────────────────────────────────┘
                            │
                            ▼
@@ -177,6 +144,7 @@ bob-subastas/
 │   ├── user-stories.md
 │   └── wireframes/ <-- imagenes
 ├── README.md
+├── js
 └── .gitignore
 ```
 
@@ -207,7 +175,7 @@ Este proyecto está siendo desarrollado por:
 - **Transacciones simples**: Sin manejo de concurrencia o transacciones complejas.
 
 ### Roadmap Post-MVP
-- Implementación de exportación a PDF
+- Implementación de exportación a CSV
 - Visualizaciones gráficas de datos
 - Respaldo automático de datos
 - Sistema básico de usuarios
